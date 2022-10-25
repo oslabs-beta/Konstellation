@@ -8,7 +8,7 @@ const TraceTester = () => {
     });
 
     async function getTraceData(): Promise<void> {
-        console.log("Im a new build");
+        console.log("Im the newest build!");
         if(traceData.data) return;
 
         // const httpHeaders = {'ngrok-skip-browser-warning': 'true'}

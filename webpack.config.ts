@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  // watch: true,
   mode: 'development',
   entry: {
     bundle: './client/index.tsx' 
@@ -12,7 +13,6 @@ module.exports = {
     filename: '[name].[contenthash].js',
     clean: true, // this will run dev from RAM rather than storing to HDD, and for npm run build it deletes old build files
     assetModuleFilename: '[name][ext]', // this makes sure that the name remains the same during compilation
-    publicPath: './',
   },
   module: {
     rules: [
