@@ -8,6 +8,7 @@
     "build": "webpack",
     "start": "nodemon server/server.ts",
     "server": "nodemon server/server.ts",
+    "proxy": "nodemon server/proxy.ts",
     "client": "npx webpack serve --mode development --progress --hot --color",
     "dev": "webpack-dev-server & nodemon server/server.ts",
     "lint": "eslint . --ext .ts"

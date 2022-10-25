@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  // watch: true,
   mode: 'development',
   entry: {
     bundle: './client/index.tsx' 
@@ -58,7 +57,7 @@ module.exports = {
     },
     compress: false,
     host: 'localhost',
-    port: 8081,
+    port: 8080,
     hot: true,
     historyApiFallback: true,
   },

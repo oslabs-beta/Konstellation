@@ -8,14 +8,14 @@ const TraceTester = () => {
     });
 
     async function getTraceData(): Promise<void> {
-        console.log("Im the newest build!");
+        console.log("Weback conquered");
         if(traceData.data) return;
 
-        // const httpHeaders = {'ngrok-skip-browser-warning': 'true'}
-        // const requestHeaders: HeadersInit = new Headers(httpHeaders);
+        const httpHeaders = {'ngrok-skip-browser-warning': 'true'}
+        const requestHeaders: HeadersInit = new Headers(httpHeaders);
 
         return (
-        fetch('http://localhost:3000') //{headers: requestHeaders}
+        fetch('https://e2de-136-52-47-115.ngrok.io') 
         .then((response) => response.json())
         .then(data => {
             console.log("I ran a fetch");

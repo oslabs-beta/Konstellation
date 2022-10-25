@@ -16,8 +16,8 @@ const App = () => {
     <div>
       <ThemeProvider theme={darkTheme}>
         <TraceTester />
-        {/* <CssBaseline />
-        <VisualizerTab /> */}
+        <CssBaseline />
+        <VisualizerTab />
       </ThemeProvider>
     </div>
   );
