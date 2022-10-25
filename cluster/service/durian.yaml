@@ -1,28 +1,28 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: apple-service
+  name: durian-service
   labels:
-    app: apple
+    app: durian
 spec:
 # -- Specify the node this service must run on
   nodeSelector:
-    nodeNum: "1"
+    nodeNum: "2"
   containers:
-    - name: apple-service
+    - name: durian-service
       image: hashicorp/http-echo
       args:
-        - "-text=apple"
+        - "-text=durian"
 
 ---
 
 kind: Service
 apiVersion: v1
 metadata:
-  name: apple-service
+  name: durian-service
 spec:
   selector:
-    app: apple
+    app: durian
   ports:
     - port: 8080 
       targetPort: 5678

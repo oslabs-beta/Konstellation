@@ -44,7 +44,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   namespace: default
-  name: test-ingress-2048
+  name: fruit-ingress
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
@@ -53,6 +53,13 @@ spec:
   rules:
     - http:
         paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: landing-page-service
+              port:
+                number: 8080
         - path: /apple
           pathType: Prefix
           backend:
@@ -67,10 +74,10 @@ spec:
               name: banana-service
               port:
                 number: 8080
-        - path: /
+        - path: /durian
           pathType: Prefix
           backend:
             service:
-              name: service-2048
+              name: durian-service
               port:
-                number: 80
+                number: 8080

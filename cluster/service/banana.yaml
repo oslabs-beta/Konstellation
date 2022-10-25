@@ -5,6 +5,8 @@ metadata:
   labels:
     app: banana
 spec:
+  nodeSelector:
+    nodeNum: "3"
   containers:
     - name: banana-service
       image: hashicorp/http-echo
