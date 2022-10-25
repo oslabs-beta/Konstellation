@@ -58,7 +58,7 @@ module.exports = {
     },
     compress: false,
     host: 'localhost',
-    port: 8080,
+    port: 8081,
     hot: true,
     historyApiFallback: true,
   },

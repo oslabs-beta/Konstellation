@@ -51261,18 +51261,13 @@ const TraceTester = () => {
     });
     function getTraceData() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("test");
+            console.log("Running TraceData Functionsss");
             if (traceData.data)
                 return;
-            const httpHeaders = { 'ngrok-skip-browser-warning': 'true',
-                'path': 'https://d5b6-136-52-47-115.ngrok.io',
-                'Access-Control-Allow-Origin': 'https://andrewdunne.com',
-                'X-Trigger': 'CORS' };
-            const requestHeaders = new Headers(httpHeaders);
-            return (fetch('https://829e-136-52-47-115.ngrok.io/', { headers: requestHeaders })
+            return (fetch('http://localhost:3000')
                 .then((response) => response.json())
                 .then(data => {
-                console.log("hello");
+                console.log("I ran a fetch");
                 console.log(data);
                 setTraceData(data);
             })
@@ -52484,4 +52479,4 @@ function combine (array, callback) {
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=bundle.a3305478e6d8d920406e.js.map
+//# sourceMappingURL=bundle.9c7b2b6a4ad9daa3a544.js.map

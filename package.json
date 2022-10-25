@@ -8,7 +8,7 @@
     "build": "webpack",
     "start": "nodemon server/server.ts",
     "server": "nodemon server/server.ts",
-    "client": "webpack-dev-server",
+    "client": "cross-env NODE_ENV=development webpack-dev-server --open --hot --color",
     "dev": "webpack-dev-server & nodemon server/server.ts",
     "lint": "eslint . --ext .ts"
   },
@@ -30,6 +30,7 @@
     "chartjs-gauge": "^0.3.0",
     "chartjs-plugin-datalabels": "^2.1.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "cytoscape": "^3.23.0",
     "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-dom-node": "^1.1.0",
