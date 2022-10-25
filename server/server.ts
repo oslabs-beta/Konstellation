@@ -12,8 +12,6 @@ let counter = 0;
 // app.use('*', setCORS, route);
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Request received for endpoint '${req.path}' with method '${req.method}'`);
-  console.log(req.path);
-  console.log(req.headers);
   const traceData = req.body.traceData ? req.body.traceData : {data: "Example Trace Data From Server"};
   res.send({traceData}).json;
 })
