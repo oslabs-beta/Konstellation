@@ -5,8 +5,10 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest",
-    "build": "NODE_ENV=production webpack",
+    "build": "webpack",
     "start": "nodemon server/server.ts",
+    "server": "nodemon server/server.ts",
+    "client": "webpack-dev-server",
     "dev": "webpack-dev-server & nodemon server/server.ts",
     "lint": "eslint . --ext .ts"
   },
