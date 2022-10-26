@@ -5,8 +5,11 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest",
-    "build": "NODE_ENV=production webpack",
-    "start": "nodemon server/server.ts",
+    "build": "webpack",
+    "start": "concurrently \"nodemon server/proxy.ts\"  \"nodemon server/server.ts\"",
+    "server": "nodemon server/server.ts",
+    "proxy": "nodemon server/proxy.ts",
+    "client": "npx webpack serve --mode development --progress --hot --color",
     "dev": "webpack-dev-server & nodemon server/server.ts",
     "lint": "eslint . --ext .ts"
   },
@@ -27,7 +30,9 @@
     "chart.js": "^3.9.1",
     "chartjs-gauge": "^0.3.0",
     "chartjs-plugin-datalabels": "^2.1.0",
+    "concurrently": "^7.5.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "cytoscape": "^3.23.0",
     "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-dom-node": "^1.1.0",
