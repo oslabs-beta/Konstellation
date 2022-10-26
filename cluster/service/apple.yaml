@@ -1,0 +1,29 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: apple-service
+  labels:
+    app: apple
+spec:
+# -- Specify the node this service must run on
+  nodeSelector:
+    nodeNum: "1"
+  containers:
+    - name: apple-service
+      image: hashicorp/http-echo
+      args:
+        - "-text=apple"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: apple-service
+spec:
+  selector:
+    app: apple
+  ports:
+    - port: 8080 
+      targetPort: 5678
+      protocol: TCP

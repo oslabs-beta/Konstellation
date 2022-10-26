@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: landing-page
+  labels:
+    app: landing-page
+spec:
+# -- Specify the node this service must run on
+  containers:
+  - image: gcr.io/google-samples/node-hello:1.0
+    name: hello-world
+    ports:
+    - containerPort: 8080
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: landing-page-service
+spec:
+  selector:
+    app: landing-page
+  ports:
+    - port: 8080 
+      targetPort: 8080
+      protocol: TCP
