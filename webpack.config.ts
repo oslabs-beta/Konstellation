@@ -4,11 +4,14 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './client/index.tsx',
+  entry: {
+    bundle: './client/index.tsx' 
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/',
+    filename: '[name].[contenthash].js',
+    clean: true, // this will run dev from RAM rather than storing to HDD, and for npm run build it deletes old build files
+    assetModuleFilename: '[name][ext]', // this makes sure that the name remains the same during compilation
   },
   module: {
     rules: [
@@ -33,6 +36,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: 'Konstellation',
       template: './client/index.html',
       filename: './index.html',
       // favicon: './client/favicon.ico',
@@ -41,6 +45,7 @@ module.exports = {
       patterns: [{ from: './client/style.css' }],
     }),
   ],
+  devtool: 'source-map',
   devServer: {
     static: {
       directory: path.join(__dirname, './dist'),
