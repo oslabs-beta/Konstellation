@@ -1,0 +1,11 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: Konstellation-Cluster
+  region: us-west-2
+
+managedNodeGroups:
+  - name: kon-small-nodes 
+    instanceType: t2.small
+    desiredCapacity: 3
