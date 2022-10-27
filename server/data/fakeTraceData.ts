@@ -2,24 +2,73 @@
 
 export default [
     {
-    data: {
-      source: 'apple-pod',
-      target: 'pod2',
-      type: 'arrow'
-    }
-  },
+      data: {
+        id: 'CLIENT',
+        label: 'CLIENT',
+        type: 'client',
+      }
+    },
     {
       data: {
-        source: 'pod1',
-        target: 'pod3',
+        id: 'recipes-front-end',
+        label: 'recipes-front-end',
+        type: 'pod',
+      }
+    },
+    {
+      data: {
+        id: 'recipes-back-end',
+        label: 'recipes-back-end',
+        type: 'pod',
+      }
+    },
+    {
+      data: {
+        id: 'database',
+        label: 'database',
+        type: 'pod',
+      }
+    },
+    {
+      data: {
+        source: 'CLIENT',
+        target: 'recipes-front-end',
+        type: 'arrow'
+      }
+    },
+    {
+      data: {
+        source: 'recipes-front-end',
+        target: 'recipes-back-end',
+        type: 'arrow'
+      }
+    },
+    {
+      data: {
+        source: 'recipes-back-end',
+        target: 'database',
         type: 'arrow',
       }
     },
     {
       data: {
-        id: 'someId',
-        label: 'someId',
-        type: 'pod',
+        source: 'database',
+        target: 'recipes-back-end',
+        type: 'arrow',
+      }
+    },
+    {
+      data: {
+        source: 'recipes-back-end',
+        target: 'recipes-front-end',
+        type: 'arrow',
+      }
+    },
+    {
+      data: {
+        source: 'recipes-back-end',
+        target: 'CLIENT',
+        type: 'arrow',
       }
     }
 ]

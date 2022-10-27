@@ -11,7 +11,8 @@ const express = require('express');
 export class TraceController {
 
     public static getData(req: IRequest, res: IResponse, next: INextFunction) {
-      TraceModel.getSampleData;
+      console.log("In Tracecontroller");
+      TraceModel.getSampleData(req, res);
       next();
     }
 
