@@ -42,6 +42,20 @@ const clusterController = {
       console.log('in the clusterController')
       const elements = []
 
+       // function nodeText(text:string) {
+  //   let canvas = document.createElement("canvas");
+
+  //   let image = new Image();
+
+  //   canvas.getContext("2d")!.fillStyle = "#000000";
+  //   //note: font must be declared before the text is filled. 
+  //   canvas.getContext("2d")!.font = "bold 24px roboto";
+  //   //note: the fourth parameter number limits the width of the text image
+  //   // canvas.getContext("2d")!.fillText(text, 25, 25, 250);
+  //   canvas.getContext("2d")!.fillText(text, 25, 73, 250);
+   
+  //   return canvas.toDataURL();
+
       const clusterName = 'Control Plane'; //await getClusterName()
 
       elements.push({data: {id: clusterName, label: clusterName, type: 'root'}})

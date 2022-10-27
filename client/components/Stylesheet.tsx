@@ -36,7 +36,7 @@ const styleSheet = [
       height: 50,
       width: 50,
       shape: 'star',
-      'background-color': 'white',
+      'background-color': 'lightpink',
     },
   },
   {
@@ -48,7 +48,7 @@ const styleSheet = [
       height: 50,
       width: 50,
       shape: 'triangle',
-      'background-color': 'yellow',
+      'background-color': 'lightblue',
     },
   },
   {
