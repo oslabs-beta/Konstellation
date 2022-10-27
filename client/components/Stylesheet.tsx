@@ -69,7 +69,7 @@ const styleSheet = [
       width: 1,
       'line-color': 'data(color)',
       // 'target-arrow-color': '#ccc',
-      'target-arrow-shape': 'triangle',
+      // 'target-arrow-shape': 'triangle',
       'curve-style': 'bezier'
     },
   },
