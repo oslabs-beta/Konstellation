@@ -15,14 +15,16 @@ const ClusterVisualizer = () => {
     fetch('/api/cluster')
     .then((response) => response.json())
     // .then((data) => console.log('Inside fetch', data))
-    .then((data) => setPodData(data));
+    .then((data) => {setPodData(data)});
   }, []);
 
   const layout = options2()
+  // console.log("Cluster Data Format:")
+  // console.log(podData);
   
   return (
   <div>
-  <div id="title">Konstellation</div>
+  {/* <div id="title">Konstellation</div> */}
   <div
     style={{
       display: 'flex',
@@ -30,16 +32,7 @@ const ClusterVisualizer = () => {
     }}
     
   >
-    <div id="sidebar">
-      <div id='traceSearch'>
-      <input placeholder='TraceID'></input>
-      <button className='searchButton'>Get Trace Logs</button>
-      </div>
-      <div id='lineBreak'></div>
-      <div className='traceData'>
-        Trace Data Goes Here?...
-      </div>
-    </div>
+    
    
     <CytoscapeComponent
      

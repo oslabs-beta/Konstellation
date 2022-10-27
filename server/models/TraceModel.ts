@@ -8,7 +8,9 @@ export class TraceModel {
   static requestCount:Number = 0;
 
   public static getSampleData(req: IRequest, res: IResponse) {
+    console.log("In Trace Model");
     res.traceData = fakeTraceData;
+    console.log(res.traceData);
   }
 
   public static getDataFromJaeger(req: IRequest, res: IResponse) {
