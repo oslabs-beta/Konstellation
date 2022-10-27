@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import express from 'express';
 
-import clusterController from '../controllers/ClusterController';
+import ClusterController from '../controllers/ClusterController';
 const router = express.Router();
 
-router.get('/', clusterController.getCluster, 
+router.get('/', ClusterController.getCluster, 
 (req: Request, res : Response, next : NextFunction) => {
   res.status(200).json(res.locals.elements);
 })
