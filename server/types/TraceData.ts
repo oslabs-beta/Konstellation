@@ -1,0 +1,1 @@
+type TraceData = (PodData | SpanData)[]

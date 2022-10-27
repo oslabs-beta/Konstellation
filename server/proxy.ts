@@ -10,13 +10,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log("received a request");
+    console.log("Proxy Server Received a Request");
+
     res.set('Access-Control-Allow-Origin', ['*']);
-    // const headerDetails: IncomingHttpHeaders = req.headers;
-    // const headers: HeadersInit = new Headers(headerDetails as HeadersInit);
-    fetch('http://localhost:3001' + req.path)
+    
+    fetch('http://localhost:3000' + req.path)
     .then(response => response.json())
     .then(data => res.send(data));
 });
 
-app.listen(3000, () => console.log('Proxy Server is listening on port 3000'));
+app.listen(3001, () => console.log('Proxy Server is listening on port 3001'));
