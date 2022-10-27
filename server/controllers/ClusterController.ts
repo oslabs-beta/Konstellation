@@ -31,7 +31,6 @@ async function getClusterName() {
   }
 }
 
-
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
@@ -123,7 +122,7 @@ const clusterController = {
 
 // clusterController.getCluster()
 
-module.exports = clusterController;
+export default clusterController;
 
 // const nodeData = k8sApi.listNode('default').then((res) => {
 //     // console.log(res.body);

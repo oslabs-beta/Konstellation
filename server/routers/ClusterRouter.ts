@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-const express = require('express');
+import express from 'express';
 
-const clusterController = require('../controllers/ClusterController');
+import clusterController from '../controllers/ClusterController';
 const router = express.Router();
 
-// Give me everything
-module.exports = router.get('/', clusterController.getCluster, (req: Request, res : Response, next : NextFunction) => {
+router.get('/', clusterController.getCluster, 
+(req: Request, res : Response, next : NextFunction) => {
   res.status(200).json(res.locals.elements);
 })
+
+export default router;
