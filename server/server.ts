@@ -10,6 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 
 let counter = 0;
 
+const traceRouter = require('./routers/TraceRouter.ts')
+
 // app.use('*', setCORS, route);
 // app.use((req: Request, res: Response, next: NextFunction) => {
 //   console.log(`Request received for endpoint '${req.path}' with method '${req.method}'`);
@@ -20,6 +22,7 @@ let counter = 0;
   // app.use('/api/dashboard', dashboardRouter);
   // Give me everything in the cluster
   app.use('/api/cluster', clusterRouter);
+  app.use('/api/traces', traceRouter);
   // app.use('/api/pod', podRouter);
   // app.use('/api/node', nodeRouter);
   // app.use('/api/custom', customRouter);

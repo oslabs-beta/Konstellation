@@ -1,14 +1,22 @@
+import { resolveNaptr } from "dns";
 import { NextFunction } from "express";
 import { appendFile} from 'fs';
+import { IResponse } from "../interfaces/IResponse";
+import { TraceModel } from "../models/TraceModel";
 
 const express = require('express');
 
 
 export class TraceController {
-    public static counter: number;
-
+  public static counter: number;
+  
     constructor() {
         TraceController.counter = 0;
+    }
+
+    public static getData(req: Request, res: IResponse, next: NextFunction) {
+      TraceModel.getSampleData;
+      res.send(res.traceData).json();
     }
 
     public static saveData (req: Request, res: Response, next: NextFunction): void {
@@ -26,19 +34,5 @@ export class TraceController {
 
         //   next();
 
-  function getTimestamp() {
-    let ts = Date.now();
-  
-    let date_ob = new Date(ts);
-    let hours = date_ob.getHours();
-    let minutes = date_ob.getMinutes();
-    let seconds = date_ob.getSeconds();
-    let date = date_ob.getDate();
-    let month = date_ob.getMonth() + 1;
-    let year = date_ob.getFullYear();
-  
-  // prints date & time in YYYY-MM-DD format
-   return (year + "-" + month + "-" + date + " at " + hours + ":" + minutes + ":" + seconds);
-  }
-    }
+      }
 }
