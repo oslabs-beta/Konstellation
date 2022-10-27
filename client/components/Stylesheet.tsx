@@ -40,6 +40,30 @@ const styleSheet = [
     },
   },
   {
+    selector: "node[type='namespace']",
+    style: {
+      'border-width': '1px',
+      'border-color': 'grey',
+      
+      height: 50,
+      width: 50,
+      shape: 'triangle',
+      'background-color': 'yellow',
+    },
+  },
+  {
+    selector: "node[type='root']",
+    style: {
+      'border-width': '1px',
+      'border-color': 'grey',
+      
+      height: 50,
+      width: 50,
+      shape: 'rectangle',
+      'background-color': 'green',
+    },
+  },
+  {
     selector: 'edge',
     style: {
       width: 1,
