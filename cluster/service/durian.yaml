@@ -1,0 +1,29 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: durian-service
+  labels:
+    app: durian
+spec:
+# -- Specify the node this service must run on
+  nodeSelector:
+    nodeNum: "2"
+  containers:
+    - name: durian-service
+      image: hashicorp/http-echo
+      args:
+        - "-text=durian"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: durian-service
+spec:
+  selector:
+    app: durian
+  ports:
+    - port: 8080 
+      targetPort: 5678
+      protocol: TCP

@@ -65,7 +65,7 @@ export type ClusterController = {
 //   getMemUsage: RequestHandler;
 //   getInstantMetrics: RequestHandler;
 // };
-export type HierarchyController = {
+export type ElemController = {
   getElements: RequestHandler;
 };
 export type ErrObject = {
@@ -80,10 +80,6 @@ export type Elements = {
     source?: string;
     target?: string;
     type?: string;
-  };
-  position?: {
-    x: number;
-    y: number;
   };
 };
 // export type node =  string;
