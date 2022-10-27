@@ -25,8 +25,9 @@ export class TraceController {
         //   console.log(`${this.counter} requests made since last server restart`);
 
         //   next();
+    }
 
-  function getTimestamp() {
+  public static getTimestamp(): string {
     let ts = Date.now();
   
     let date_ob = new Date(ts);
@@ -40,5 +41,4 @@ export class TraceController {
   // prints date & time in YYYY-MM-DD format
    return (year + "-" + month + "-" + date + " at " + hours + ":" + minutes + ":" + seconds);
   }
-    }
 }

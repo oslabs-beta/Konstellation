@@ -1,4 +1,4 @@
-import { ErrObject, express } from '../types';
+import { ErrObject, express } from '../../types';
 import { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 const app = express();

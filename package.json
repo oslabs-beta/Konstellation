@@ -6,9 +6,9 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "start": "concurrently \"nodemon server/proxy.ts\"  \"nodemon server/server.ts\"",
-    "server": "nodemon server/server.ts",
-    "proxy": "nodemon server/proxy.ts",
+    "start": "concurrently \"nodemon src/server/proxy.ts\" \"npx webpack serve --mode development --progress --hot --color\"",
+    "server": "nodemon src/server/server.ts",
+    "proxy": "nodemon src/server/proxy.ts",
     "client": "npx webpack serve --mode development --progress --hot --color",
     "dev": "webpack-dev-server & nodemon server/server.ts",
     "lint": "eslint . --ext .ts"
@@ -40,6 +40,7 @@
     "node-fetch": "^3.2.10",
     "nodemon": "^2.0.20",
     "prom-client": "^14.1.0",
+    "protobufjs": "^7.1.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-cytoscapejs": "^2.0.0",

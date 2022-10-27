@@ -8,14 +8,18 @@ const TraceTester = () => {
     });
 
     async function getTraceData(): Promise<void> {
-        console.log("Weback conquered");
         if(traceData.data) return;
 
-        const httpHeaders = {'ngrok-skip-browser-warning': 'true'}
+        const httpHeaders = {'content-type': 'application/json'}
         const requestHeaders: HeadersInit = new Headers(httpHeaders);
 
+        const text:string = "hi";
+
         return (
-        fetch('https://e2de-136-52-47-115.ngrok.io') 
+        fetch('/api', {
+            method: 'POST',
+            body: text,
+            headers: requestHeaders }) 
         .then((response) => response.json())
         .then(data => {
             console.log("I ran a fetch");

@@ -5,7 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    bundle: './client/index.tsx' 
+    bundle: './src/client/index.tsx' 
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -37,12 +37,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Konstellation',
-      template: './client/index.html',
+      template: './src/client/index.html',
       filename: './index.html',
       // favicon: './client/favicon.ico',
     }),
     new CopyPlugin({
-      patterns: [{ from: './client/style.css' }],
+      patterns: [{ from: './src/client/style.css' }],
     }),
   ],
   devtool: 'source-map',
@@ -52,7 +52,7 @@ module.exports = {
       publicPath: '/',
     },
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/api': 'http://localhost:4318',
       secure: false,
     },
     compress: false,
