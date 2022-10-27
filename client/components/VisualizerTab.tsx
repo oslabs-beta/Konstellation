@@ -54,6 +54,7 @@ const VisualizerTab = () => {
 
 const options = {
   name: 'cose-bilkent',
+  // name: 'breadthfirst',
   ready: function () {
   },
   // Called on `layoutstop`
@@ -71,7 +72,7 @@ const options = {
   // Whether to fit the network view after when done
   fit: true,
   // Padding on fit
-  padding: 100,
+  padding: 50,
   // Whether to enable incremental mode
   randomize: true,
   // Node repulsion (non overlapping) multiplier
