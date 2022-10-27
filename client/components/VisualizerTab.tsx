@@ -11,16 +11,13 @@ const VisualizerTab = () => {
     const [podData, setPodData] = useState([]);
 
     useEffect(() => {
-    
+      fetch('/api/cluster')
+      .then((response) => response.json())
+      // .then((data) => console.log('Inside fetch', data))
+      .then((data) => setPodData(data));
     }, []);
 
-
-  function getPods() {
-    fetch('/api/getPods')
-      .then((response) => response.json())
-      .then((data) => setPodData(data));
-  }
-
+    //console.log('podData: ', podData)
 
   function nodeText(text:string) {
     let canvas = document.createElement("canvas");
@@ -38,25 +35,26 @@ const VisualizerTab = () => {
   }
 
 //elements object will be the format of what is needed to be fetched from api.
-const elements = [
-  { data: { id: "one", label: "Whole Wheat", type: "pod", data: nodeText("Average Latency: 1.0ms") } },
-  { data: { id: "two", label: "Drew", data: nodeText("Average Latency: 33.40ms") }},
-  { data: { id: "three", label: "Kat", data: nodeText("Kat?") }},
-  { data: { id: "four", label: "Jonathan", data: nodeText("Jonathan?") }},
-  { data: { id: "five", label: "Matthew", data: nodeText("Matthew?") }},
-  { data: { id: "six", label: "Richard", data: nodeText("Richard?") }},
-  { data: { source: "one", target: "two", label: "1x2", color: 'red' } },
-  { data: { source: "two", target: "one", label: "1x2" } },
-  { data: { source: "one", target: "three", label: "1x2" } },
-  { data: { source: "one", target: "four", label: "1x2" } },
-  { data: { source: "one", target: "five", label: "1x2" } },
-  { data: { source: "one", target: "six", label: "1x2" } },
-  { data: { source: "five", target: "six", label: "1x2" } },
-  { data: { source: "three", target: "six", label: "1x2" } }
-];
+// const elements = [
+//   { data: { id: "one", label: "Whole Wheat", type: "pod", data: nodeText("Average Latency: 1.0ms") } },
+//   { data: { id: "two", label: "Drew", data: nodeText("Average Latency: 33.40ms") }},
+//   { data: { id: "three", label: "Kat", data: nodeText("Kat?") }},
+//   { data: { id: "four", label: "Jonathan", data: nodeText("Jonathan?") }},
+//   { data: { id: "five", label: "Matthew", data: nodeText("Matthew?") }},
+//   { data: { id: "six", label: "Richard", data: nodeText("Richard?") }},
+//   { data: { source: "one", target: "two", label: "1x2", color: 'red' } },
+//   { data: { source: "two", target: "one", label: "1x2" } },
+//   { data: { source: "one", target: "three", label: "1x2" } },
+//   { data: { source: "one", target: "four", label: "1x2" } },
+//   { data: { source: "one", target: "five", label: "1x2" } },
+//   { data: { source: "one", target: "six", label: "1x2" } },
+//   { data: { source: "five", target: "six", label: "1x2" } },
+//   { data: { source: "three", target: "six", label: "1x2" } }
+// ];
 
 const options = {
   name: 'cose-bilkent',
+  // name: 'breadthfirst',
   ready: function () {
   },
   // Called on `layoutstop`
@@ -74,7 +72,7 @@ const options = {
   // Whether to fit the network view after when done
   fit: true,
   // Padding on fit
-  padding: 100,
+  padding: 50,
   // Whether to enable incremental mode
   randomize: true,
   // Node repulsion (non overlapping) multiplier
@@ -132,7 +130,7 @@ const options = {
         </div>
         <CytoscapeComponent
         
-          elements={elements}
+          elements={podData}
           stylesheet={styleSheet}
           layout={options}
           style={{
