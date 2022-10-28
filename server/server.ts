@@ -14,6 +14,7 @@ import traceRouter from './routers/TraceRouter';
 
   app.use('/api/cluster', clusterRouter);
   app.use('/api/traces', traceRouter);
+  app.use('/api/account', authRouter);
   
   app.use((err: ErrObject, req: Request, res: Response) => {
     const defaultErr = {
