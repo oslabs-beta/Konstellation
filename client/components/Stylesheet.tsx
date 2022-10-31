@@ -81,7 +81,7 @@ const styleSheet = [
     selector: 'edge',
     style: {
       width: 1,
-      'line-color': 'data(color)',
+      // 'line-color': 'data(color)',
       // 'target-arrow-color': '#ccc',
       // 'target-arrow-shape': 'triangle',
       'curve-style': 'bezier'
@@ -91,7 +91,7 @@ const styleSheet = [
     selector: "edge[type='arrow']",
     style: {
       width: 1,
-      'line-color': 'data(color)',
+      // 'line-color': 'data(color)',
       'font-size': '5px',
       // 'target-arrow-color': '#ccc',
       'target-arrow-shape': 'triangle',
@@ -107,7 +107,6 @@ const styleSheet = [
         "text-background-opacity": 1,
         "color": "black",
         "text-background-color": "whitesmoke",
-        "text-backround-radius": '20px'
     }
   }
 ];
