@@ -1,5 +1,5 @@
-import colors from '../colors';
-import { kubesColors } from '../colors';
+import colors from '../src/colors';
+import { kubesColors } from '../src/colors';
 
 const styleSheet = [
   {

@@ -5,7 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    bundle: './client/index.tsx' 
+    bundle: './client/src/index.tsx' 
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
