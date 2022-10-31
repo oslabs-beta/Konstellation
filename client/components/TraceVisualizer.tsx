@@ -11,6 +11,8 @@ const TraceVisualizer = (data:any) => {
 
   console.log(data.data);
 
+  let myCyRef;
+  
   return (
     <div
     style={{
@@ -27,6 +29,18 @@ const TraceVisualizer = (data:any) => {
         height: '50rem',
         border: 'solid',
         objectFit: 'cover',
+      }}
+      cy={cy => {
+        myCyRef = cy;
+
+        console.log("EVT", cy);
+
+        cy.on("tap", "node", evt => {
+          var node = evt.target;
+          console.log("EVT", evt);
+          console.log("TARGET", node.data());
+          console.log("TARGET TYPE", typeof node[0]);
+        });
       }}
     ></CytoscapeComponent>
   </div>

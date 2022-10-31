@@ -37,6 +37,8 @@ const styleSheet = [
       width: 50,
       shape: 'star',
       'background-color': 'lightpink',
+      // "text-valign": "center",
+      // "text-halign": "center",
     },
   },
   {
@@ -90,11 +92,24 @@ const styleSheet = [
     style: {
       width: 1,
       'line-color': 'data(color)',
+      'font-size': '5px',
       // 'target-arrow-color': '#ccc',
       'target-arrow-shape': 'triangle',
-      'curve-style': 'bezier'
+      'curve-style': 'bezier',
+      'label': 'data(label)',
+      'color': 'black',
+      'text-background-color': 'white'
     },
   },
+  {
+    selector: ".background",
+    style: {
+        "text-background-opacity": 1,
+        "color": "black",
+        "text-background-color": "whitesmoke",
+        "text-backround-radius": '20px'
+    }
+  }
 ];
 
 export default styleSheet
