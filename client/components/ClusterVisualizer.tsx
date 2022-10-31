@@ -22,6 +22,8 @@ const ClusterVisualizer = () => {
   // console.log("Cluster Data Format:")
   // console.log(podData);
   
+  let myCyRef;
+
   return (
   <div>
   {/* <div id="title">Konstellation</div> */}
@@ -44,6 +46,18 @@ const ClusterVisualizer = () => {
         height: '50rem',
         border: 'solid',
         objectFit: 'cover',
+      }}
+      cy={cy => {
+        myCyRef = cy;
+
+        console.log("EVT", cy);
+
+        cy.on("tap", "node", evt => {
+          var node = evt.target;
+          console.log("EVT", evt);
+          console.log("TARGET", node.data());
+          console.log("TARGET TYPE", typeof node[0]);
+        });
       }}
     ></CytoscapeComponent>
   </div>
