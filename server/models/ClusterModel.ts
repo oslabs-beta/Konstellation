@@ -1,3 +1,5 @@
+
+import {v4 as uuidv4}  from 'uuid';
 import { Request, Response, NextFunction } from "express";
 const k8s = require('@kubernetes/client-node');
 
@@ -27,7 +29,8 @@ class ClusterModel {
         elements.push({
           data: {
             source: clusterName,
-            target: name
+            target: name,
+            id: uuidv4()
           },
         })
       })
@@ -45,7 +48,8 @@ class ClusterModel {
           elements.push({
             data: {
               source: namespace,
-              target: name
+              target: name,
+              id: uuidv4()
             }
           })
         })

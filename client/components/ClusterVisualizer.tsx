@@ -13,14 +13,19 @@ const ClusterVisualizer = () => {
 
   useEffect(() => {
     fetch('/api/cluster')
-    .then((response) => response.json())
-    // .then((data) => console.log('Inside fetch', data))
-    .then((data) => {setPodData(data)});
+    .then((response) => {
+      console.log(response);
+      return response.json()
+    })
+    .then((data) => {
+      console.log("RAW DATA for RICHARD")
+      console.log(data);
+      return setPodData(data)});
   }, []);
 
   const layout = options2()
-  // console.log("Cluster Data Format:")
-  // console.log(podData);
+  console.log("Cluster Data Format:")
+  console.log(podData);
   
   let myCyRef;
 

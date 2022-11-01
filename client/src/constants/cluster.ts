@@ -1,6 +1,5 @@
 const Actions = {
-  LOGIN: 'LOGIN',
-  LOGOUT: 'LOGOUT'
+  GETCLUSTER: 'GETCLUSTER'
 }
 
 export default Actions;

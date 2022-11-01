@@ -3,7 +3,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import VisualizerTab from '../components/VisualizerTab';
 import '../style.css';
-import TraceTester from '../components/TraceTester';
 
 const darkTheme = createTheme({
   palette: {
@@ -12,6 +11,11 @@ const darkTheme = createTheme({
 });
 
 const App = () => {
+  const props = {
+    backgroundColor: 'blue'
+  }
+
+
   return (
     <div>
       <ThemeProvider theme={darkTheme}>

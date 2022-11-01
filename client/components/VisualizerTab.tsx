@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import ClusterVisualizer from './ClusterVisualizer'
+import ClusterVisualizer from '../src/components/clusterVisualizer'
 import TraceVisualizer from './TraceVisualizer'
 
 enum VisualizerType{cluster, trace}
