@@ -3,6 +3,9 @@ import { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 const app = express();
 import clusterRouter from './routers/ClusterRouter';
+import  * as dotenv from 'dotenv'
+
+dotenv.config()
 
 app.use(cors());
 app.use(express.json());
