@@ -27,10 +27,9 @@ const ClusterVisualizer = () => {
   return (
   <div>
   {/* <div id="title">Konstellation</div> */}
-  <div
+  <div 
     style={{
       display: 'flex',
-      justifyContent: 'space-around',
     }}
     
   >
@@ -42,15 +41,17 @@ const ClusterVisualizer = () => {
       stylesheet={styleSheet}
       layout={layout}
       style={{
-        width: '70%',
+        width: '100%',
         height: '50rem',
-        border: 'solid',
         objectFit: 'cover',
+        backgroundColor: '#161820'
       }}
+      maxZoom={3}
+      minZoom={0.1}
       cy={cy => {
         myCyRef = cy;
 
-        console.log("EVT", cy);
+        // console.log("EVT", cy);
 
         cy.on("tap", "node", evt => {
           var node = evt.target;

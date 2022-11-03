@@ -3,11 +3,11 @@ import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from './Stylesheet'
-import options2 from './CytoscapeConfig'
+import options from './CytoscapeConfig'
 
 cytoscape.use(coseBilkent);
 const TraceVisualizer = (data:any) => {
-  const layout = options2()
+  const layout = options()
 
   console.log(data.data);
 
@@ -25,11 +25,14 @@ const TraceVisualizer = (data:any) => {
       stylesheet={styleSheet}
       layout={layout}
       style={{
-        width: '70%',
+        width: '100%',
         height: '50rem',
-        border: 'solid',
+        // border: 'solid',
         objectFit: 'cover',
+        backgroundColor: '#161820'
       }}
+      maxZoom={3}
+      minZoom={0.1}
       cy={cy => {
         myCyRef = cy;
 
