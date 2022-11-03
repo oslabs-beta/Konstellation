@@ -12,8 +12,27 @@ export class TraceModel {
   }
 
   public static getDataFromJaeger(req: IRequest, res: IResponse) {
+    //use the req.params.traceId to retrieve teh trace id
+		//send a get request to http://localhost:16686/api/traces/<traceId>
+		//once we get the data. we want to process the data. We want the source pod, target pod, type, (arrow?),
+		//it will be an array with x amount of elements. should also retrieve duration data in the traces
+		//each element will be an object with a data property.
+    const traceId: string = req.params.traceId //this sets the trace id to a variable
+		const requestString: string = `http://localhost:16686/api/traces/${traceId}`;
+		fetch(requestString)
+		.then((response) => response.json())
+		.then(data => {
+			console.log("data from jaeger", data);
+			
+		})
+
 
   }
+
+	public static queryJaeger(req: IRequest, res: IResponse){
+    const podName = req.query.podName
+		
+	}
 
   public static saveDataToTextFile(req: IRequest, res: IResponse) {
     // console.log(req.socket.remoteAddress); // Use this if not using a server proxy (ex: ngrok)
