@@ -108,5 +108,4 @@ export const options = () => { return {
   initialEnergyOnIncremental: 0.5}
 }
 
-
 export default options2;
