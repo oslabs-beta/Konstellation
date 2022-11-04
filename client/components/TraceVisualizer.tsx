@@ -27,7 +27,6 @@ const TraceVisualizer = (data:any) => {
       style={{
         width: '100%',
         height: '50rem',
-        // border: 'solid',
         objectFit: 'cover',
         backgroundColor: '#161820'
       }}
@@ -36,7 +35,7 @@ const TraceVisualizer = (data:any) => {
       cy={cy => {
         myCyRef = cy;
 
-        console.log("EVT", cy);
+        // console.log("EVT", cy);
 
         cy.on("tap", "node", evt => {
           var node = evt.target;

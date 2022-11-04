@@ -150,8 +150,9 @@ const styleSheet = [
     selector: ".background",
     style: {
         "text-background-opacity": 1,
-        "color": "black",
-        "text-background-color": "whitesmoke",
+        "color": "white",
+        "text-background-color": "#161820",
+        'font-family': 'SF Pro',
     }
   },
   // {
