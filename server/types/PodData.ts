@@ -4,4 +4,5 @@ type PodData = {
     label: string,
     type: string,
   }
+  classes?: any
 }
