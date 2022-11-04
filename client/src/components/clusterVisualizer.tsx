@@ -7,9 +7,6 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from '../../components/Stylesheet';
 import options2 from '../../components/CytoscapeConfig';
 
-
-
-
 export default function ClusterVisualizer() {
   
   const clusterData = useAppSelector(selectElements);
@@ -24,9 +21,6 @@ export default function ClusterVisualizer() {
       dispatch(getClusterAsync());
     }
   })
-
-  
-
 
   console.log(clusterData);
   const obj = [{

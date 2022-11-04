@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../lib/store";
 import coseBilkent from 'cytoscape-cose-bilkent';
 import cytoscape from 'cytoscape';
+import { config } from '../../constants/config'
+import {env} from '../../../lib/env'
 
 export type ClusterData = ClusterElement[];
 
@@ -28,10 +30,13 @@ const initialState: Cluster = {
 // typically used to make async requests.
 cytoscape.use(coseBilkent);
 
+console.log(config.url + '/api/cluster')
+
+// console.log(config.url);
 export const getClusterAsync = createAsyncThunk(
   'clusterVisualizer/getData',
   async () => {
-    const response = await fetch('/api/cluster')
+    const response = await fetch(config.url + '/api/cluster')
     const data = await response.json();
     console.log("RAW DATA from Fetch")
     console.log(data);
