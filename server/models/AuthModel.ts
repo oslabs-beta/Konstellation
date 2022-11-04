@@ -12,11 +12,11 @@ export default class AuthModel {
   public static async connect(req: Request, res: Response, next: NextFunction) {
     console.log('trying to connect...');
     try {
-      const output = execSync('kubectl get svc', {encoding: 'utf-8'});
+      //const output = execSync('kubectl get svc', {encoding: 'utf-8'});
       const namespaceData = await k8sApi.listNamespace();
       //const output = execSync('kubectl get node', {encoding: 'utf-8'});
 
-      console.log('Output was:\n', output);
+      console.log('Output was:\n', namespaceData);
       next();
     }
     catch(err) {
