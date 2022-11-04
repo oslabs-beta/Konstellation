@@ -2,48 +2,26 @@ import React, { useState, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
-import styleSheet from '../src/styles/Stylesheet'
-import options2 from '../src/constants/CytoscapeConfig'
-
+import styleSheet from '../styles/Stylesheet'
+import options2 from '../constants/CytoscapeConfig'
 
 cytoscape.use(coseBilkent);
-const ClusterVisualizer = () => {
-  console.log('imported options: ', options2)
-  const [podData, setPodData] = useState([]);
-
-  useEffect(() => {
-    fetch('/api/cluster')
-    .then((response) => {
-      console.log(response);
-      return response.json()
-    })
-    .then((data) => {
-      console.log("RAW DATA for RICHARD")
-      console.log(data);
-      return setPodData(data)});
-  }, []);
-
+const TraceVisualizer = (data:any) => {
   const layout = options2()
-  console.log("Cluster Data Format:")
-  console.log(podData);
-  
-  let myCyRef;
 
+  console.log(data.data);
+
+  let myCyRef;
+  
   return (
-  <div>
-  {/* <div id="title">Konstellation</div> */}
-  <div
+    <div
     style={{
       display: 'flex',
       justifyContent: 'space-around',
     }}
-    
   >
-    
-   
     <CytoscapeComponent
-     
-      elements={podData}
+      elements={data.data}
       stylesheet={styleSheet}
       layout={layout}
       style={{
@@ -66,8 +44,7 @@ const ClusterVisualizer = () => {
       }}
     ></CytoscapeComponent>
   </div>
-  </div>
   )
 }
 
-export default ClusterVisualizer
+export default TraceVisualizer;

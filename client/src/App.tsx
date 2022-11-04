@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import VisualizerTab from '../components/VisualizerTab';
+import VisualizerTab from './components/visualizerTab';
 import '../style.css';
 
 const darkTheme = createTheme({
