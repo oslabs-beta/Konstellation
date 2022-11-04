@@ -2,22 +2,23 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
-const Dotenv = require('dotenv').config({path: path.resolve(__dirname, '.env')});
-const TerserPlugin = require('terser-webpack-plugin')
-
+const Dotenv = require('dotenv').config({path: path.resolve(__dirname, './client/.env')});
 
 
 module.exports = (env: any, argv:any) => {
 
   const mode = argv.mode || 'development';
-  console.log('ARGV MODE IS: ', argv.mode)
 
   const dotEnv = new webpack.DefinePlugin({
     "process.env": {
-      'BASE_URL_DEV': JSON.stringify(process.env.BASE_URL_DEV),
-      'PORT_DEV': JSON.stringify(process.env.PORT_DEV),
-      'BASE_URL_PROD': JSON.stringify(process.env.BASE_URL_PROD),
-      'PORT_PROD': JSON.stringify(process.env.PORT_PROD),
+      'DOMAIN': JSON.stringify(process.env.DOMAIN),
+      'PORT': JSON.stringify(process.env.PORT),
+
+      // PRODUCTION
+      // Testing Purposes Only - never save production environment variables in local files.
+      // Tests will require updating config.ts as well
+      'DOMAIN_PD': JSON.stringify(process.env.DOMAIN_PD),
+      'PORT_PD': JSON.stringify(process.env.PORT_PD),
    }
 });
 

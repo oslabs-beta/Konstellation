@@ -3,20 +3,14 @@ import { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 const app = express();
 import clusterRouter from './routers/ClusterRouter';
-import { config } from './config'
 import dotenv from 'dotenv'
 import path from 'path'
 
 dotenv.config({path: path.resolve(__dirname, '../.env')})
 
-console.log(process.env.BASE_URL_PROD)
-
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-let counter = 0;
 
 import traceRouter from './routers/TraceRouter';
 

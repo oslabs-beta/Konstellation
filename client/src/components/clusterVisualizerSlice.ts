@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../lib/store";
 import coseBilkent from 'cytoscape-cose-bilkent';
 import cytoscape from 'cytoscape';
-import { config } from '../../constants/config'
+import { config } from '../constants/config'
 
 export type ClusterData = ClusterElement[];
 

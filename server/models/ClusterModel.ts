@@ -17,6 +17,7 @@ class ClusterModel {
       
       const namespaceData = await k8sApi.listNamespace();
       let namespaces: string[] = [];
+
       namespaceData.body.items.forEach((space: any) => {
         const name = space.metadata.name;
         if (name !== 'kube-system') namespaces.push(name);

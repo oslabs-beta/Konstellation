@@ -4,8 +4,8 @@ import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { getClusterAsync, selectElements } from './clusterVisualizerSlice';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
-import styleSheet from '../../components/Stylesheet';
-import options2 from '../../components/CytoscapeConfig';
+import styleSheet from '../styles/Stylesheet';
+import options2 from '../constants/CytoscapeConfig';
 
 export default function ClusterVisualizer() {
   
