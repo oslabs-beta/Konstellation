@@ -1,6 +1,7 @@
 import React from 'react';
 import CytoscapeContainer from './components/sourceMap';
 import '../style.css';
+import SearchBar from './components/SearchBar';
 
 const App = () => {
   const props = {
@@ -9,6 +10,7 @@ const App = () => {
 
   return (
     <div>
+			<SearchBar />
       <CytoscapeContainer />
     </div>
   );
