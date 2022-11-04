@@ -37,8 +37,6 @@ export const getClusterAsync = createAsyncThunk(
   async () => {
     const response = await fetch(config.url + '/api/cluster')
     const data = await response.json();
-    console.log("RAW DATA from Fetch")
-    console.log(data);
     return data;
   }
 )

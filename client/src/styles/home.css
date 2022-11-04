@@ -1,0 +1,13 @@
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 154fr 881fr 45fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  }
+  
+  .home__header { grid-area: 1 / 1 / 2 / 6; }
+  .home__cluster-map { grid-area: 1 / 1 / 4 / 6; }
+  .home__trace-table-button { grid-area: 3 / 3 / 4 / 4; }
+  .home__pod-details { grid-area: 2 / 3 / 3 / 6; }
+  .home__trace-table { grid-area: 2 / 1 / 4 / 6; }
