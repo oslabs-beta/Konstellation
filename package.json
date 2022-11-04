@@ -23,8 +23,6 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@kubernetes/client-node": "^0.17.1",
-    "@mui/icons-material": "^5.10.6",
-    "@mui/material": "^5.10.7",
     "axios": "^0.27.2",
     "canvas": "^2.10.1",
     "chart.js": "^3.9.1",

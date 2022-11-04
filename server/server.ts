@@ -34,6 +34,6 @@ import traceRouter from './routers/TraceRouter';
     res.status(404).json('404 Page Not Found')
   });
 
-app.listen(3000, () => console.log('listening on port 3000'));
+app.listen(3000, () => console.log('SERVER is listening on port 3000'));
 
 export default app;

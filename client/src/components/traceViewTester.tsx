@@ -18,8 +18,6 @@ const TraceTester = () => {
         fetch('https://e2de-136-52-47-115.ngrok.io') 
         .then((response) => response.json())
         .then(data => {
-            console.log("I ran a fetch");
-            console.log(data);
             setTraceData(data)
         })
         .catch((err) => {"Unable to fetch Trace Data: " + err })

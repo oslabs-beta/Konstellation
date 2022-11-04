@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-import { getClusterAsync, selectElements } from './clusterVisualizerSlice';
-import cytoscape from 'cytoscape';
-import coseBilkent from 'cytoscape-cose-bilkent';
+import { getClusterAsync, selectElements } from './clusterViewSlice';
 import styleSheet from '../styles/Stylesheet';
 import options2 from '../constants/CytoscapeConfig';
 
-export default function ClusterVisualizer() {
+export default function ClusterView(): JSX.Element {
   
   const clusterData = useAppSelector(selectElements);
   const dispatch = useAppDispatch();
@@ -15,28 +13,12 @@ export default function ClusterVisualizer() {
   const layout = options2();
 
   let myCyRef;
+
   useEffect(() => {
-    console.log(clusterData as [])
     if(!clusterData) {
       dispatch(getClusterAsync());
     }
   })
-
-  console.log(clusterData);
-  const obj = [{
-    data: {
-      id: 'jaeger-operator-7c4556c49f-95v8b',
-      label: 'jaeger-operator-7c4556c49f-95v8b',
-      type: 'pod'
-    }
-  },
-  {
-    data: {
-      id: 'jaeger-operator-7c4556c49f-95v8b',
-      label: 'jaeger-operator-7c4556c49f-95v8b',
-      type: 'pod'
-    }
-  }]
 
   return (
   <div>
@@ -48,7 +30,6 @@ export default function ClusterVisualizer() {
     >
 
     <CytoscapeComponent
-     
       elements={clusterData as []}
       stylesheet={styleSheet}
       layout={layout}
@@ -60,9 +41,7 @@ export default function ClusterVisualizer() {
       }}
       cy={cy => {
         myCyRef = cy;
-
         console.log("EVT", cy);
-
         cy.on("tap", "node", evt => {
           var node = evt.target;
           console.log("EVT", evt);
@@ -74,6 +53,5 @@ export default function ClusterVisualizer() {
   </div>
   </div>
   )
-
 }
 

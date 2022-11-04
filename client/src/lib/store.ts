@@ -1,5 +1,5 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
-import clusterReducer from '../components/clusterVisualizerSlice'
+import clusterReducer from '../components/clusterViewSlice'
 
 export const store = configureStore({
   reducer: {
