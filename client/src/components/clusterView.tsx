@@ -34,14 +34,15 @@ export default function clusterView(): JSX.Element {
       stylesheet={styleSheet}
       layout={layout}
       style={{
-        width: '70%',
+        width: '100%',
         height: '50rem',
-        border: 'solid',
         objectFit: 'cover',
+        background: '#161820' 
       }}
+      maxZoom={3.0}
+      minZoom={0.1}
       cy={cy => {
         myCyRef = cy;
-        console.log("EVT", cy);
         cy.on("tap", "node", evt => {
           var node = evt.target;
           console.log("EVT", evt);
