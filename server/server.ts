@@ -15,7 +15,7 @@ import traceRouter from './routers/TraceRouter';
   app.use('/api/cluster', clusterRouter);
   app.use('/api/traces', traceRouter);
   
-  app.use((err: ErrObject, req: Request, res: Response) => {
+  app.use((err: ErrObject, req: Request, res: Response, next: NextFunction) => {
     const defaultErr = {
       log: 'Express error handler caught unknown middleware error',
       status: 500,
