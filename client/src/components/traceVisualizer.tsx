@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
-import styleSheet from './Stylesheet'
-import options2 from './CytoscapeConfig'
+import styleSheet from '../styles/Stylesheet'
+import options2 from '../constants/CytoscapeConfig'
 
 cytoscape.use(coseBilkent);
 const TraceVisualizer = (data:any) => {
