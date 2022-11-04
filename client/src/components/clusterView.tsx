@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-import { getClusterAsync, selectElements } from './clusterViewSlice';
+import { getClusterAsync, selectElements, ClusterData } from './clusterViewSlice';
 import styleSheet from '../styles/Stylesheet';
 import options2 from '../constants/CytoscapeConfig';
+
+export interface Cluster {
+  data: ClusterData | undefined
+  status: 'idle' | 'loading' | 'failed';
+}
 
 export default function clusterView(): JSX.Element {
   
@@ -13,6 +18,7 @@ export default function clusterView(): JSX.Element {
   const layout = options2();
 
   let myCyRef;
+
 
   useEffect(() => {
     if(!clusterData) {

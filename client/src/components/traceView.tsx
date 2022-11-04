@@ -5,11 +5,34 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from '../styles/Stylesheet'
 import options from '../constants/CytoscapeConfig'
 
+export interface Trace {
+  data: TraceData | undefined
+  status: 'idle' | 'loading' | 'failed';
+
+  // const [traceData, setTraceData] = useState([]);
+
+}
+
+// async function handleGetTraceData() {
+
+//   fetch('http://localhost:3000/api/traces/1', {
+//     method: 'GET'
+//   })
+//   .then(response => {
+//     if (response.status === 200) {
+//       return response.json();
+//     }
+//   })
+//   .then(data => {
+//     setType(sourceMapType.trace)
+//     setTraceData(data);
+//   })
+// }
+
+
 cytoscape.use(coseBilkent);
 const TraceVisualizer = (data:any) => {
   const layout = options()
-
-  console.log(data.data);
 
   let myCyRef;
   
