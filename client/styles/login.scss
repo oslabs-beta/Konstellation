@@ -1,3 +1,5 @@
+@use "./theme" as theme;
+
 #login {
   display: flex;
   justify-content: center;
@@ -13,48 +15,15 @@
 }
 
 #login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
+  @include theme.container;
 
-  position: absolute;
+  padding: 8px;
   width: 500px;
   height: 640.08px;
-
-  background: #3C3C3C;
-  box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
-}
-
-* {
-  //styleName: Body Default Bold;
-  font-family: SF Pro;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 19px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #F4F4F4;
 }
 
 #logo {
-  background: url(images/konstellation-logo.png);
-  /*position: absolute;*/
-  width: 400px;
-  height: 53px;
-  left: 0px;
-  top: 0px;
-
-  font-family: 'Noto Serif';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 39.0261px;
-  line-height: 53px;
-  letter-spacing: 0.15em;
-
-  color: #EFEFEF;
+  @include theme.logo;
 }
 
 #login-label {
@@ -67,96 +36,24 @@
   text-align: left;
 }
 
-input[type=text],[type=password] {
-  box-sizing: border-box;
-  background-color: #3C3C3C;
-  /* Auto layout */
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 16px;
-  gap: 8px;
-
-  width: 436px;
-  height: 51px;
-
-  /* Mid Gray */
-
-  border: 1px solid #919191;
-  border-radius: 8px;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
-}
-
 form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
+  @include theme.form-style;
 }
 
 ::placeholder {
-  height: 19px;
+  @include theme.placeholder-style
+}
 
-  font-family: 'SF Pro';
-  font-style: italic;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  /* identical to box height */
-
-  /* Mid Gray */
-
-  color: #919191;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+input {
+  @include theme.input;
+  width: 436px;
 }
 
 #login-button {
   /* Button */
-  /* Auto layout */
-  /*margin: 10px;*/
-  
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 16px 8px;
-  gap: 8px;
+  @include theme.button-style;
 
   width: 436px;
   height: 56px;
 
-  /* Blue 1 */
-
-  background: #2F80ED;
-  border-radius: 8px;
-  border: 0px;
-
-
-
-  /* Inside auto layout */
-  margin-top: 10px;
-
-  &:hover {
-    color:yellow;
-  }
-
-}
-#login-button:hover {
-  background: #438be9;
-}
-#login-button:active {
-  background: #1a66c9;
 }
