@@ -5,7 +5,7 @@ import { getClusterAsync, selectElements } from './clusterViewSlice';
 import styleSheet from '../styles/Stylesheet';
 import options2 from '../constants/CytoscapeConfig';
 
-export default function ClusterView(): JSX.Element {
+export default function clusterView(): JSX.Element {
   
   const clusterData = useAppSelector(selectElements);
   const dispatch = useAppDispatch();
