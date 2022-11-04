@@ -1,45 +1,28 @@
-import React, { useState} from 'react';
+import React from 'react';
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import ClusterView from './clusterView'
 import TraceView from './traceView'
+import { selectSourceMap, ViewType } from './sourceMapSlice'
 
-enum sourceMapType{cluster, trace}
-
-const VisualizerTab = () => {
+const sourceMap = () => {
  
-  const [type, setType] = useState<sourceMapType>(sourceMapType.cluster)
-  const [traceData, setTraceData] = useState([]);
+  const viewType = useAppSelector(selectSourceMap);
 
-async function handleGetTraceData() {
-
-  fetch('http://localhost:3000/api/traces/1', {
-    method: 'GET'
-  })
-  .then(response => {
-    if (response.status === 200) {
-      return response.json();
-    }
-  })
-  .then(data => {
-    setType(sourceMapType.trace)
-    setTraceData(data);
-  })
-}
-
-  if (type === sourceMapType.cluster) {
+  if(viewType === ViewType.cluster) {
     return (
-      <div>
-          <ClusterView />
-      </div>
-    );
+      <ClusterView />
+    )
   }
-  else if (type === sourceMapType.trace) {
+  else if (viewType === ViewType.trace) {
     return (
-    <div>
-      <TraceView data={traceData}/>
-    </div>
-    );
+      <TraceView />
+    )
   }
-  return null
+  else {
+    return (
+      <TraceView />
+    )
+  }
 };
 
-export default VisualizerTab;
+export default sourceMap;
