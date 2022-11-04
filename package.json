@@ -11,7 +11,7 @@
     "client": "npx webpack serve --mode development --progress --hot --color --stats-error-details --stats-children",
     "server": "cross-env NODE_ENV=development nodemon server/server.ts",
     "proxy": "cross-env NODE_ENV=development nodemon server/proxy.ts",
-    "server-prod": "cross-env NODE_ENV=development nodemon server/server.ts",
+    "server-prod": "cross-env NODE_ENV=production nodemon server/server.ts",
     "proxy-prod": "cross-env NODE_ENV=development nodemon server/proxy.ts",
     "client-prod": "npx webpack serve --mode production --progress --hot --color",
     "dev": "concurrently \"webpack-dev-server\" \"NODE_ENV=production nodemon server/server.ts\""
@@ -68,7 +68,6 @@
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
     "@types/webpack": "^5.28.0",
-    "@types/webpack-dev-server": "^4.7.2",
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",

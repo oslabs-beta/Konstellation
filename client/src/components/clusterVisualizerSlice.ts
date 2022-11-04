@@ -3,7 +3,6 @@ import { RootState, AppThunk } from "../lib/store";
 import coseBilkent from 'cytoscape-cose-bilkent';
 import cytoscape from 'cytoscape';
 import { config } from '../../constants/config'
-import {env} from '../../../lib/env'
 
 export type ClusterData = ClusterElement[];
 

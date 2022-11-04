@@ -1,4 +1,5 @@
 
+
 const production = {
   url: `http://${process.env.BASE_URL_PROD}:${process.env.PORT_PROD}`
 }
@@ -8,6 +9,7 @@ const development = {
 }
 
 export const config = (() => {
+  console.log("CONFIG SEES ENV AS: " + process.env.NODE_ENV)
   if (process.env.NODE_ENV === "production") {
     return production;
   }

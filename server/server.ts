@@ -3,18 +3,13 @@ import { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 const app = express();
 import clusterRouter from './routers/ClusterRouter';
-import  * as dotenv from 'dotenv'
-import { env } from '../lib/env'
+import { config } from './config'
+import dotenv from 'dotenv'
+import path from 'path'
 
-//Initializes Environment Variables stored in .env
-dotenv.config()
+dotenv.config({path: path.resolve(__dirname, '../.env')})
 
-if (env.isDevelopment) console.log("DEV!")
-if (env.isProduction) console.log("PROD!")
-
-console.log(env.url);
-
-console.log("env")
+console.log(process.env.BASE_URL_PROD)
 
 
 app.use(cors());
