@@ -1,15 +1,18 @@
 import React from 'react'
 import SourceMap from './sourceMap'
-import Footer from './footer'
+import FooterDrawer from './footerDrawer'
 import '../styles/home.scss'
 
 type Props = {}
 
 const home  = (props: Props) => {
+
   return (
     <>
       <SourceMap />
-      <Footer />
+      <div className="home__overlay">
+        <FooterDrawer />
+      </div>
     </>
   )
 }
