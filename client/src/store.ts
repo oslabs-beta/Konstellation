@@ -1,11 +1,13 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import clusterReducer from './components/clusterViewSlice'
 import sourceMapReducer from './components/sourceMapSlice'
+import footerButtonReducer from './components/footerButtonSlice'
 
 export const store = configureStore({
   reducer: {
     sourceMap: sourceMapReducer,
     cluster: clusterReducer,
+    footerButton: footerButtonReducer,
   },
 })
 
