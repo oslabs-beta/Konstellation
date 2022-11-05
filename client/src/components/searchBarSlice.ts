@@ -18,6 +18,16 @@ const initialState: Search = {
 	namespace: undefined
 }
 
+//sends a fetch request to the backend to get the traces for 1 trace
+export const getTraceAsync = (trace:any) =>  createAsyncThunk(
+  'searchBar/getTraces',
+  async () => {
+    const response = await fetch(config.url + '/api/traces')
+    const data = await response.json();
+    return data;
+  }
+)
+
 export const getNamespaceAsync = createAsyncThunk(
   'searchBar/getNamespace',
   async () => {

@@ -1,6 +1,6 @@
 import React, { JSXElementConstructor, useEffect } from 'react';
 import { selectSourceMap, ViewType } from './sourceMapSlice'
-import {getNamespaceAsync} from './searchBarSlice'
+import {getNamespaceAsync, selectNameSpace, getTraceAsync} from './searchBarSlice'
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 //import logo from './konstellation-logo.png';
 
@@ -8,12 +8,14 @@ import { useAppSelector, useAppDispatch } from '../lib/hooks';
 const SearchBarCluster = ():JSX.Element => {
 
 //need to grab the namespaces and st it as stat here
-const namespaceData = useAppSelector(getNamespaceAsync);
-	
+  const namespaceData = useAppSelector(selectNameSpace);
+	const dispatch = useAppDispatch();
+
+
   const submitTrace = ():any => {
     //sends a fetch request to the api to get the data from a particular trace
 		//changes the state from cluster to trace view
-		
+		dispatch(getTraceAsync('placeholder'))
 		
 		
 		return
