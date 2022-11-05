@@ -44,6 +44,7 @@ export default function clusterView(): JSX.Element {
         objectFit: 'cover',
         background: '#161820' 
       }}
+      wheelSensitivity={0.08}
       maxZoom={3.0}
       minZoom={0.1}
       cy={cy => {
