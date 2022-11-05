@@ -51,7 +51,7 @@ module.exports = (env: any, argv:any) => {
         },
         {
           test: /\.s?css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
         },
       ],
     },
