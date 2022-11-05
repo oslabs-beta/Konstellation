@@ -19,7 +19,6 @@ export default function clusterView(): JSX.Element {
 
   let myCyRef;
 
-
   useEffect(() => {
     if(!clusterData) {
       dispatch(getClusterAsync());
@@ -40,8 +39,8 @@ export default function clusterView(): JSX.Element {
       stylesheet={styleSheet}
       layout={layout}
       style={{
-        width: '100%',
-        height: '50rem',
+        width: '100vw',
+        height: '100vh',
         objectFit: 'cover',
         background: '#161820' 
       }}
