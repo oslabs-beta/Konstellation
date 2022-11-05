@@ -10,12 +10,23 @@
   
   .home__header { grid-area: 1 / 1 / 2 / 6; }
   .home__source-map { grid-area: 1 / 1 / 4 / 6; }
-  .home__footer-button { grid-area: 3 / 3 / 4 / 4; }
+  .home__footer {
+    display: flex;
+    grid-area: 3 / 1 / 4 / 6; 
+    justify-content: space-around;
+    z-index: 1;
+  }
   .home__pod-details { grid-area: 2 / 3 / 3 / 6; }
   .home__trace-table { grid-area: 2 / 1 / 4 / 6; }
 
   #home__footer-button {
-    @include theme.container
+    @include theme.container;
+
+    background: #3C3C3C;
+    width: .257vw;
+    padding: 8px;
+    gap: 8px; 
+    border-radius: 12px 12px 0px 0px;
   }
 
 
