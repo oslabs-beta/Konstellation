@@ -12,7 +12,7 @@ export class TraceController {
 
     public static getData(req: IRequest, res: IResponse, next: INextFunction) {
       console.log("In Tracecontroller");
-      TraceModel.getSampleData(req, res);
+      TraceModel.getDataFromJaeger(req, res);
       next();
     }
 
