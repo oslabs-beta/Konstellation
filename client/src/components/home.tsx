@@ -1,6 +1,6 @@
 import React from 'react'
 import SourceMap from './sourceMap'
-import Footer from './traceTableButton'
+import Footer from './footer'
 import '../styles/home.scss'
 
 type Props = {}

@@ -1,5 +1,11 @@
 @use "./theme" as theme;
 
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+body {
+  overflow-y: hidden;
+}
+
 .home {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -12,45 +18,33 @@
   .home__source-map { grid-area: 1 / 1 / 4 / 6; }
   .home__footer {
     display: flex;
-    grid-area: 3 / 1 / 4 / 6; 
-    justify-content: space-around;
+    grid-area: 3 / 3 / 4 / 4; 
+    justify-content: center;
     z-index: 1;
   }
   .home__pod-details { grid-area: 2 / 3 / 3 / 6; }
   .home__trace-table { grid-area: 2 / 1 / 4 / 6; }
 
   #home__footer-button {
-    @include theme.container;
-
+    display: flex;
     background: #3C3C3C;
-    width: .257vw;
-    padding: 8px;
-    gap: 8px; 
-    border-radius: 12px 12px 0px 0px;
+    font-size: 1.48vh;
+    width: 14.479vw;
+    height: 4.166vh;
+    border-radius: 12px 12px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
+  #home__footer-button:hover {
+    cursor: pointer;
+    background: #4a4a4a;
+  }
 
-  #login-container {
-    @include theme.container;
-  
-    padding: 8px;
-    width: 500px;
-    height: 640.08px;
+  .material-symbols-outlined {
+    margin-left: 1vw;
+    font-variation-settings:
+    'wght' 700,
   }
   
-  #logo {
-    @include theme.logo;
-  }
-  
-  input {
-    @include theme.input;
-    width: 436px;
-  }
-  
-  #login-button {
-    @include theme.button-style;
-  
-    width: 436px;
-    height: 56px;
-  
-  }
