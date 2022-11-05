@@ -3,13 +3,36 @@ import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from '../styles/Stylesheet'
-import options2 from '../constants/CytoscapeConfig'
+import options from '../constants/CytoscapeConfig'
+
+export interface Trace {
+  data: TraceData | undefined
+  status: 'idle' | 'loading' | 'failed';
+
+  // const [traceData, setTraceData] = useState([]);
+
+}
+
+// async function handleGetTraceData() {
+
+//   fetch('http://localhost:3000/api/traces/1', {
+//     method: 'GET'
+//   })
+//   .then(response => {
+//     if (response.status === 200) {
+//       return response.json();
+//     }
+//   })
+//   .then(data => {
+//     setType(sourceMapType.trace)
+//     setTraceData(data);
+//   })
+// }
+
 
 cytoscape.use(coseBilkent);
 const TraceVisualizer = (data:any) => {
-  const layout = options2()
-
-  console.log(data.data);
+  const layout = options()
 
   let myCyRef;
   
@@ -25,15 +48,17 @@ const TraceVisualizer = (data:any) => {
       stylesheet={styleSheet}
       layout={layout}
       style={{
-        width: '70%',
+        width: '100%',
         height: '50rem',
-        border: 'solid',
         objectFit: 'cover',
+        backgroundColor: '#161820'
       }}
+      maxZoom={3}
+      minZoom={0.1}
       cy={cy => {
         myCyRef = cy;
 
-        console.log("EVT", cy);
+        // console.log("EVT", cy);
 
         cy.on("tap", "node", evt => {
           var node = evt.target;

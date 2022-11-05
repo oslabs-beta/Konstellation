@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../lib/store";
+import { RootState, AppThunk } from "../store";
 import coseBilkent from 'cytoscape-cose-bilkent';
 import cytoscape from 'cytoscape';
 import { config } from '../constants/config'
+import { Cluster } from './clusterView'
 
 export type ClusterData = ClusterElement[];
 
@@ -10,11 +11,6 @@ export interface ClusterElement {
   id: string,
   label: string,
   type: string,
-}
-
-export interface Cluster {
-  data: ClusterData | undefined
-  status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: Cluster = {
@@ -29,9 +25,9 @@ const initialState: Cluster = {
 // typically used to make async requests.
 cytoscape.use(coseBilkent);
 
+console.log("Fetching Data From: ")
 console.log(config.url + '/api/cluster')
 
-// console.log(config.url);
 export const getClusterAsync = createAsyncThunk(
   'clusterVisualizer/getData',
   async () => {
@@ -41,8 +37,8 @@ export const getClusterAsync = createAsyncThunk(
   }
 )
 
-export const clusterVisualizerSlice = createSlice({
-  name: 'clusterVisualizer',
+export const clusterViewSlice = createSlice({
+  name: 'clusterView',
   initialState: initialState,
   reducers: { 
     updateData:  (state, action: PayloadAction<ClusterData>) => {
@@ -69,10 +65,10 @@ export const clusterVisualizerSlice = createSlice({
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
+// in the slice file. For example: `useSelector((state: RootState) => state.getClusterAsnyc.data)`
 export const selectElements = (state: RootState) => 
 {
   return state.cluster.data;
 }
 
-export default clusterVisualizerSlice.reducer;
+export default clusterViewSlice.reducer;

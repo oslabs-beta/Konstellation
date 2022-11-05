@@ -12,22 +12,25 @@ export default [
       data: {
         id: 'recipes-landing-2048-598f6',
         label: 'recipes-landing-2048-598f6',
-        type: 'pod',
-      }
+        type: 'trace',
+      },
+      classes: 'label'
     },
     {
       data: {
         id: 'recipes-server-m65321-321fs',
         label: 'recipes-server-m65321-321fs',
-        type: 'pod',
-      }
+        type: 'trace',
+      },
+      classes: 'label'
     },
     {
       data: {
         id: 'database-321f-dzd2dmf',
         label: 'database-321f-dzd2dmf',
-        type: 'pod',
-      }
+        type: 'trace',
+      },
+      classes: 'label'
     },
     {
       data: {

@@ -29,5 +29,4 @@ return (
 
 
 
-
 export default SearchBar;

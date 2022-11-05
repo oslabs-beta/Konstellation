@@ -1,17 +1,12 @@
 import React from 'react';
-import CytoscapeContainer from './components/sourceMap';
 import '../style.css';
-import SearchBar from './components/SearchBar';
+import Home from './components/home';
 
 const App = () => {
-  const props = {
-    backgroundColor: 'blue'
-  }
 
   return (
     <div>
-			<SearchBar />
-      <CytoscapeContainer />
+      <Home />
     </div>
   );
 };

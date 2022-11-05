@@ -57,6 +57,7 @@ class ClusterModel {
       }
     
     res.locals.elements = elements
+    console.log(elements)
     return next();
   }
 }
