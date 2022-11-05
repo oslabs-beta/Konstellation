@@ -1,29 +1,37 @@
 
 import React, {useState, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-
+import { selectSourceMap, ViewType } from './sourceMapSlice'
+import SearchBarTrace from './SearchBarTrace';
+import SearchBarCluster from './SearchBarCluster';
+import '../styles/searchBar.scss';
 
 const SearchBar = (props:any) => {
 	
 
 	const dispatch = useAppDispatch();
-  const type = []
-  //
+  const type = useAppSelector(selectSourceMap);
+  
 
 
 
-return (
+  const viewType = useAppSelector(selectSourceMap);
 
-
-
-  <div>
-		here
-
-
-
-	</div>
-
-)
+  if(viewType === ViewType.cluster) {
+    return (
+      <SearchBarCluster />
+    )
+  }
+  else if (viewType === ViewType.trace) {
+    return (
+      <SearchBarTrace />
+    )
+  }
+  else {
+    return (
+      <SearchBarTrace />
+    )
+  }
 
 }
 

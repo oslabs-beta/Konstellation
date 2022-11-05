@@ -1,0 +1,73 @@
+import React, { JSXElementConstructor, useEffect } from 'react';
+import { selectSourceMap, ViewType } from './sourceMapSlice'
+import {getNamespaceAsync} from './searchBarSlice'
+import { useAppSelector, useAppDispatch } from '../lib/hooks';
+//import logo from './konstellation-logo.png';
+
+
+const SearchBarCluster = ():JSX.Element => {
+
+//need to grab the namespaces and st it as stat here
+const namespaceData = useAppSelector(getNamespaceAsync);
+	
+  const submitTrace = ():any => {
+    //sends a fetch request to the api to get the data from a particular trace
+		//changes the state from cluster to trace view
+		
+		
+		
+		return
+
+	}
+
+//remove fake data later
+const fakeData = ['default', 'jon', 'demo']
+
+
+//populates the dropdown menu with namespaces
+const DropDownOptions: React.ReactElement[] =[]
+
+fakeData.forEach(element => {
+	DropDownOptions.push (<option className='options'>{element}</option>)
+})
+
+
+return (
+		<div className="searchBar">
+			<div id='logo'>
+				logo here
+			</div>
+			<div id="namespaceDropDown">
+				<div id="namespaceText">
+			  namespace:
+				</div>
+			  <div className="dropdown">
+                <select className='dropDownOptions'required>
+                <option className='options'>all</option>
+			{DropDownOptions}
+                </select>
+			  </div>
+			</div>
+			<div id="searchBar">
+				<span id='searchText'>
+					Search:
+				</span>
+				  <input
+				    id="searchBarInput"
+				    type='text'
+					  name='traceID'
+					  placeholder='Enter TraceID, node, pod, or service name'  
+					  />
+				  <button id="submitButton" onClick={()=>submitTrace()}> submit</button>
+			</div>
+		</div>
+	)
+}
+
+
+/* <option value="photospot">Photospot</option>
+<option value="food">Food</option>
+<option value="hiking">Hiking</option>
+<option value="other">Other</option> */
+
+export default SearchBarCluster;
