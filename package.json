@@ -1,17 +1,19 @@
-{ 
+{
   "name": "konstellation",
   "version": "1.0.0",
   "description": "## readme in construction",
-  "main": "server.ts",
+  "main": "electron/main.js",
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "start": "concurrently \"nodemon server/proxy.ts\"  \"nodemon server/server.ts\"",
     "server": "nodemon server/server.ts",
     "proxy": "nodemon server/proxy.ts",
     "client": "npx webpack serve --mode development --progress --hot --color",
     "dev": "webpack-dev-server & nodemon server/server.ts",
-    "lint": "eslint . --ext .ts"
+    "start": "export NODE_ENV=production && electron .",
+
+    "electron-dev": "webpack-dev-server & nodemon --watch . --exec electron .",
+    "dev-fullstack": "concurrently --kill-others --names \"webpack,electron\" \"npm run dev\" \"npm run electron-dev\""
   },
   "keywords": [],
   "author": "",
@@ -63,6 +65,7 @@
     "@typescript-eslint/parser": "^5.40.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
+    "electron": "^21.2.2",
     "enzyme": "^3.11.0",
     "eslint": "^8.25.0",
     "file-loader": "^6.2.0",
@@ -73,7 +76,7 @@
     "prettier": "2.7.1",
     "puppeteer": "^18.0.5",
     "regenerator-runtime": "^0.13.9",
-    "sass-loader":"^13.1.0",
+    "sass-loader": "^13.1.0",
     "style-loader": "^3.3.1",
     "supertest": "^6.2.4",
     "ts-jest": "^29.0.3",
