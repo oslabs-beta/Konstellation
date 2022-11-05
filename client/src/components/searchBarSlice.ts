@@ -10,7 +10,7 @@ export interface NamespaceElement {
 }
 
 export interface Search {
-  type: 'cluster' | 'node'
+  type: 'cluster' | 'node',
 	namespace: NamespaceData | undefined
 }
 

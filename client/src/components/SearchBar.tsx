@@ -5,6 +5,8 @@ import { useAppSelector, useAppDispatch } from '../lib/hooks';
 
 const SearchBar = (props:any) => {
 	
+
+	const dispatch = useAppDispatch();
   const type = []
   //
 
