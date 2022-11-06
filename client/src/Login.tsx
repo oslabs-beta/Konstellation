@@ -1,6 +1,19 @@
 import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/login.scss';
+// Allows Login to establish a connection with electron's main process,
+// gaining access to the local file system
+//const mainProcess = remote.require('../../electron/electron.js');
+// In some file from the main process
+// like main.js
+
+// const configAWS = require('../../electron/electron.js');
+// configAWS();
+
+// Inside any React file
+const test = () => {
+  window.electronAPI.ipcRenderer.onButtonClick('Button Clicked');
+}
 
 function Login() {
   let navigate = useNavigate();
@@ -14,6 +27,8 @@ function Login() {
   // and $HOME/.kube/) and populate their corresponding fields in the form
   const parseLocalCredentials = () => {
     console.log('<ELECTRON NEEDED> : Parse User\'s local files here!');
+    //window.electronAPI.configAWS();
+    test();
   }
 
   const loginUser = () => {
@@ -42,12 +57,14 @@ function Login() {
   const buttonPressed = (event : FormEvent) => {
     event.preventDefault();
 
-    // Use the non-empty inputs to configure local files
-    if(accessKey && secretKey) {
+    parseLocalCredentials();
 
-    }
+    // // Use the non-empty inputs to configure local files
+    // if(accessKey && secretKey) {
 
-    loginUser();
+    // }
+
+    // loginUser();
   }
 
   // Need an environmental condition to avoid logging in user if they just logged out
