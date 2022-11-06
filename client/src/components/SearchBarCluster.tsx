@@ -12,7 +12,7 @@ const SearchBarCluster = ():JSX.Element => {
 	const dispatch = useAppDispatch();
 
 
-  const submitTrace = (traceID?:any):any => {
+  const submitTrace = (traceID?:string | undefined):any => {
     //sends a fetch request to the api to get the data from a particular trace
 		//changes the state from cluster to trace view
 		
