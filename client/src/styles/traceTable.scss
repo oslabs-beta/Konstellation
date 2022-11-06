@@ -1,0 +1,17 @@
+#trace-table-content {
+  background: #3C3C3C;
+  height: 82vh;
+  width: 93.3vw;
+  border-radius: 12px;
+  filter: drop-shadow(0px 10px 24px rgba(0, 0, 0, 0.25));
+}
+
+#trace-window-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  h1 {
+    font-size: 3.05vh;
+  }
+}
