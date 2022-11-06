@@ -8,30 +8,15 @@ import options from '../constants/CytoscapeConfig'
 export interface Trace {
   data: TraceData | undefined
   status: 'idle' | 'loading' | 'failed';
-
-  // const [traceData, setTraceData] = useState([]);
-
 }
 
-// async function handleGetTraceData() {
-
-//   fetch('http://localhost:3000/api/traces/1', {
-//     method: 'GET'
-//   })
-//   .then(response => {
-//     if (response.status === 200) {
-//       return response.json();
-//     }
-//   })
-//   .then(data => {
-//     setType(sourceMapType.trace)
-//     setTraceData(data);
-//   })
-// }
-
-
 cytoscape.use(coseBilkent);
-const TraceVisualizer = (data:any) => {
+
+/**
+ * Renders passed-in Trace Data to a Source Map View
+ * @param data Related trace Data to be rendered by the Source Map View
+ */
+const TraceView = (data:any) => {
   const layout = options()
 
   let myCyRef;
@@ -72,4 +57,4 @@ const TraceVisualizer = (data:any) => {
   )
 }
 
-export default TraceVisualizer;
+export default TraceView;

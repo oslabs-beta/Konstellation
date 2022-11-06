@@ -1,13 +1,13 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import clusterReducer from './components/clusterViewSlice'
 import sourceMapReducer from './components/sourceMapSlice'
-import footerDrawerReducer from './components/footer/footerDrawerSlice'
+import drawerReducer from './components/trace-table/drawerSlice'
 
 export const store = configureStore({
   reducer: {
     sourceMap: sourceMapReducer,
     cluster: clusterReducer,
-    footerDrawer: footerDrawerReducer,
+    traceDrawer: drawerReducer,
   },
 })
 

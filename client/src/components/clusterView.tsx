@@ -10,6 +10,10 @@ export interface Cluster {
   status: 'idle' | 'loading' | 'failed';
 }
 
+/**
+   * A specific "View" of the Source Map used for presenting cluster data
+   * @renders A Source Map which displays a view of the relevant Kubernetes Cluster
+   */
 export default function clusterView(): JSX.Element {
   
   const clusterData = useAppSelector(selectElements);

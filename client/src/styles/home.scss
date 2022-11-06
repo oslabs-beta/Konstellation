@@ -6,6 +6,25 @@ body {
   overflow: hidden;
 }
 
+.footer-drawer-tab {
+  display: flex;
+  flex-direction: column;
+  background: #3C3C3C;
+  font-size: 1.48vh;
+  width: 14.479vw;
+  height: 4.166vh;
+  border-radius: 12px 12px 0px 0px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.footer-drawer-tab:hover {
+  cursor: pointer;
+  background: #4a4a4a;
+  pointer-events: auto;
+}
+
 .home {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -18,32 +37,34 @@ body {
   .home__source-map { grid-area: 1 / 1 / 4 / 6; }
   .home__header { grid-area: 1 / 1 / 2 / 6; }
 
-  .home__overlay {
-    grid-area: 1 / 1 / 4 / 6;
+  .overlay {
     pointer-events: none;
+    z-index: 1;
+  }
+
+  #trace-table-overlay {
+    grid-area: 1 / 1 / 4 / 6;
 
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 154fr 926fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    z-index: 1;
 
-    .home__overlay__bottom-drawer-closed {
+    #drawer-closed {
       grid-area: 2 / 1 / 2 / 2;
 
       display: flex;
       flex-direction: column;
       pointer-events: auto;
-      transform: translateY(82vh);
+      transform: translateY(81.2vh);
       transition-property: transform;
       transition-duration: .6s;
       align-items: center;
     }
 
-    .home__overlay__bottom-drawer-open {
+    #drawer-opened {
       grid-area: 2 / 1 / 2 / 2;
-
 
       display: flex;
       flex-direction: column;
@@ -53,40 +74,7 @@ body {
       transition-duration: .6s;
       align-items: center;
     }
-    
-    #footer-drawer {
-      display: flex;
-      flex-direction: column;
-      background: #3C3C3C;
-      font-size: 1.48vh;
-      width: 14.479vw;
-      height: 4.166vh;
-      border-radius: 12px 12px 0px 0px;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    #footer-drawer:hover {
-      cursor: pointer;
-      background: #4a4a4a;
-      pointer-events: auto;
-    }
-
-    @keyframes bottomslide {
-      from {
-        transform: translateY(95.1%);
-      }
-      to {
-        transform: translateY(0%);
-      }
-    }
   }
-}
-
-#big-thing {
-  height: 82vh;
-  width: 100vw;
 }
 
   .material-symbols-outlined {

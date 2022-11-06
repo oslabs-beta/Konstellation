@@ -18,16 +18,15 @@ const initialState: Cluster = {
   status: 'idle'
 }
 
+// Included as a critical first step for troubleshooting:
+console.log("Fetching Data From: ")
+console.log(config.url + '/api/cluster')
+
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(getClusterData())`. This
 // will call the thunk with the `getClusterData` function as the first argument. Async
 // code can then be executed and other actions can be dispatched. Thunks are
 // typically used to make async requests.
-cytoscape.use(coseBilkent);
-
-console.log("Fetching Data From: ")
-console.log(config.url + '/api/cluster')
-
 export const getClusterAsync = createAsyncThunk(
   'clusterVisualizer/getData',
   async () => {
@@ -37,6 +36,9 @@ export const getClusterAsync = createAsyncThunk(
   }
 )
 
+/**
+   * Handles reducer logic related to the Cluster View
+   */
 export const clusterViewSlice = createSlice({
   name: 'clusterView',
   initialState: initialState,
