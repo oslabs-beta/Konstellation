@@ -5,7 +5,9 @@ import React from 'react'
    */
 const tableHeader = () => {
   return (
-    <div>In Progress</div>
+    <div id="trace-table-header">
+      <div>Trace Table</div>
+    </div>
   )
 }
 
