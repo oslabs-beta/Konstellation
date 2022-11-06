@@ -6,26 +6,46 @@ import { selectFooterButtonFullscreen as selectFooterDrawerIsOpen, toggleIsOpen 
 type Props = {
 }
 
+type DrawerPeekData = {
+  cssClassName: string,
+  iconId: string,
+  handleText: string,
+}
+
 export const footerDrawer = (props: Props) => {
-
-  let idName = "home__overlay__bottom-drawer"
-
   const dispatch = useAppDispatch();
-  const footerIsOpen = useAppSelector(selectFooterDrawerIsOpen);
-
+  const drawerIsOpen = useAppSelector(selectFooterDrawerIsOpen);
+  
+  const data: DrawerPeekData = getDrawerPeekData();
+  
   const handleClick = () => {
-    console.log("original state: ", footerIsOpen);
     dispatch(toggleIsOpen())
   }
 
-  idName += footerIsOpen ? '-open' : '-closed'
-
   return (
-    <div id="footer-drawer" className={idName} onClick={handleClick}>Trace View 
+    <div id="footer-drawer" className={data.cssClassName} onClick={handleClick}>{data.handleText}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <span className="material-symbols-outlined"> expand_less </span>
+    <span className="material-symbols-outlined"> {data.iconId} </span>
     </div>
   )
+
+  function getDrawerPeekData(): DrawerPeekData {
+    if(drawerIsOpen) {
+      return {
+          cssClassName: 'home__overlay__bottom-drawer-open',
+          iconId: 'expand_more',
+          handleText: 'Hide View',
+        }
+      }
+      else {
+        return {
+            cssClassName: 'home__overlay__bottom-drawer-closed',
+            iconId: 'expand_less',
+            handleText: 'Trace Table',
+          }
+      }
+  }
 }
+
 
 export default footerDrawer
