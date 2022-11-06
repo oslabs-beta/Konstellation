@@ -24,6 +24,8 @@
   color: #919191;
 	height: 56px;
 	border-radius: 8px 0px 0px 8px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .dropdown{
@@ -47,6 +49,8 @@
 	color: #919191;
   flex-grow: 4;
 	align-items: center;
+	display: flex;
+	justify-content: flex-end;
 }
 
 #searchText {
@@ -54,12 +58,14 @@
 	padding-top: 19px;
 	padding-bottom: 19px;
 	border-radius: 8px 0px 0px 8px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #searchBarInput{
 	background-color: #3C3C3C;
 	color: #919191;
-	width: 80%;
+	width: 70%;
 	height: 54px;
 	border: 1px solid #919191;
 }

@@ -19,10 +19,10 @@ const initialState: Search = {
 }
 
 //sends a fetch request to the backend to get the traces for 1 trace
-export const getTraceAsync = (trace:any) =>  createAsyncThunk(
+export const getTraceAsync = (traceID:string) =>  createAsyncThunk(
   'searchBar/getTraces',
   async () => {
-    const response = await fetch(config.url + '/api/traces')
+    const response = await fetch(config.url + `/api/traces${traceID}`)
     const data = await response.json();
     return data;
   }
@@ -46,6 +46,8 @@ const searchReducer = createSlice({
   	}
   }
 })
+
+
 
 export const selectNameSpace = (state: RootState) => state.search.namespace;
 
