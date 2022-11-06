@@ -8,7 +8,7 @@ body {
 
 .footer-drawer-tab {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   background: #3C3C3C;
   font-size: 1.48vh;
   width: 14.479vw;
@@ -57,7 +57,7 @@ body {
       display: flex;
       flex-direction: column;
       pointer-events: auto;
-      transform: translateY(81.2vh);
+      transform: translateY(80.5vh);
       transition-property: transform;
       transition-duration: .2s;
       align-items: center;

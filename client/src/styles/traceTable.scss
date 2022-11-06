@@ -30,21 +30,27 @@
   }
 }
 
+$selector-font-size: 1.48vh;
+$selector-size: 4.72vh;
+
 #trace-table-window-header__duration-container {
   display: flex;
   flex-direction: row;
+  font-size: $selector-font-size;
 
   align-items: center;
-  gap: 18px;
+  gap: 5px;
 }
 
 #duration-selector {
   display: flex;
   flex-direction: row;
-  padding: 0px 10px 0px 10px;
+  padding: 0px .83vw;
+  font-size: $selector-font-size;
 
   width: 15.6vw;
-  height: 4.72vh;
+  gap: .83vw;
+  height: $selector-size;
   border: 1px solid #919191;
   border-radius: 12px;
   align-items: center;
@@ -52,7 +58,24 @@
 }
 
 .duration-selector {
-  font-size: 1.48vh;
-  padding: 16px 8px;
-  gap: 8px;
+  cursor: pointer;
+  font-size: $selector-font-size;
+
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
+
+.duration-selector-active {
+  
+  font-size: $selector-font-size;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: #242424;
+  text-justify: center;
+  height: calc($selector-size - 1px);
+}
+
