@@ -85,3 +85,39 @@
 #submitButton:active {
 	opacity: 0.3;
 }
+
+#traceSearchBar {
+	height: 252px;
+	flex-direction: column;
+}
+
+#traceSearchBarTopHalf{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+#traceSearchBarTraceDetails{
+	background-color: #242424;
+	width: 100%;
+}
+
+#traceSearchBar #submitButton {
+	border-radius: 0px 0px 0px 0px;
+}
+
+#returnButton {
+	background-color: #3C3C3C;
+	color:#919191;
+	border: 1px solid #919191;
+	height: 58px;
+	border-radius: 0px 8px 8px 0px;
+}
+
+#returnButton:hover {
+  opacity: 0.6;
+}
+
+#returnButton:active {
+  opacity: 0.3;
+}
