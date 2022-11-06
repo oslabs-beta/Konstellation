@@ -12,10 +12,12 @@ const SearchBarCluster = ():JSX.Element => {
 	const dispatch = useAppDispatch();
 
 
-  const submitTrace = ():any => {
+  const submitTrace = (traceID?:any):any => {
     //sends a fetch request to the api to get the data from a particular trace
 		//changes the state from cluster to trace view
-		dispatch(getTraceAsync('placeholder'))
+		
+		console.log(traceID);
+		dispatch(getTraceAsync(traceID))
 		
 		
 		return
@@ -60,7 +62,11 @@ return (
 					  name='traceID'
 					  placeholder='Enter TraceID, node, pod, or service name'  
 					  />
-				  <button id="submitButton" onClick={()=>submitTrace()}> submit</button>
+				  <button id="submitButton" onClick={()=>{
+						const input = document.getElementById('searchBarInput') as HTMLInputElement;
+						submitTrace(input.value)
+						}}> submit
+					</button>
 			</div>
 		</div>
 	)
