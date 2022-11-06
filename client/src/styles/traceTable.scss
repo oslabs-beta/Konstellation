@@ -17,6 +17,8 @@
 
   h1 {
     font-size: 3.05vh;
+    font-weight: 500;
+    margin-left: 10px;
   }
 }
 
@@ -79,3 +81,86 @@ $selector-size: 4.72vh;
   height: calc($selector-size - 1px);
 }
 
+
+$trace-table-grid-gap: 1.66vw;
+$trace-table-long-width: 15.3646vw;
+$trace-table-medium-width: 7.4479vw;
+$trace-table-slim-width: 5.156vw;
+
+
+
+#trace-table-header {
+  background: #242424;
+  border-radius: 6px;
+  width: 91.666vw;
+  height: 3.703vh;
+  padding: .074vh;
+  margin: auto;
+  align-items: center;
+  
+  display: grid;
+  grid-template-columns: repeat(2, 15.3646fr) 7.4479fr repeat(2, 5.156fr) repeat(2, 15.3646fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+    div {
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    gap: $trace-table-grid-gap;
+    
+    .timestamp { grid-area: 1 / 1 / 2 / 2; text-align: center;}
+    .traceId { grid-area: 1 / 2 / 2 / 3; text-align: center;}
+    .response-time { grid-area: 1 / 3 / 2 / 4; text-align: center;}
+    .response { grid-area: 1 / 4 / 2 / 5; text-align: center;}
+    .method { grid-area: 1 / 5 / 2 / 6; text-align: center;}
+    .url { grid-area: 1 / 6 / 2 / 7; text-align: center;}
+    .namespaces { grid-area: 1 / 7 / 2 / 8; text-align: center;}
+}
+
+#trace-table-list {
+  overflow-y: scroll;
+  display: flex;
+  gap: 32px;
+
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.entry-spacer {
+  height: 32px;
+}
+.trace-table-entry {
+  
+  display: grid;
+    grid-template-columns: repeat(2, 15.3646fr) 7.4479fr repeat(2, 5.156fr) repeat(2, 15.3646fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    
+    div {
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 300;
+    }
+
+    .timestamp { grid-area: 1 / 1 / 2 / 2;text-align: center; }
+    .traceId { 
+      cursor:pointer;
+      color: rgb(142, 142, 254);
+      text-decoration: underline;
+      grid-area: 1 / 2 / 2 / 3;
+      text-align: center;
+     }
+    .response-time { grid-area: 1 / 3 / 2 / 4; text-align: center;}
+    .response { grid-area: 1 / 4 / 2 / 5; text-align: center;}
+    .method { grid-area: 1 / 5 / 2 / 6; text-align: center;}
+    .url { grid-area: 1 / 6 / 2 / 7; text-align: center;}
+    .namespaces { grid-area: 1 / 7 / 2 / 8; text-align: center;}
+
+  gap: $trace-table-grid-gap;
+}
