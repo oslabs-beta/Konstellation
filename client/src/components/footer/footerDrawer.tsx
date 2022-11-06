@@ -23,10 +23,15 @@ export const footerDrawer = (props: Props) => {
   }
 
   return (
-    <div id="footer-drawer" className={data.cssClassName} onClick={handleClick}>{data.handleText}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <span className="material-symbols-outlined"> {data.iconId} </span>
-    </div>
+    <>
+      <div className={data.cssClassName}>
+        <div id="footer-drawer" onClick={handleClick}>{data.handleText}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <span className="material-symbols-outlined"> {data.iconId} </span>
+        </div>
+        <div id="big-thing">Text</div>
+      </div>
+    </>
   )
 
   function getDrawerPeekData(): DrawerPeekData {

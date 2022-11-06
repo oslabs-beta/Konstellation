@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 body {
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .home {
@@ -23,37 +23,40 @@ body {
     pointer-events: none;
 
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 154fr 881fr 45fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 154fr 926fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     z-index: 1;
-    justify-items: center;
 
     .home__overlay__bottom-drawer-closed {
-      grid-area: 3 / 3 / 3 / 3;
+      grid-area: 2 / 1 / 2 / 2;
 
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       pointer-events: auto;
-      transform: translateY(0);
+      transform: translateY(82vh);
       transition-property: transform;
       transition-duration: .6s;
+      align-items: center;
     }
 
     .home__overlay__bottom-drawer-open {
-      grid-area: 3 / 3 / 3 / 3;
+      grid-area: 2 / 1 / 2 / 2;
+
 
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       pointer-events: auto;
-      transform: translateY(-78.7vh);
+      transform: translateY(0vh);
       transition-property: transform;
       transition-duration: .6s;
+      align-items: center;
     }
     
     #footer-drawer {
       display: flex;
+      flex-direction: column;
       background: #3C3C3C;
       font-size: 1.48vh;
       width: 14.479vw;
@@ -79,6 +82,11 @@ body {
       }
     }
   }
+}
+
+#big-thing {
+  height: 82vh;
+  width: 100vw;
 }
 
   .material-symbols-outlined {
