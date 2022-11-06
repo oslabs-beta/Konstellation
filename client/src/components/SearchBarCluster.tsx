@@ -1,5 +1,5 @@
 import React, { JSXElementConstructor, useEffect } from 'react';
-import { selectSourceMap, ViewType } from './sourceMapSlice'
+import { selectSourceMapType, ViewType } from './sourceMapSlice'
 import {getNamespaceAsync, selectNameSpace, getTraceAsync} from './searchBarSlice'
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 //import logo from './konstellation-logo.png';
