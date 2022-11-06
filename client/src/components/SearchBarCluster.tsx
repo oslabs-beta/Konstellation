@@ -1,7 +1,8 @@
 import React, { JSXElementConstructor, useEffect } from 'react';
-import { selectSourceMapType, ViewType } from './sourceMapSlice'
-import {getNamespaceAsync, selectNameSpace, getTraceAsync} from './searchBarSlice'
+import { selectSourceMapType, updateData, ViewType } from './sourceMapSlice'
+import {getNamespaceAsync, selectNameSpace} from './searchBarSlice'
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
+import { trace } from 'console';
 //import logo from './konstellation-logo.png';
 
 
@@ -17,11 +18,14 @@ const SearchBarCluster = ():JSX.Element => {
 		//changes the state from cluster to trace view
 		
 		console.log(traceID);
-		dispatch(getTraceAsync(traceID))
-		
-		
-		return
+		//this is an either or
+		//either make the fetch request to the server or
+		//dispatch(getTraceAsync(traceID))
 
+		//update view so that the data property is updated to the inputted trace view.
+		dispatch(updateData({type: 1, data:traceID}))
+
+		return
 	}
 
 //remove fake data later

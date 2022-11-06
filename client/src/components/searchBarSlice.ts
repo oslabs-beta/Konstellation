@@ -19,14 +19,14 @@ const initialState: Search = {
 }
 
 //sends a fetch request to the backend to get the traces for 1 trace
-export const getTraceAsync = (traceID:string | undefined) =>  createAsyncThunk(
-  'searchBar/getTraces',
-  async () => {
-    const response = await fetch(config.url + `/api/traces${traceID}`)
-    const data = await response.json();
-    return data;
-  }
-)
+// export const getTraceAsync = (traceID:string | undefined) =>  createAsyncThunk(
+//   'searchBar/getTraces',
+//   async () => {
+//     const response = await fetch(config.url + `/api/traces${traceID}`)
+//     const data = await response.json();
+//     return data;
+//   }
+// )
 
 export const getNamespaceAsync = createAsyncThunk(
   'searchBar/getNamespace',

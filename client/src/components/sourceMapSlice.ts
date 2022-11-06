@@ -19,11 +19,16 @@ export const sourceMapSlice = createSlice({
   reducers: {
     changeView: (state, action: PayloadAction<View>) => {
       state.type = action.payload.type
+    },
+		updateData: (state, action: PayloadAction<View>) => {
+			state.type = action.payload.type
+      state.data = action.payload.data
     }
   }
 })
 
 export const { changeView } = sourceMapSlice.actions;
+export const { updateData } = sourceMapSlice.actions;
 export const selectSourceMapType = (state: RootState) => state.sourceMap.type
 export const selectSourceMapData = (state: RootState) => state.sourceMap.data
 export default sourceMapSlice.reducer;

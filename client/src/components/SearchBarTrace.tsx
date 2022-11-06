@@ -4,7 +4,7 @@ import React from 'react';
 
 const SearchBarTrace = (): JSX.Element => {
 	
-
+  
   const submitTrace = ():any => {
     //sends a fetch request to the api to get the data from a particular trace
 		
