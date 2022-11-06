@@ -10,7 +10,11 @@ type TraceData = {
   namespaces: string,
 }
 
-const tableContent = () => {
+/** 
+   * Renders the list of elements contained within the Trace Table Drawer
+   * @Remarks Pre-fetching when hovering over drawerTabHandle will greatly improve performance
+   */
+const tableList = () => {
   
   const traceData: TraceData[] = [];
 
@@ -50,9 +54,6 @@ const tableContent = () => {
     return result;
   })()
 
-  
-
-
   return (
     <div id="trace-table-list">
       {jsxElements}
@@ -60,4 +61,4 @@ const tableContent = () => {
   )
 }
 
-export default tableContent
+export default tableList

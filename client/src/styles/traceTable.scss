@@ -81,13 +81,10 @@ $selector-size: 4.72vh;
   height: calc($selector-size - 1px);
 }
 
-
 $trace-table-grid-gap: 1.66vw;
 $trace-table-long-width: 15.3646vw;
 $trace-table-medium-width: 7.4479vw;
 $trace-table-slim-width: 5.156vw;
-
-
 
 #trace-table-header {
   background: #242424;
@@ -103,14 +100,13 @@ $trace-table-slim-width: 5.156vw;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  gap: $trace-table-grid-gap;
 
     div {
       color: #FFFFFF;
       font-size: 10px;
       font-weight: 700;
     }
-
-    gap: $trace-table-grid-gap;
     
     .timestamp { grid-area: 1 / 1 / 2 / 2; text-align: center;}
     .traceId { grid-area: 1 / 2 / 2 / 3; text-align: center;}
@@ -137,10 +133,11 @@ $trace-table-slim-width: 5.156vw;
 .trace-table-entry {
   
   display: grid;
-    grid-template-columns: repeat(2, 15.3646fr) 7.4479fr repeat(2, 5.156fr) repeat(2, 15.3646fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+  grid-template-columns: repeat(2, 15.3646fr) 7.4479fr repeat(2, 5.156fr) repeat(2, 15.3646fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  gap: $trace-table-grid-gap;
     
     div {
       color: #FFFFFF;
@@ -162,5 +159,4 @@ $trace-table-slim-width: 5.156vw;
     .url { grid-area: 1 / 6 / 2 / 7; text-align: center;}
     .namespaces { grid-area: 1 / 7 / 2 / 8; text-align: center;}
 
-  gap: $trace-table-grid-gap;
 }
