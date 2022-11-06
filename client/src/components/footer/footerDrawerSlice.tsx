@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../store";
-import { config } from '../constants/config'
+import { RootState, AppThunk } from "../../store";
+import { config } from '../../constants/config'
 
 /**
    * Defines the types of permitted Footer Drawers
@@ -57,7 +57,7 @@ export const footerDrawerSlice = createSlice({
   },
 })
 
-export const selectFooterButtonFullscreen = (state: RootState) => state.footerDrawer.isOpen;
+export const selectFooterDrawerIsOpen = (state: RootState) => state.footerDrawer.isOpen;
 
 export const { toggleIsOpen: toggleIsOpen } = footerDrawerSlice.actions;
 

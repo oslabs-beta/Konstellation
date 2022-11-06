@@ -1,6 +1,6 @@
 import React from 'react'
 import SourceMap from './sourceMap'
-import FooterDrawer from './footerDrawer'
+import FooterDrawer from './footer/footerDrawer'
 import '../styles/home.scss'
 
 type Props = {}

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import '../styles/home.scss'
-import { useAppDispatch, useAppSelector } from '../lib/hooks'
-import { selectFooterButtonFullscreen as selectFooterDrawerIsOpen, toggleIsOpen } from './footerDrawerSlice'
+import '../../styles/home.scss'
+import { useAppDispatch, useAppSelector } from '../../lib/hooks'
+import { selectFooterDrawerIsOpen, toggleIsOpen } from './footerDrawerSlice'
 
 type Props = {
 }
