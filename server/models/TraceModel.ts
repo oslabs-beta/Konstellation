@@ -1,6 +1,7 @@
 import { NextFunction } from "express";
 import { appendFile } from "fs";
 import fakeTraceData from "../data/fakeTraceData";
+import fakeTraceData2 from "../data/fakeTraceData2";
 import { IRequest, IResponse } from "../interfaces/IExpress";
 import Utils from "../utils/Utils";
 
@@ -9,8 +10,15 @@ export class TraceModel {
 
   public static getSampleData(req: IRequest, res: IResponse) {
     console.log("In Trace Model");
-    res.traceData = fakeTraceData;
-    console.log(res.traceData);
+
+    //TEMPORARY TEST for confirming Data fetching behavior. Replace with actual trace data.
+    if (req.params.traceId === '0412jk3401925e92929') {
+      res.traceData = fakeTraceData;
+    }
+    else if(req.params.traceId === '8jfjh1hfhj21-fhj2h') {
+      res.traceData = fakeTraceData2;
+    }
+    // console.log(res.traceData);
   }
 
   public static getDataFromJaeger(req: IRequest, res: IResponse) {

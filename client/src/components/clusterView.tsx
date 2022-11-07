@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-import { getClusterAsync, selectElements, ClusterData } from './clusterViewSlice';
+import { getClusterAsync, selectData, ClusterData } from './clusterViewSlice';
 import styleSheet from '../styles/Stylesheet';
 import options2 from '../constants/CytoscapeConfig';
 
 export interface Cluster {
-  data: ClusterData | undefined
+  data: ClusterData
   status: 'idle' | 'loading' | 'failed';
 }
 
@@ -16,7 +16,7 @@ export interface Cluster {
    */
 export default function clusterView(): JSX.Element {
   
-  const clusterData = useAppSelector(selectElements);
+  const clusterData = useAppSelector(selectData);
   const dispatch = useAppDispatch();
 
   const layout = options2();
@@ -24,7 +24,7 @@ export default function clusterView(): JSX.Element {
   let myCyRef;
 
   useEffect(() => {
-    if(!clusterData) {
+    if(clusterData.length === 0) {
       dispatch(getClusterAsync());
     }
   })
