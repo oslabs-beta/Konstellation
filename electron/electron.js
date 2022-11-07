@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain} = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 // const { electron } = require("process");
 const url = require("url");
@@ -6,18 +6,26 @@ const { exec } = require("child_process");
 const { config } = require("dotenv");
 
 let win;
-exec("kubectl get nodes", (error, stdout, stderr) => {
-//exec("ls -la", (error, stdout, stderr) => {
-  if (error) {
+
+/**
+ * Need to set individual AWS creds one by one, additionally
+ * want to avoid violating the DRY principle
+ */
+
+function setAWSCred(field, value, field2, value2, field3, value3) {
+  exec(`aws configure set ${field} ${value} set ${field2} ${value2} set ${field3} ${value3} set output json`, (error, stdout, stderr) => {
+    //exec("ls -la", (error, stdout, stderr) => {
+    if (error) {
       console.log(`error: ${error.message}`);
       return;
-  }
-  if (stderr) {
+    }
+    if (stderr) {
       console.log(`stderr: ${stderr}`);
       return;
-  }
-  console.log(`stdout: ${stdout}, ${__dirname}`);
-});
+    }
+    console.log(`stdout: ${stdout}, ${__dirname}`);
+  });
+}
 
 /**
    * Returns the average of two numbers.
@@ -32,15 +40,34 @@ exec("kubectl get nodes", (error, stdout, stderr) => {
    *
    * @beta
    */
-function configAWS() {
+function configAWS(accessKey, secretKey, region) {
 
-  console.log('configAWS!');
+  setAWSCred('aws_access_key_id', accessKey, 'aws_secret_access_key', secretKey, 'region', region,);
+  // setAWSCred('aws_secret_access_key', secretKey);
+  // setAWSCred('region', region);
+  // setAWSCred('output', 'json');
+
+  // exec("aws configure", (error, stdout, stderr) => {
+  //   //exec("ls -la", (error, stdout, stderr) => {
+  //     if (error) {
+  //         console.log(`error: ${error.message}`);
+  //         return;
+  //     }
+  //     if (stderr) {
+  //         console.log(`stderr: ${stderr}`);
+  //         return;
+  //     }
+  //     console.log(`stdout: ${stdout}, ${__dirname}`);
+  //   });
+
+  return 'configAWS!';
 }
 
-function createWindow () {
+function createWindow() {
   // Create the browser window
   // Sets the dimensions and contextBridge between main and renderer processes
-  win = new BrowserWindow({width: 1400, height: 900, 
+  win = new BrowserWindow({
+    width: 1400, height: 900,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
@@ -67,15 +94,23 @@ function createWindow () {
 }
 //app.on('ready', createWindow);
 
-ipcMain.on('button-example', (arg) => {
-  console.log(arg);
-  configAWS();
-});
 
 app.whenReady().then(() => {
-  // Attach listener in the main process with the given ID
-// Listen event through runCommand channel
-// And return the result to Renderer.
+  /**
+     * @remarks
+     * Invoked by Login.tsx when the Login button is pressed
+     * Configures the client's auth using CLI commands 
+     * @param event - event that triggered the 
+     * @param arg - how to configure the client's local files
+     * @returns True if success, otherwise False
+     */
+  ipcMain.on('onLoginClick', (event, arg) => {
+    console.log('arg', arg);
+    //console.log(configAWS('AKIAYJBPIFYYMUCCI4AS', 'vrivjMHgOJfWUkf+/x0GqMuBzTnDicoiZJZsKDWA', 'us-west-2'));
+    // event.reply('config-aws-result', configAWS());
+    // Trigger another IPC event back to the render process
+    event.sender.send('onConfigResp', 'my goodness watson!');
+  });
 
   createWindow();
 });

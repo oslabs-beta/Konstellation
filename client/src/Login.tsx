@@ -1,19 +1,11 @@
 import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/login.scss';
-// Allows Login to establish a connection with electron's main process,
-// gaining access to the local file system
-//const mainProcess = remote.require('../../electron/electron.js');
-// In some file from the main process
-// like main.js
 
-// const configAWS = require('../../electron/electron.js');
-// configAWS();
-
-// Inside any React file
-const test = () => {
-  window.electronAPI.ipcRenderer.onButtonClick('Button Clicked');
-}
+// Catch an event invoked by the main process with the event key 'onConfigResp'
+window.electronAPI.onConfigResp('onConfigResp', (event : any, data : string) => {
+  console.log("From server:", data)
+})
 
 function Login() {
   let navigate = useNavigate();
@@ -26,9 +18,7 @@ function Login() {
   // For the user's convenience, find and parse their three files (in $HOME/.aws/ 
   // and $HOME/.kube/) and populate their corresponding fields in the form
   const parseLocalCredentials = () => {
-    console.log('<ELECTRON NEEDED> : Parse User\'s local files here!');
-    //window.electronAPI.configAWS();
-    test();
+    window.electronAPI.onLoginClick('Button Clicked');
   }
 
   const loginUser = () => {
