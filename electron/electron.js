@@ -2,65 +2,52 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 // const { electron } = require("process");
 const url = require("url");
-const { exec } = require("child_process");
+// This makes the CLI commands asynchronous
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 const { config } = require("dotenv");
+const k8s = require('@kubernetes/client-node');
+const fs = require('fs');
 
 let win;
 
-/**
- * Need to set individual AWS creds one by one, additionally
- * want to avoid violating the DRY principle
- */
 
-function setAWSCred(field, value, field2, value2, field3, value3) {
-  exec(`aws configure set ${field} ${value} set ${field2} ${value2} set ${field3} ${value3} set output json`, (error, stdout, stderr) => {
-    //exec("ls -la", (error, stdout, stderr) => {
-    if (error) {
-      console.log(`error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.log(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}, ${__dirname}`);
-  });
+/**
+ * 
+ * @remarks
+ * This method executes a aws CLI command to retrieve the specified field
+ * @param field The field to retrieve
+ * @returns a string
+ */
+ async function setAWSField(field, value) {
+  try {
+    const { stdout, stderr } = await exec(`aws configure set ${field} ${value}`);
+    console.log('exec:', stdout);
+    // Strip '\n' from the end of the response string
+    return stdout.slice(0, stdout.length - 1);
+  } catch (e) {
+    console.log('err:', e);
+  }
 }
 
 /**
-   * Returns the average of two numbers.
-   *
-   * @remarks
-   * This method configures the client's local AWS credentials and config files.
-   *
-   * @param accessKey - the AWS access key
-   * @param secretKey - the AWS secret key
-   * @param region - the region the EKS cluster is located
-   * @returns The arithmetic mean of `x` and `y`
-   *
-   * @beta
-   */
-function configAWS(accessKey, secretKey, region) {
-
-  setAWSCred('aws_access_key_id', accessKey, 'aws_secret_access_key', secretKey, 'region', region,);
-  // setAWSCred('aws_secret_access_key', secretKey);
-  // setAWSCred('region', region);
-  // setAWSCred('output', 'json');
-
-  // exec("aws configure", (error, stdout, stderr) => {
-  //   //exec("ls -la", (error, stdout, stderr) => {
-  //     if (error) {
-  //         console.log(`error: ${error.message}`);
-  //         return;
-  //     }
-  //     if (stderr) {
-  //         console.log(`stderr: ${stderr}`);
-  //         return;
-  //     }
-  //     console.log(`stdout: ${stdout}, ${__dirname}`);
-  //   });
-
-  return 'configAWS!';
+ * 
+ * @remarks
+ * This method executes a aws CLI command to retrieve the specified field
+ * @param field The field to retrieve
+ * @returns a string
+ */
+async function getAWSField(field) {
+  try {
+    const { stdout, stderr } = await exec(`aws configure get ${field}`);
+    console.log('exec:', stdout);
+    // Strip '\n' from the end of the response string
+    return stdout.slice(0, stdout.length - 1);
+  } catch (e) {
+    console.log('err:', e);
+  }
+  // Returns an empty string if nothing is found or an error
+  return '';
 }
 
 function createWindow() {
@@ -92,8 +79,6 @@ function createWindow() {
     win.webContents.openDevTools();
   }
 }
-//app.on('ready', createWindow);
-
 
 app.whenReady().then(() => {
   /**
@@ -104,15 +89,33 @@ app.whenReady().then(() => {
      * @param arg - how to configure the client's local files
      * @returns True if success, otherwise False
      */
-  ipcMain.on('onLoginClick', (event, arg) => {
+  ipcMain.on('on-config', (event, arg) => {
     console.log('arg', arg);
-    //console.log(configAWS('AKIAYJBPIFYYMUCCI4AS', 'vrivjMHgOJfWUkf+/x0GqMuBzTnDicoiZJZsKDWA', 'us-west-2'));
+    setAWSField('aws_access_key_id', arg[0])
+    setAWSField('aws_secret_access_key', arg[1])
+    setAWSField('region', arg[3])
+
     // event.reply('config-aws-result', configAWS());
     // Trigger another IPC event back to the render process
     event.sender.send('onConfigResp', 'my goodness watson!');
   });
 
+  /**
+   * @remarks
+   * Invoked by Login.tsx when the Login button is pressed
+   * Configures the client's auth using CLI commands 
+   * @param event - event that triggered the 
+   * @returns True if success, otherwise False
+   */
+  ipcMain.on('get-config', async (event) => {
+    console.log("hi?");
+    // Retrieve the user's Access Key, Secret Key, and Region from their local files
+    const data = [await getAWSField('aws_access_key_id'), await getAWSField('aws_secret_access_key'), await getAWSField('region')];
+    console.log('sending config:', data);
+
+    // Send the information to Login.tsx
+    event.sender.send('onSendConfig', data);
+  });
+
   createWindow();
 });
-
-//module.exports = { configAWS }

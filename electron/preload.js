@@ -14,15 +14,30 @@ const exposedAPI = {
    * @param x - The first input number
    * @param y - The second input number
    */
-  onLoginClick: (arg) => ipcRenderer.send('onLoginClick', 'Button Clicked'),
-    /**
+  onConfig: (arg) => ipcRenderer.send('on-config', arg),
+  /**
    * @remarks
-   * Invoked by Login button to configure the user's local files
+   * Invoked by electron to send response to Login's button press
    *
    * @param x - The first input number
    * @param y - The second input number
    */
   onConfigResp: (event, func) => {
+    ipcRenderer.on(event, func);
+  },
+  /**
+  * @remarks
+  * Invoked by Login to retrieve any locally-stored configurations/credentials
+  * located in the user's aws and kubeconfig files.
+  */
+  getConfig: () => ipcRenderer.send('get-config'),
+  /**
+   * @remarks
+   * Invoked by electron to give Login any found user credentials/configurations
+   *
+   * @param x - The first input number
+   */
+  onSendConfig: (event, func) => {
     ipcRenderer.on(event, func);
   }
 };

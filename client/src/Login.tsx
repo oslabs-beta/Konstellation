@@ -2,10 +2,10 @@ import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/login.scss';
 
-// Catch an event invoked by the main process with the event key 'onConfigResp'
-window.electronAPI.onConfigResp('onConfigResp', (event : any, data : string) => {
-  console.log("From server:", data)
-})
+/**
+ * Catch their respective event from the electron main process
+ * Need to be outside of the Login component, otherwise they will fire twice
+ */
 
 function Login() {
   let navigate = useNavigate();
@@ -14,12 +14,31 @@ function Login() {
   const [clusterName, setClusterName] = useState("");
   const [regionName, setRegionName] = useState("");
 
-  // If the server sends anything besides 200, then the user isn't authenticated
-  // For the user's convenience, find and parse their three files (in $HOME/.aws/ 
-  // and $HOME/.kube/) and populate their corresponding fields in the form
-  const parseLocalCredentials = () => {
-    window.electronAPI.onLoginClick('Button Clicked');
-  }
+  // Why is this executing twice?
+  // Response after trying to update local cred/config files
+  window.electronAPI.onConfigResp('onConfigResp', (event: any, data: any) => {
+    console.log("From server:", data)
+  })
+  
+  // Why is this executing twice?
+  // Response after parsing local cred/config files
+  window.electronAPI.onSendConfig('onSendConfig', (event: any, data: [string, string, string]) => {
+    console.log("Parsed from local files:", data);
+    // Update each input field
+    setAccessKey(data[0]);
+    setSecretKey(data[1]);
+    setRegionName(data[2]);
+  })
+  
+  /**
+   * Invoked when the user isn't authenticated to access a K8 cluster
+   * Invoke electron's main process to access any credentials on the
+   * user's local computer.
+   */
+  // const parseLocalCredentials = () => {
+  //   //window.electronAPI.onConfig('Button Clicked');
+  //   window.electronAPI.getConfig();
+  // }
 
   const loginUser = () => {
     //alert('id:' + accessKey + ' secret:' + secretKey);
@@ -27,34 +46,55 @@ function Login() {
     fetch('http://localhost:3000/authenticate', {
       method: 'GET'
     })
-    .then(response => {
-      //console.log('resp:', resp.json());
-      //console.log('typeof:', typeof response.json());
-      //console.log(response.json());
-      console.log('status:', response.status);
-      if(response.status !== 200) {
+      .then(response => {
+        //console.log('resp:', resp.json());
+        //console.log('typeof:', typeof response.json());
+        //console.log(response.json());
+        console.log('status:', response.status);
+        if (response.status !== 200) {
+          console.log('bad credentials...');
+          // Leverage Electron to parse authentication data from local files
+          window.electronAPI.getConfig();
+        }
+        else {
+          console.log('Valid creds!');
+          navigate('/app');
+        }
+      }).catch(err => {
         console.log('bad credentials...');
         // Leverage Electron to parse authentication data from local files
-        parseLocalCredentials();
-      }
-      else {
-        console.log('Valid creds!');
-        navigate('/app');
-      }
-    })
+        window.electronAPI.getConfig();       
+      })
   }
 
-  const buttonPressed = (event : FormEvent) => {
+  // Returns true if the input string is empty
+  const emptyString = (input : string ) => {
+    if(input.trim() === '') return true;
+    return false;    
+  }
+
+  const buttonPressed = (event: FormEvent) => {
     event.preventDefault();
 
-    parseLocalCredentials();
+    // Don't submit if any of the fields are empty
+    if(emptyString(accessKey) || emptyString(secretKey) || emptyString(clusterName) || emptyString(regionName)) {
+      alert('Please fill out all fields');
+      return;
+    }
+
+    // Configure the user's local files with the input fields
+    window.electronAPI.onConfig([accessKey, secretKey, clusterName, regionName]);
+    // // Temporary
+    // parseLocalCredentials();
+    // // Tells electron to parse local credentials
+    // window.electronAPI.getConfig();
 
     // // Use the non-empty inputs to configure local files
     // if(accessKey && secretKey) {
 
     // }
 
-    // loginUser();
+    loginUser();
   }
 
   // Need an environmental condition to avoid logging in user if they just logged out
