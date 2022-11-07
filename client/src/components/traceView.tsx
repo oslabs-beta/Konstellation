@@ -55,11 +55,22 @@ cytoscape.use(coseBilkent);
   
           // console.log("EVT", cy);
   
-          cy.on("tap", "node", evt => {
+          cy.on("dblclick", "node", evt => {
             var node = evt.target;
             console.log("EVT", evt);
             console.log("TARGET", node.data());
             console.log("TARGET TYPE", typeof node[0]);
+            cy.fit( cy.$(':selected'), 50 );
+            setTimeout( function(){
+              cy.panBy({
+                x: -300,
+                y: 0
+              })
+            }, 10)
+            setTimeout( function(){
+              cy.$('').unselect();
+              cy.fit(cy.$(''),50);
+            }, 5000 );
           });
         }}
       ></CytoscapeComponent>
