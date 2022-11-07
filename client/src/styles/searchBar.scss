@@ -100,6 +100,7 @@
 #traceSearchBarTraceDetails{
 	background-color: #242424;
 	width: 100%;
+	border-radius: 6px;
 }
 
 #traceSearchBar #submitButton {
@@ -120,4 +121,50 @@
 
 #returnButton:active {
   opacity: 0.3;
+}
+
+#traceInfoBarContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px;
+	height: 65px;
+}
+
+#traceInfoBar {
+  display: flex;
+	align-items: center;
+	gap: 12px;
+	#traceMapSearchBar {
+		font-weight: 510;
+		font-size: 28px;
+		line-height: 33px;
+	}
+	.searchTextPrefix {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+		height: 19px;
+	}
+	.searchData {
+		font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+		height: 19px;
+	}
+}
+
+
+
+.close {
+	padding-right: 8px;
+	color: #EFEFEF
+}
+.close:hover {
+	opacity: 0.6;
+	cursor: pointer;
+}
+.close:active {
+	opacity: 0.3;
+	cursor: pointer;
 }
