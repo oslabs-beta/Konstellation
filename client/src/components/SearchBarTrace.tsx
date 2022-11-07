@@ -1,13 +1,13 @@
 import React, { JSXElementConstructor, useEffect } from 'react';
 import { changeView, selectSourceMap } from './sourceMapSlice';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-import { selectTraceViewData } from './traceViewSlice';
+import { selectTraceView } from './traceViewSlice';
 import { TraceData } from './trace-table/tableList';
 
 const SearchBarTrace = (): JSX.Element => {
 	
 
-  const traceViewData = useAppSelector(selectTraceViewData); 
+  const traceViewData = useAppSelector(selectTraceView); 
 	const traceData: TraceData[] = [];
 
 	const dispatch = useAppDispatch();
