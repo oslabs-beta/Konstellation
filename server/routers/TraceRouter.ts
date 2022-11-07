@@ -5,12 +5,16 @@ const express = require('express')
 
 const router = express.Router();
 
-router.get('/:traceId', 
-  TraceController.getData,
-  (req: IRequest, res: IResponse, next: INextFunction) => {res.status(200).json(res.traceData)}
+router.get('/getAll', 
+  TraceController.getAggregateData,
+  (req: IRequest, res: IResponse, next: INextFunction) => {res.status(200).json(res.locals.tracesArray)}
 );
 
-router.post('*', 
+router.get('/getIndiv', 
+  TraceController.getTraceViewData,
+  (req: IRequest, res: IResponse, next: INextFunction) => {res.status(200).json(res.locals.traceViewArray)}
+);
+router.post('/post', 
   TraceController.saveData, 
   (req: IRequest, res: IResponse, next: INextFunction) => {res.status(200).json("Trace Data Added")}
 );

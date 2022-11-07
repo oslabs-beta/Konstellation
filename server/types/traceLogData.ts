@@ -6,5 +6,6 @@ type TraceLogData = {
      duration: number,
      response: number,
      method: string,
+     url: string,
     }
  }

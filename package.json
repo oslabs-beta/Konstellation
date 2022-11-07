@@ -1,4 +1,4 @@
-{ 
+{
   "name": "konstellation",
   "version": "1.0.0",
   "description": "## readme in construction",
@@ -26,7 +26,7 @@
     "@mui/material": "^5.10.7",
     "@types/react-cytoscapejs": "^1.2.2",
     "axios": "^0.27.2",
-    "canvas": "^2.10.1",
+    "canvas": "^2.10.2",
     "chart.js": "^3.9.1",
     "chartjs-gauge": "^0.3.0",
     "chartjs-plugin-datalabels": "^2.1.0",
