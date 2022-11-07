@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
+/**
+ * Returns sample data for the Trace View for testing purposes
+ * @temp This function can soon be deleted
+ */
 const TraceTester = () => {
     const [traceData, setTraceData] = useState<TraceData>({data: ""});
 

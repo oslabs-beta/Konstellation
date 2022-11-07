@@ -1,41 +1,39 @@
 import React, { JSXElementConstructor, useEffect } from 'react';
-import { selectSourceMapType, updateData, ViewType } from './sourceMapSlice'
+import { selectSourceMap, ViewType, changeView } from './sourceMapSlice'
 import {getNamespaceAsync, selectNameSpace} from './searchBarSlice'
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { trace } from 'console';
-//import logo from './konstellation-logo.png';
+import { getTraceDataAsync } from './traceViewSlice'
+import { selectCluster } from './clusterViewSlice';
 
 
 const SearchBarCluster = ():JSX.Element => {
 
 //need to grab the namespaces and st it as stat here
-  const namespaceData = useAppSelector(selectNameSpace);
+  const { data } = useAppSelector(selectCluster);
 	const dispatch = useAppDispatch();
-
-
-  const submitTrace = (traceID?:string | undefined):any => {
-    //sends a fetch request to the api to get the data from a particular trace
+  
+  
+  const submitTrace = (traceID:string):any => {
 		//changes the state from cluster to trace view
-		
-		console.log(traceID);
-		//this is an either or
-		//either make the fetch request to the server or
-		//dispatch(getTraceAsync(traceID))
-
-		//update view so that the data property is updated to the inputted trace view.
-		dispatch(updateData({type: 1, data:traceID}))
-
+		//update view so that the data property is updated to the inputted trace view and changes the view type
+		dispatch(changeView({type: 1}))
+		dispatch(getTraceDataAsync(traceID))
 		return
 	}
 
-//remove fake data later
-const fakeData = ['default', 'jon', 'demo']
 
+  const nameSpaceData = []
+	for (let i = 0; i < data.length;i++){
+		if (data[i].data.type === 'namespace'){
+			nameSpaceData.push (data[i].data.id)	
+		}
+	}
 
 //populates the dropdown menu with namespaces
-const DropDownOptions: React.ReactElement[] =[]
+  const DropDownOptions: React.ReactElement[] =[]
 
-fakeData.forEach(element => {
+nameSpaceData.forEach(element => {
 	DropDownOptions.push (<option className='options'>{element}</option>)
 })
 
@@ -43,7 +41,6 @@ fakeData.forEach(element => {
 return (
 		<div className="searchBar">
 			<div id='logo'>
-				logo here
 			</div>
 			<div id="namespaceDropDown">
 				<div id="namespaceText">

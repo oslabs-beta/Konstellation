@@ -1,15 +1,20 @@
 import React, { JSXElementConstructor, useEffect } from 'react';
-import { changeView, selectSourceMapData, updateData } from './sourceMapSlice';
+import { changeView, selectSourceMap } from './sourceMapSlice';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-import { trace } from 'console';
+import { selectTraceViewData } from './traceViewSlice';
+import { TraceData } from './trace-table/tableList';
 
 const SearchBarTrace = (): JSX.Element => {
 	
+
+  
+	const traceData: TraceData[] = [];
+
 	const dispatch = useAppDispatch();
   const submitTrace = (traceID?:string | undefined):any => {
     //updates the view data to reflect the new trace
 		console.log(traceID)
-		dispatch(updateData({type: 1, data:traceID}))
+		//dispatch(updateData({type: 1, data:traceID}))
 		return
 		
 	}
@@ -23,14 +28,15 @@ const SearchBarTrace = (): JSX.Element => {
 	const handleClick = ():any => {
 		//closes this trace details view?
 	}
+	
+ //create a use effect that upon render, grabs the actual trace data store in the store and display it on top
+  //const traceData = useAppSelector(selectTraceViewData);
+	console.log(traceData)
 
-	const traceID = useAppSelector(selectSourceMapData);
-	console.log(traceID)
   return (
 		<div className="searchBar" id="traceSearchBar">
 			<div id="traceSearchBarTopHalf">
 			  <div id='logo'>
-				  logo here
 			  </div>
 			  <div id="searchBar">
 				  <span id='searchText'>
@@ -58,7 +64,7 @@ const SearchBarTrace = (): JSX.Element => {
 						Trace ID:
 					  </div>
 					  <div className='searchData'>
-					{traceID}
+						A1290809809
 					  </div>
 					  <div className="searchTextPrefix">
 						Trace Start:

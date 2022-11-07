@@ -1,0 +1,55 @@
+@use "./theme" as theme;
+
+#login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+
+  background: radial-gradient(79.58% 79.58% at 50% 50%, #000000 0%, rgba(0, 0, 0, 0) 100%), url(images/login-background.png);
+}
+
+#login-container {
+  @include theme.container;
+
+  padding: 8px;
+  width: 500px;
+  height: 640.08px;
+}
+
+#logo {
+  @include theme.logo;
+}
+
+#login-label {
+  font-family: SF Pro;
+  font-size: 22px;
+  font-weight: 510;
+  line-height: 26px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+form {
+  @include theme.form-style;
+}
+
+::placeholder {
+  @include theme.placeholder-style
+}
+
+input {
+  @include theme.input;
+  width: 436px;
+}
+
+#login-button {
+  @include theme.button-style;
+  width: 436px;
+  height: 56px;
+}

@@ -1,42 +1,125 @@
 @use "./theme" as theme;
 
-.parent {
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+body {
+  overflow: hidden;
+}
+
+.footer-drawer-tab {
+  display: flex;
+  flex-direction: row;
+  background: #3C3C3C;
+  font-size: 1.48vh;
+  width: 14.479vw;
+  height: 4.166vh;
+  border-radius: 12px 12px 0px 0px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.footer-drawer-tab:hover {
+  cursor: pointer;
+  background: #4a4a4a;
+  pointer-events: auto;
+}
+
+.home {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 154fr 881fr 45fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-}
   
-  .home__header { grid-area: 1 / 1 / 2 / 6; }
-  .home__source-map { grid-area: 1 / 1 / 4 / 6; }
-  .home__trace-table-button { grid-area: 3 / 3 / 4 / 4; }
   .home__pod-details { grid-area: 2 / 3 / 3 / 6; }
   .home__trace-table { grid-area: 2 / 1 / 4 / 6; }
+  .home__source-map { grid-area: 1 / 1 / 4 / 6; }
+  .home__header { grid-area: 1 / 1 / 2 / 6; }
 
+  .overlay {
+    pointer-events: none;
+    z-index: 1;
+  }
 
-// Examples of how to import from theme.scss below:  
-  // #login-container {
-  //   @include theme.container;
+  #trace-table-overlay {
+    grid-area: 1 / 1 / 4 / 6;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 154fr 926fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    #drawer-closed {
+      grid-area: 2 / 1 / 2 / 2;
+
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+      transform: translateY(80.5vh);
+      transition-property: transform;
+      transition-duration: .2s;
+      align-items: center;
+    }
+
+    #drawer-opened {
+      grid-area: 2 / 1 / 2 / 2;
+
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+      transform: translateY(0vh);
+      transition-property: transform;
+      transition-duration: .2s;
+      align-items: center;
+    }
+  }
+}
+
+#loading-message {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+}
+
+#loading-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 3vh;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px solid #2F80ED; /* Light grey */
+  border-top: 10px solid #4a4a4a; /* Black */
+  border-radius: 50%;
+  animation: spinner .9s linear infinite;
+}
+
+  .material-symbols-outlined {
+    margin-left: 1vw;
+    font-variation-settings:
+    'wght' 700,
+  }
+
   
-  //   padding: 8px;
-  //   width: 500px;
-  //   height: 640.08px;
-  // }
-  
-  // #logo {
-  //   @include theme.logo;
-  // }
-  
-  // input {
-  //   @include theme.input;
-  //   width: 436px;
-  // }
-  
-  // #login-button {
-  //   @include theme.button-style;
-  
-  //   width: 436px;
-  //   height: 56px;
-  
-  // }
