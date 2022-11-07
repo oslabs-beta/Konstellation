@@ -3,6 +3,5 @@ type TraceData = {
     id: string,
     label: string,
     type: string
-    
    }
 }

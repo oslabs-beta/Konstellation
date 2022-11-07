@@ -8,7 +8,9 @@ const initialState: Trace = {
   status: 'idle'
 }
 
-export type TraceData = {
+export type TraceData = Data[]
+
+export type Data = {
   data: {
     id: string,
     label: string,
@@ -28,6 +30,7 @@ export const getTraceDataAsync = createAsyncThunk(
 
     const response = await fetch(url)
     const data = await response.json();
+    console.log(data);
     return data;
   }
 )
@@ -36,8 +39,8 @@ export const traceViewSlice = createSlice({
   name: 'traceView',
   initialState: initialState,
   reducers: { 
-    updateData:  (state, action: PayloadAction<Trace>) => {
-      state.data = action.payload.data;
+    updateData:  (state, action: PayloadAction<TraceData>) => {
+      state.data = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -45,9 +48,9 @@ export const traceViewSlice = createSlice({
       .addCase(getTraceDataAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(getTraceDataAsync.fulfilled, (state, action: PayloadAction<Trace>) => {
+      .addCase(getTraceDataAsync.fulfilled, (state, action: PayloadAction<TraceData>) => {
         state.status = 'idle';
-        state.data = action.payload.data;
+        state.data = action.payload;
       })
       .addCase(getTraceDataAsync.rejected, (state) => {
         state.status = 'failed';

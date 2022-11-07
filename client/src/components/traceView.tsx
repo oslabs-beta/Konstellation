@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { selectTraceView, TraceData } from './traceViewSlice';
 
 export interface Trace {
-  data: TraceData[]
+  data: TraceData
   status: 'idle' | 'loading' | 'failed';
 }
 

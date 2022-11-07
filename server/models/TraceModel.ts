@@ -8,6 +8,7 @@ import { Request, Response, NextFunction } from "express";
 import Utils from "../utils/Utils";
 import { triggerAsyncId } from "async_hooks";
 import { AnyListenerPredicate } from "@reduxjs/toolkit";
+import {v4 as uuidv4}  from 'uuid';
 
 // const QUERY_URL = 'http://localhost:16686/api/traces?limit=20000&service='
 
@@ -86,7 +87,7 @@ export class TraceModel {
     console.log("jaeger query-ing");
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/10139efeb84c1674a76f681e7050dade')
+    const response = await fetch('http://localhost:16686/api/traces/07c2272e42aea16d223398ce4a574455')
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
@@ -131,6 +132,7 @@ export class TraceModel {
       if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
         traceViewArray.push({
           data: {
+            id: uuidv4(),
             source: spanToProcess[indivSpan.spanID],
             target: spanToProcess[indivSpan.references[0].spanID],
             type: 'arrow',
