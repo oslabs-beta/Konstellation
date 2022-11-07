@@ -4,6 +4,9 @@ import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from '../styles/Stylesheet'
 import options from '../constants/CytoscapeConfig'
+import { useAppSelector, useAppDispatch } from '../lib/hooks';
+import { getTraceAsync, selectData, TraceData } from './traceViewSlice';
+import { selectSourceMap, selectSourceMapData } from './sourceMapSlice';
 
 export interface Trace {
   data: TraceData | undefined
@@ -29,9 +32,21 @@ export interface Trace {
 //   })
 // }
 
+export default function clusterView(): JSX.Element {
+
+const traceData = useAppSelector(selectData);
+const dispatch = useAppDispatch();
+
+const traceID = useAppSelector(selectSourceMapData)
+
+useEffect(() => {
+  if(!traceData) {
+    dispatch(getTraceAsync());
+  }
+})
 
 cytoscape.use(coseBilkent);
-const TraceVisualizer = (data:any) => {
+// const TraceVisualizer = (data:any) => {
   const layout = options()
 
   let myCyRef;
@@ -44,7 +59,7 @@ const TraceVisualizer = (data:any) => {
     }}
   >
     <CytoscapeComponent
-      elements={data.data}
+      elements={traceData as []}
       stylesheet={styleSheet}
       layout={layout}
       style={{
@@ -72,4 +87,4 @@ const TraceVisualizer = (data:any) => {
   )
 }
 
-export default TraceVisualizer;
+// export default TraceVisualizer;

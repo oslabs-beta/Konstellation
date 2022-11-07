@@ -34,27 +34,42 @@ export default function clusterView(): JSX.Element {
         justifyContent: 'space-around',
       }}
     >
-
     <CytoscapeComponent
       elements={clusterData as []}
       stylesheet={styleSheet}
       layout={layout}
       style={{
-        width: '100%',
-        height: '50rem',
+        width: '100vw',
+        height: '100vh',
         objectFit: 'cover',
-        background: '#161820' 
+        background: '#161820',
+        
       }}
+      wheelSensitivity={0.8}
       maxZoom={3.0}
       minZoom={0.1}
       cy={cy => {
         myCyRef = cy;
-        cy.on("tap", "node", evt => {
-          var node = evt.target;
-          console.log("EVT", evt);
-          console.log("TARGET", node.data());
-          console.log("TARGET TYPE", typeof node[0]);
-        });
+        cy.on("dblclick", "node", evt => {
+          
+          const node = evt.target;
+          // console.log("EVT", evt);
+          // console.log("TARGET", node.data());
+          // console.log("TARGET TYPE", typeof node[0]);
+          //on double click we will select and zoom in on specified node
+          cy.fit( cy.$(':selected'), 50 );
+          setTimeout( function(){
+            cy.panBy({
+              x: -100,
+              y: 0
+            })
+          }, 10);
+          //this will be used to unselect the node and pan to show the entirety of our nodes
+          setTimeout( function(){
+            cy.$('').unselect();
+            cy.fit(cy.$(''),50);
+          }, 5000 );
+       });
       }}
     ></CytoscapeComponent>
   </div>
