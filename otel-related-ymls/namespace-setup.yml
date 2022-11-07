@@ -1,0 +1,9 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: aiait
+  labels:
+    name: test
+  annotations: 
+    "sidecar.opentelemetry.io/inject" : "true"
+    "instrumentation.opentelemetry.io/inject-nodejs": "true"

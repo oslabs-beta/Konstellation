@@ -28,7 +28,7 @@
     "@emotion/styled": "^11.10.4",
     "@kubernetes/client-node": "^0.17.1",
     "axios": "^0.27.2",
-    "canvas": "^2.10.1",
+    "canvas": "^2.10.2",
     "chart.js": "^3.9.1",
     "chartjs-gauge": "^0.3.0",
     "chartjs-plugin-datalabels": "^2.1.0",
