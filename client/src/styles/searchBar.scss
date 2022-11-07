@@ -69,6 +69,9 @@
 	height: 54px;
 	border: 1px solid #919191;
 }
+#searchBarInput:focus{
+	outline: none;
+}
 
 #submitButton {
 	background-color: #3C3C3C;
