@@ -1,23 +1,39 @@
 import { TraceController } from "../controllers/TraceController";
-import { IRequest, IResponse, INextFunction } from "../interfaces/IExpress";
-
-const express = require('express')
+import { Request, Response, NextFunction } from 'express';
+import express from 'express';
 
 const router = express.Router();
 
 router.get('/getAll', 
   TraceController.getAggregateData,
-  (req: IRequest, res: IResponse, next: INextFunction) => {res.status(200).json(res.locals.tracesArray)}
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log('router complete getAll');
+    res.status(200).json(res.locals.tracesArray);
+  }
 );
 
-// router.get('/getIndiv', 
-//   TraceController.getTraceViewData,
-//   (req: IRequest, res: IResponse, next: INextFunction) => {res.status(200).json(res.locals.traceViewArray)}
+router.get('/getTraceView', 
+  TraceController.getTraceViewData,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json(res.locals.traceViewArray)
+  }
+);
+
+// router.get('/getSpansInProcess',
+//   TraceController.getPodDetails,
+//   (req: Request, res: Response, next: NextFunction) => {
+//     res.status(200).json(res.locals.processSpecificSpans)
+//   }
+// )
+// router.get('/getSpanDetails', 
+//   TraceController.getSpanDetails,
+//   (req: Request, res: Response, next: NextFunction) => {
+//     res.status(200).json(res.locals.spanDetails)
+// } 
+// )
+// router.post('/post', 
+//   TraceController.saveData, 
+//   (req: Request, res: Response, next: NextFunction) => {res.status(200).json("Trace Data Added")}
 // );
-
-router.post('/post', 
-  TraceController.saveData, 
-  (req: IRequest, res: IResponse, next: INextFunction) => {res.status(200).json("Trace Data Added")}
-);
 
 export default router;

@@ -1,9 +1,15 @@
 type SpanData = {
   data: {
-    id: string,
-    source: string,
-    target: string,
-    type?: string,
-    duration?: Number,
+    operationName: string,
+    references: string,
+    startTime: string,
+    duration: string,
+    spanTags: [],
+    httpHost: string,
+    httpMethod: string,
+    httpTarget: string,
+    httpUrl: string,
+    rpcMethod: string,
+    rpcGrpcStatusCode: string
   }
 }
