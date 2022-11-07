@@ -5,7 +5,7 @@ import { Cluster } from './clusterView';
 export enum ViewType {cluster, trace}
 
 const initialState: View = {
-  type: ViewType.cluster
+  type: ViewType.cluster,
 }
 
 export interface View {
@@ -19,12 +19,12 @@ export const sourceMapSlice = createSlice({
   name: 'sourceMap',
   initialState: initialState,
   reducers: {
-    changeView: (state, action: PayloadAction<ViewType>) => {
-      state.type = action.payload
+    changeView: (state, action: PayloadAction<View>) => {
+      state.type = action.payload.type
     }
   }
 })
 
 export const { changeView } = sourceMapSlice.actions;
-export const selectSourceMapType = (state: RootState) => state.sourceMap.type
+export const selectSourceMap = (state: RootState) => state.sourceMap;
 export default sourceMapSlice.reducer;

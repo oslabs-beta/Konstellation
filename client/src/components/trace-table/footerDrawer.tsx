@@ -28,7 +28,7 @@ export const footerDrawer = () => {
 
   return (
       <div id={cssId}>
-        <FooterDrawerHandle handleClick={handleClick} iconId={data.iconId} handleText={data.handleText} />
+        <FooterDrawerHandle handleClick={handleClick} iconId={data.iconId} handleText={data.handleText}/>
         <TraceTable />
       </div>
   )

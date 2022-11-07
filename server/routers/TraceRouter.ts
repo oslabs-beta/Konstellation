@@ -5,6 +5,10 @@ const express = require('express')
 
 const router = express.Router();
 
+router.get('/', (req: IRequest, res: IResponse, next: INextFunction) => {
+  res.send('Awaiting Sample Trace Table Data')
+})
+
 router.get('/:traceId', 
   TraceController.getData,
   (req: IRequest, res: IResponse, next: INextFunction) => {res.status(200).json(res.traceData)}

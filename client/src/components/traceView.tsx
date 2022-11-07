@@ -4,57 +4,68 @@ import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from '../styles/Stylesheet'
 import options from '../constants/CytoscapeConfig'
+import { useSelector } from 'react-redux';
+import { selectTraceViewData } from './traceViewSlice';
 
 export interface Trace {
-  data: TraceData | undefined
+  data: TraceData
   status: 'idle' | 'loading' | 'failed';
 }
 
 cytoscape.use(coseBilkent);
 
 /**
- * Renders passed-in Trace Data to a Source Map View
- * @param data Related trace Data to be rendered by the Source Map View
+ * Renders trace data by fetching it from the Redux Store
+ * @Remarks Trace Data requests should be dispatched by the components handling the event which caused a trace to load.
  */
-const TraceView = (data:any) => {
-  const layout = options()
+  const TraceView = () => {
+  
+  const traceViewData = useSelector(selectTraceViewData); 
+  const layout = options();
 
   let myCyRef;
-  
-  return (
-    <div
-    style={{
-      display: 'flex',
-      justifyContent: 'space-around',
-    }}
-  >
-    <CytoscapeComponent
-      elements={data.data}
-      stylesheet={styleSheet}
-      layout={layout}
+
+  if (traceViewData.data.length === 0){
+    return (
+      <div id="loading-screen">Loading...</div>
+    )
+  }
+  else {
+    return (
+      <div
       style={{
-        width: '100%',
-        height: '50rem',
-        objectFit: 'cover',
-        backgroundColor: '#161820'
+        display: 'flex',
+        justifyContent: 'space-around',
       }}
-      maxZoom={3}
-      minZoom={0.1}
-      cy={cy => {
-        myCyRef = cy;
-
-        // console.log("EVT", cy);
-
-        cy.on("tap", "node", evt => {
-          var node = evt.target;
-          console.log("EVT", evt);
-          console.log("TARGET", node.data());
-          console.log("TARGET TYPE", typeof node[0]);
-        });
-      }}
-    ></CytoscapeComponent>
-  </div>
-  )
+    >
+      <CytoscapeComponent
+        elements={traceViewData.data}
+        stylesheet={styleSheet}
+        layout={layout}
+        style={{
+          width: '100%',
+          height: '50rem',
+          objectFit: 'cover',
+          backgroundColor: '#161820'
+        }}
+        maxZoom={3}
+        minZoom={0.1}
+        cy={cy => {
+          myCyRef = cy;
+  
+          // console.log("EVT", cy);
+  
+          cy.on("tap", "node", evt => {
+            var node = evt.target;
+            console.log("EVT", evt);
+            console.log("TARGET", node.data());
+            console.log("TARGET TYPE", typeof node[0]);
+          });
+        }}
+      ></CytoscapeComponent>
+    </div>
+    )
+  }
 }
 
 export default TraceView;

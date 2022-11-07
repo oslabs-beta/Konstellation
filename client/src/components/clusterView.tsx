@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-import { getClusterAsync, selectElements, ClusterData } from './clusterViewSlice';
+import { getClusterAsync, ClusterData, selectCluster } from './clusterViewSlice';
 import styleSheet from '../styles/Stylesheet';
 import options2 from '../constants/CytoscapeConfig';
+import cluster from 'cluster';
+import LoadingScreen, { LoadingScreenType } from './loadingScreen';
 
 export interface Cluster {
-  data: ClusterData | undefined
+  data: ClusterData
   status: 'idle' | 'loading' | 'failed';
 }
 
@@ -16,7 +18,7 @@ export interface Cluster {
    */
 export default function clusterView(): JSX.Element {
   
-  const clusterData = useAppSelector(selectElements);
+  const {data, status} = useAppSelector(selectCluster);
   const dispatch = useAppDispatch();
 
   const layout = options2();
@@ -24,45 +26,55 @@ export default function clusterView(): JSX.Element {
   let myCyRef;
 
   useEffect(() => {
-    if(!clusterData) {
+    if(data.length === 0) {
       dispatch(getClusterAsync());
     }
   })
 
-  return (
-  <div>
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-around',
-      }}
-    >
-
-    <CytoscapeComponent
-      elements={clusterData as []}
-      stylesheet={styleSheet}
-      layout={layout}
-      style={{
-        width: '100vw',
-        height: '100vh',
-        objectFit: 'cover',
-        background: '#161820' 
-      }}
-      wheelSensitivity={0.08}
-      maxZoom={3.0}
-      minZoom={0.1}
-      cy={cy => {
-        myCyRef = cy;
-        cy.on("tap", "node", evt => {
-          var node = evt.target;
-          console.log("EVT", evt);
-          console.log("TARGET", node.data());
-          console.log("TARGET TYPE", typeof node[0]);
-        });
-      }}
-    ></CytoscapeComponent>
-  </div>
-  </div>
-  )
+  if (status === 'failed') {
+    <div id="message-screen">Request Failed. Please confirm server is active.</div>
+  }
+  if (status === 'loading'){
+    return (
+      <LoadingScreen type={LoadingScreenType.cyclingStops} />
+    )
+  }
+  else {
+    return (
+      <div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
+  
+        <CytoscapeComponent
+          elements={data as []}
+          stylesheet={styleSheet}
+          layout={layout}
+          style={{
+            width: '100vw',
+            height: '100vh',
+            objectFit: 'cover',
+            background: '#161820' 
+          }}
+          wheelSensitivity={0.08}
+          maxZoom={3.0}
+          minZoom={0.1}
+          cy={cy => {
+            myCyRef = cy;
+            cy.on("tap", "node", evt => {
+              var node = evt.target;
+              console.log("EVT", evt);
+              console.log("TARGET", node.data());
+              console.log("TARGET TYPE", typeof node[0]);
+            });
+          }}
+        ></CytoscapeComponent>
+      </div>
+      </div>
+      )
+  }
 }
 
