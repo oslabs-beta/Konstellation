@@ -1,9 +1,12 @@
-import { ErrObject, express } from '../types';
+import { express } from '../types';
 import { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import { appendFile} from 'fs';
-import { IncomingHttpHeaders } from 'http';
 const app = express();
+import dotenv from 'dotenv'
+import { config } from './constants/config'
+import path from 'path'
+
+dotenv.config({path: path.resolve(__dirname, '../.env')})
 
 app.use(cors());
 app.use(express.json());
@@ -14,9 +17,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
     res.set('Access-Control-Allow-Origin', ['*']);
     
-    fetch('http://localhost:3000' + req.path)
-    .then(response => response.json())
+    fetch(config.serverUrl + req.path)
+    .then(response => response.json() )
     .then(data => res.send(data));
 });
 
-app.listen(3001, () => console.log('Proxy Server is listening on port 3001'));
+app.listen(3010, () => console.log('Proxy Server is listening on port 3010'));
