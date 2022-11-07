@@ -2,21 +2,19 @@ import { NextFunction, response } from "express";
 import { appendFile } from "fs";
 import { Http2ServerRequest } from "http2";
 import { nextTick, traceDeprecation } from "process";
-import TraceVisualizer from "../../client/components/TraceVisualizer";
 import { axios } from "../../types";
 import fakeTraceData from "../data/fakeTraceData";
 import fakeTraceData2 from "../data/fakeTraceData2";
 import { IRequest, IResponse } from "../interfaces/IExpress";
 import Utils from "../utils/Utils";
 
-const QUERY_URL = 'http://localhost:16686/api/traces?limit=20000&service='
+// const QUERY_URL = 'http://localhost:16686/api/traces?limit=20000&service='
 
 export class TraceModel {
   static requestCount: Number = 0;
   // Add helper fxn to convert epoch time : 
   // var myDate = new Date( your epoch date *1000);
   // document.write(myDate.toGMTString()+"<br>"+myDate.toLocaleString());
-
 // Currently set to only retrieve first 3, when complete, will want to pass in service name, lookbackParam 
    // final fetch call should be line below
       // const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=' + serviceQuery + '&lookback=' + lookbackParam)
@@ -81,163 +79,163 @@ export class TraceModel {
     res.locals.tracesArray = tracesArray;
     return next();
   }
-
-  public static async getIndividualTraceView(req: IRequest, res: IResponse, next: NextFunction) {
-    const traceViewArray = [];
-    console.log("jaeger query-ing");
-    // const traceID = req.body.traceID;
-    // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/fac23e04baca3badb014d7e063507cd3')
-    if (!response.ok) {
-      throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const currentTraceData = responseJson.data[0]
-    const currentTraceSpans = currentTraceData.spans;
-    const currentTraceProcesses = currentTraceData.processes;
-    // make pods first
-    const podsArray: { data: { id: string; label: any; type: string; }; classes: string; }[] = [];
-    traceViewArray.push(podsArray)
-    for (const process in currentTraceProcesses){
-      const currProcess = currentTraceProcesses[process];
-      const currProcessTags = currProcess.tags;
-      for (let i = 0; i < currProcessTags.length; i++){
-        if (currProcessTags[i].key === 'k8s.pod.name')
-        podsArray.push({
-          data: {
-            id: process,
-            label: currProcessTags[i].value,
-            type: 'trace',
-          },
-          classes: 'label'
-        })
-      }
-    }
-    console.log(podsArray);
-    type SpanCache = {[key: string] : string}
-    const spanToProcess: SpanCache = {};
-    // associate each span with a process 
-    currentTraceSpans.forEach((indivSpan: any) => {
-      const currSpan = indivSpan.spanID;
-      const currProcess = indivSpan.processID;
-      spanToProcess[currSpan] = currProcess;
-    });
-    // SpanToProcess is dictionary to access which pod each span is referencing
-    // console.log(spanToProcess)
-    // Make Edges below
-    // Can we reduce time complexity of this? Possibly refactor to combine with spanToProcess to reduce iteration on traceSpans 
-    const edgesArray: { data: { source: any; target: any; type: string; label: any; }; classes: string; }[] = [];
-    // For some reason, forEach on currentTraceSpans is returning an error here despite being used above to generate spanToProcess
-    // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
-    for (let k = 0; k < currentTraceSpans.length; k++){
-      let indivSpan = currentTraceSpans[k];
-      if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
-        edgesArray.push({
-          data: {
-            source: spanToProcess[indivSpan.spanID],
-            target: spanToProcess[indivSpan.references[0].spanID],
-            type: 'arrow',
-            label: indivSpan.duration,
-          },
-          classes: 'background'
-        })
-      };
-    }
-    traceViewArray.push(edgesArray)
-    // console.log(traceViewArray);
-    res.locals.traceViewArray = traceViewArray;
-    return next();
+  
+  // public static async getIndividualTraceView(req: IRequest, res: IResponse, next: NextFunction) {
+  //   const traceViewArray = [];
+  //   console.log("jaeger query-ing");
+  //   // const traceID = req.body.traceID;
+  //   // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
+  //   const response = await fetch('http://localhost:16686/api/traces/fac23e04baca3badb014d7e063507cd3')
+  //   if (!response.ok) {
+  //     throw new Error(`Error retrieving traceview! Status: ${response.status}`)
+  //   }
+  //   const responseJson = await response.json();
+  //   const currentTraceData = responseJson.data[0]
+  //   const currentTraceSpans = currentTraceData.spans;
+  //   const currentTraceProcesses = currentTraceData.processes;
+  //   // make pods first
+  //   const podsArray: { data: { id: string; label: any; type: string; }; classes: string; }[] = [];
+  //   traceViewArray.push(podsArray)
+  //   for (const process in currentTraceProcesses){
+  //     const currProcess = currentTraceProcesses[process];
+  //     const currProcessTags = currProcess.tags;
+  //     for (let i = 0; i < currProcessTags.length; i++){
+  //       if (currProcessTags[i].key === 'k8s.pod.name')
+  //       podsArray.push({
+  //         data: {
+  //           id: process,
+  //           label: currProcessTags[i].value,
+  //           type: 'trace',
+  //         },
+  //         classes: 'label'
+  //       })
+  //     }
+  //   }
+  //   console.log(podsArray);
+  //   type SpanCache = {[key: string] : string}
+  //   const spanToProcess: SpanCache = {};
+  //   // associate each span with a process 
+  //   currentTraceSpans.forEach((indivSpan: any) => {
+  //     const currSpan = indivSpan.spanID;
+  //     const currProcess = indivSpan.processID;
+  //     spanToProcess[currSpan] = currProcess;
+  //   });
+  //   // SpanToProcess is dictionary to access which pod each span is referencing
+  //   // console.log(spanToProcess)
+  //   // Make Edges below
+  //   // Can we reduce time complexity of this? Possibly refactor to combine with spanToProcess to reduce iteration on traceSpans 
+  //   const edgesArray: { data: { source: any; target: any; type: string; label: any; }; classes: string; }[] = [];
+  //   // For some reason, forEach on currentTraceSpans is returning an error here despite being used above to generate spanToProcess
+  //   // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
+  //   for (let k = 0; k < currentTraceSpans.length; k++){
+  //     let indivSpan = currentTraceSpans[k];
+  //     if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
+  //       edgesArray.push({
+  //         data: {
+  //           source: spanToProcess[indivSpan.spanID],
+  //           target: spanToProcess[indivSpan.references[0].spanID],
+  //           type: 'arrow',
+  //           label: indivSpan.duration,
+  //         },
+  //         classes: 'background'
+  //       })
+  //     };
+  //   }
+  //   traceViewArray.push(edgesArray)
+  //   // console.log(traceViewArray);
+  //   res.locals.traceViewArray = traceViewArray;
+  //   return next();
     
-  }
+  // }
 
-  public static async getIndividualPodData(req: IRequest, res: IResponse, next: NextFunction) {
-    const traceViewArray = [];
-    console.log("jaeger query-ing");
-    const processTarget = req.body.processTarget;
-    // const traceID = req.body.traceID;
-    // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/fac23e04baca3badb014d7e063507cd3')
-    if (!response.ok) {
-      throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const currentTraceData = responseJson.data[0]
-    const currentTraceSpans = currentTraceData.spans;
-    type SpanCache = {[key: string] : string}
-    const spanToProcess: SpanCache = {};
-    // associate each span with a process 
-    currentTraceSpans.forEach((indivSpan: any) => {
-      const currSpan = indivSpan.spanID;
-      const currProcess = indivSpan.processID;
-      spanToProcess[currSpan] = currProcess;
-    });
-    // SpanToProcess is dictionary to access which pod each span is referencing
-    // console.log(spanToProcess)
-    // processSpecificSpans is looping throuh all spans & accessing it by reverse now, so that when we click on a node, it will reutrn the different spans associated with that process 
-    const processSpecificSpans = [];
-    for (let span in spanToProcess) {
-      if (spanToProcess[span] === processTarget)
-        processSpecificSpans.push(span);
-    }
-    res.locals.processSpecificSpans = processSpecificSpans;
-    return next();
-  }
+  // public static async getIndividualPodData(req: IRequest, res: IResponse, next: NextFunction) {
+  //   const traceViewArray = [];
+  //   console.log("jaeger query-ing");
+  //   const processTarget = req.body.processTarget;
+  //   // const traceID = req.body.traceID;
+  //   // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
+  //   const response = await fetch('http://localhost:16686/api/traces/fac23e04baca3badb014d7e063507cd3')
+  //   if (!response.ok) {
+  //     throw new Error(`Error retrieving traceview! Status: ${response.status}`)
+  //   }
+  //   const responseJson = await response.json();
+  //   const currentTraceData = responseJson.data[0]
+  //   const currentTraceSpans = currentTraceData.spans;
+  //   type SpanCache = {[key: string] : string}
+  //   const spanToProcess: SpanCache = {};
+  //   // associate each span with a process 
+  //   currentTraceSpans.forEach((indivSpan: any) => {
+  //     const currSpan = indivSpan.spanID;
+  //     const currProcess = indivSpan.processID;
+  //     spanToProcess[currSpan] = currProcess;
+  //   });
+  //   // SpanToProcess is dictionary to access which pod each span is referencing
+  //   // console.log(spanToProcess)
+  //   // processSpecificSpans is looping throuh all spans & accessing it by reverse now, so that when we click on a node, it will reutrn the different spans associated with that process 
+  //   const processSpecificSpans = [];
+  //   for (let span in spanToProcess) {
+  //     if (spanToProcess[span] === processTarget)
+  //       processSpecificSpans.push(span);
+  //   }
+  //   res.locals.processSpecificSpans = processSpecificSpans;
+  //   return next();
+  // }
 
-  public static async getSpanDetails(req: IRequest, res: IResponse, next: NextFunction) {
-    const spanDetails = [];
-    console.log("retrieving spanDetails");
-    // Refactor to pass in trace currentTraceSpans from previous middleware instead of making call &iterating again 
-    const spanTarget = req.body.spanTarget
-    // const traceID = req.body.traceID;
-    // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/fac23e04baca3badb014d7e063507cd3')
-    if (!response.ok) {
-      throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const currentTraceData = responseJson.data[0]
-    const currentTraceSpans = currentTraceData.spans;
-    for (let i = 0; i < currentTraceSpans; i ++){
-      if (currentTraceSpans[i].spanID === spanTarget){
-        const currentSpan = currentTraceSpans[i];
-        for (let spanDetail in currentSpan){
-          const operationName = spanDetail[operationName];
-          const references = spanDetail[references];
-          const startTime = spanDetail[startTime];
-          const duration = spanDetail[duration];
-          const spanTags = spanDetail[tags];
-          spanTags.forEach((indivTag) => {
-            if (indivTag.key === 'http.method'){
-              const httpMethod = indivTag.value;
-            }
-            else if (indivTag.key === 'http.url'){
-              const httpUrl = indivTag.value;
-            }
-            else if (indivTag.key === 'http.target'){
-              const httpTarget = indivTag.value;
-            }
-            else if (indivTag.key === 'http.status_code'){
-              const httpStatusCode = indivTag.value;
-            }
-          })
-          spanDetails.push({
-            data: {
-              operationName: operationName,
-              references: references,
-              startTime: startTime,
-              duration: duration,
-              httpMethod: httpMethod,
-              httpUrl: httpUrl,
-              httpTarget: httpTarget,
-              httpStatusCode: httpStatusCode,
-            }
-          })
-        }
-        res.locals.spanDetails = spanDetails;
-        return next();
-      }
-    }
-  }
+  // public static async getSpanDetails(req: IRequest, res: IResponse, next: NextFunction) {
+  //   const spanDetails = [];
+  //   console.log("retrieving spanDetails");
+  //   // Refactor to pass in trace currentTraceSpans from previous middleware instead of making call &iterating again 
+  //   const spanTarget = req.body.spanTarget
+  //   // const traceID = req.body.traceID;
+  //   // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
+  //   const response = await fetch('http://localhost:16686/api/traces/fac23e04baca3badb014d7e063507cd3')
+  //   if (!response.ok) {
+  //     throw new Error(`Error retrieving traceview! Status: ${response.status}`)
+  //   }
+  //   const responseJson = await response.json();
+  //   const currentTraceData = responseJson.data[0]
+  //   const currentTraceSpans = currentTraceData.spans;
+  //   for (let i = 0; i < currentTraceSpans; i ++){
+  //     if (currentTraceSpans[i].spanID === spanTarget){
+  //       const currentSpan = currentTraceSpans[i];
+  //       for (let spanDetail in currentSpan){
+  //         const operationName = spanDetail[operationName];
+  //         const references = spanDetail[references];
+  //         const startTime = spanDetail[startTime];
+  //         const duration = spanDetail[duration];
+  //         const spanTags = spanDetail[tags];
+  //         spanTags.forEach((indivTag) => {
+  //           if (indivTag.key === 'http.method'){
+  //             const httpMethod = indivTag.value;
+  //           }
+  //           else if (indivTag.key === 'http.url'){
+  //             const httpUrl = indivTag.value;
+  //           }
+  //           else if (indivTag.key === 'http.target'){
+  //             const httpTarget = indivTag.value;
+  //           }
+  //           else if (indivTag.key === 'http.status_code'){
+  //             const httpStatusCode = indivTag.value;
+  //           }
+  //         })
+  //         spanDetails.push({
+  //           data: {
+  //             operationName: operationName,
+  //             references: references,
+  //             startTime: startTime,
+  //             duration: duration,
+  //             httpMethod: httpMethod,
+  //             httpUrl: httpUrl,
+  //             httpTarget: httpTarget,
+  //             httpStatusCode: httpStatusCode,
+  //           }
+  //         })
+  //       }
+  //       res.locals.spanDetails = spanDetails;
+  //       return next();
+  //     }
+  //   }
+  // }
 
   public static saveDataToTextFile(req: IRequest, res: IResponse) {
     // console.log(req.socket.remoteAddress); // Use this if not using a server proxy (ex: ngrok)
