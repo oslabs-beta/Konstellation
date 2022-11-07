@@ -4,7 +4,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const Dotenv = require('dotenv').config({path: path.resolve(__dirname, './client/.env')});
 
-
 module.exports = (env: any, argv:any) => {
 
   const mode = argv.mode || 'development';
@@ -51,7 +50,7 @@ module.exports = (env: any, argv:any) => {
         },
         {
           test: /\.s?css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
         },
       ],
     },
