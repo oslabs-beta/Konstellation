@@ -5,6 +5,7 @@ import { nextTick, traceDeprecation } from "process";
 import TraceVisualizer from "../../client/components/TraceVisualizer";
 import { axios } from "../../types";
 import fakeTraceData from "../data/fakeTraceData";
+import fakeTraceData2 from "../data/fakeTraceData2";
 import { IRequest, IResponse } from "../interfaces/IExpress";
 import Utils from "../utils/Utils";
 

@@ -1,3 +1,5 @@
+
+import {v4 as uuidv4}  from 'uuid';
 import { Request, Response, NextFunction } from "express";
 const k8s = require('@kubernetes/client-node');
 
@@ -15,6 +17,7 @@ class ClusterModel {
       
       const namespaceData = await k8sApi.listNamespace();
       let namespaces: string[] = [];
+
       namespaceData.body.items.forEach((space: any) => {
         const name = space.metadata.name;
         if (name !== 'kube-system') namespaces.push(name);
@@ -27,7 +30,8 @@ class ClusterModel {
         elements.push({
           data: {
             source: clusterName,
-            target: name
+            target: name,
+            id: uuidv4()
           },
         })
       })
@@ -45,13 +49,15 @@ class ClusterModel {
           elements.push({
             data: {
               source: namespace,
-              target: name
+              target: name,
+              id: uuidv4()
             }
           })
         })
       }
     
     res.locals.elements = elements
+    console.log(elements)
     return next();
   }
 }
