@@ -27,7 +27,7 @@ cytoscape.use(coseBilkent);
 
   if (traceViewData.data.length === 0){
     return (
-      <div>Loading</div>
+      <div id="loading-screen">Loading...</div>
     )
   }
   else {
