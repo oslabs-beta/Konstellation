@@ -7,7 +7,7 @@ import { TraceData } from './trace-table/tableList';
 const SearchBarTrace = (): JSX.Element => {
 	
 
-  
+  const traceViewData = useAppSelector(selectTraceViewData); 
 	const traceData: TraceData[] = [];
 
 	const dispatch = useAppDispatch();
@@ -27,6 +27,7 @@ const SearchBarTrace = (): JSX.Element => {
 
 	const handleClick = ():any => {
 		//closes this trace details view?
+		//need to decide what to do withi this 
 	}
 	
  //create a use effect that upon render, grabs the actual trace data store in the store and display it on top

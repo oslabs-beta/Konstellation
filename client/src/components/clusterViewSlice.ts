@@ -20,7 +20,8 @@ export interface Data {
 
 const initialState: Cluster = {
   data: [],
-  status: 'idle'
+  status: 'idle',
+	namespace: 'all'
 }
 
 // Included as a critical first step for troubleshooting:

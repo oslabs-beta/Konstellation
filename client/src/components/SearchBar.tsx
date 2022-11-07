@@ -7,14 +7,10 @@ import SearchBarCluster from './SearchBarCluster';
 import '../styles/searchBar.scss';
 
 const SearchBar = (props:any) => {
-	
 
 	const dispatch = useAppDispatch();
   const viewType = useAppSelector(selectSourceMap);
   
-
-
-
 	const view = viewType.type === ViewType.cluster ? <SearchBarCluster /> : <SearchBarTrace />
 
 
@@ -25,8 +21,6 @@ const SearchBar = (props:any) => {
       </div>
     </>
     )
-  
-
 }
 
 

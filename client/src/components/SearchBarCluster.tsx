@@ -8,21 +8,25 @@ import { selectCluster } from './clusterViewSlice';
 
 
 const SearchBarCluster = ():JSX.Element => {
-
-//need to grab the namespaces and st it as stat here
-  const { data } = useAppSelector(selectCluster);
+	
 	const dispatch = useAppDispatch();
   
+	//fetches the namespaces
+  const { data } = useAppSelector(selectCluster);
   
+
   const submitTrace = (traceID:string):any => {
 		//changes the state from cluster to trace view
 		//update view so that the data property is updated to the inputted trace view and changes the view type
 		dispatch(changeView({type: 1}))
+		//dispatches an action to call on the asynchoronous funciton of getting tracedata
 		dispatch(getTraceDataAsync(traceID))
 		return
 	}
 
-
+  //populates the dropdown menu with namespaces
+  //adds only the namespace elements to the array
+	const DropDownOptions: React.ReactElement[] =[]
   const nameSpaceData = []
 	for (let i = 0; i < data.length;i++){
 		if (data[i].data.type === 'namespace'){
@@ -30,13 +34,9 @@ const SearchBarCluster = ():JSX.Element => {
 		}
 	}
 
-//populates the dropdown menu with namespaces
-  const DropDownOptions: React.ReactElement[] =[]
-
-nameSpaceData.forEach(element => {
-	DropDownOptions.push (<option className='options'>{element}</option>)
-})
-
+	nameSpaceData.forEach(element => {
+		DropDownOptions.push (<option className='options'>{element}</option>)
+	})
 
 return (
 		<div className="searchBar">

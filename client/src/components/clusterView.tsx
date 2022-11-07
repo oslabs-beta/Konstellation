@@ -10,6 +10,7 @@ import LoadingScreen, { LoadingScreenType } from './loadingScreen';
 export interface Cluster {
   data: ClusterData
   status: 'idle' | 'loading' | 'failed';
+	namespace: string;
 }
 
 /**
