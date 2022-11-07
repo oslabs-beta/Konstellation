@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import '../../styles/home.scss'
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'
 import { selectTraceTableDrawerIsOpen, toggleIsOpen } from './drawerSlice'
-import FooterDrawerHandle, {DrawerTabProps} from './footerTabHandle'
-import TraceTable from './traceTable'
+import FooterDrawerHandle, {DrawerTabProps} from './footerDrawerTab'
+import TraceTable from './traceTableContent'
 
 /**
    * Parent level component for managing "Drawer"-type elements in the window's Footer.
