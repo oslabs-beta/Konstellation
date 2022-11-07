@@ -8,10 +8,19 @@ const initialState: Trace = {
   status: 'idle'
 }
 
+export type TraceData = {
+  data: {
+    id: string,
+    label: string,
+    type: string,
+  }
+  classes: string,
+}
+
 export const getTraceDataAsync = createAsyncThunk(
   'traceView/getTraceData',
   async (traceId: string) => {
-    const url = config.url + '/api/traces/' + traceId
+    const url = config.url + '/api/traces/getTraceView'
 
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     console.log("Fetching Data From: ")
@@ -27,8 +36,8 @@ export const traceViewSlice = createSlice({
   name: 'traceView',
   initialState: initialState,
   reducers: { 
-    updateData:  (state, action: PayloadAction<TraceData>) => {
-      state.data = action.payload;
+    updateData:  (state, action: PayloadAction<Trace>) => {
+      state.data = action.payload.data;
     }
   },
   extraReducers: (builder) => {
@@ -36,9 +45,9 @@ export const traceViewSlice = createSlice({
       .addCase(getTraceDataAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(getTraceDataAsync.fulfilled, (state, action: PayloadAction<TraceData>) => {
+      .addCase(getTraceDataAsync.fulfilled, (state, action: PayloadAction<Trace>) => {
         state.status = 'idle';
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
       .addCase(getTraceDataAsync.rejected, (state) => {
         state.status = 'failed';
@@ -46,6 +55,6 @@ export const traceViewSlice = createSlice({
   }
 })
 
-export const selectTraceViewData = (state: RootState) => state.traceView;
+export const selectTraceView = (state: RootState) => state.traceView;
 
 export default traceViewSlice.reducer;

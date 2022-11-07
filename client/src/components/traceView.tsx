@@ -5,10 +5,10 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from '../styles/Stylesheet'
 import options from '../constants/CytoscapeConfig'
 import { useSelector } from 'react-redux';
-import { selectTraceViewData } from './traceViewSlice';
+import { selectTraceView, TraceData } from './traceViewSlice';
 
 export interface Trace {
-  data: TraceData
+  data: TraceData[]
   status: 'idle' | 'loading' | 'failed';
 }
 
@@ -20,7 +20,7 @@ cytoscape.use(coseBilkent);
  */
   const TraceView = () => {
   
-  const traceViewData = useSelector(selectTraceViewData); 
+  const traceViewData = useSelector(selectTraceView); 
   const layout = options();
 
   let myCyRef;
