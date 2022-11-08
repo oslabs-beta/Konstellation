@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/login.scss';
 
@@ -14,33 +14,52 @@ function Login() {
   const [clusterName, setClusterName] = useState("");
   const [regionName, setRegionName] = useState("");
 
-  // Why is this executing twice?
-  // Response after trying to update local cred/config files
-  window.electronAPI.onConfigResp('onConfigResp', (event: any, data: any) => {
-    console.log("From server:", data)
-  })
-  
-  // Why is this executing twice?
-  // Response after parsing local cred/config files
-  window.electronAPI.onSendConfig('onSendConfig', (event: any, data: [string, string, string]) => {
-    console.log("Parsed from local files:", data);
-    // Update each input field
-    setAccessKey(data[0]);
-    setSecretKey(data[1]);
-    setRegionName(data[2]);
-  })
-  
+  // Only fire on initial render
+  // Executes twice because of React.Strict
+  useEffect(() => {
+
+    // On mount
+    //const removeEventListener = window.electronAPI.receive('fromMain', (data : any) => onEvent(data));
+
+    console.log("useEffect!");
+
+    loginUser(true);
+    // Why is this executing twice?
+    // Response after trying to update local cred/config files
+    window.electronAPI.onConfigResp('onConfigResp', (event: any, data: any) => {
+      console.log("From server:", data)
+      loginUser(false);
+      // If error, then electron internally broke
+    })
+    // Why is this executing twice?
+    // Response after parsing local cred/config files
+    window.electronAPI.onSendConfig('onSendConfig', (event: any, data: [string, string, string]) => {
+      console.log("Parsed from local files:", data);
+      // Update each input field
+      setAccessKey(data[0]);
+      setSecretKey(data[1]);
+      setRegionName(data[2]);
+    })
+    return;
+    // return () => {
+    //   // On unmount, remove listeners
+    //   window.electronAPI.removeEventListeners();
+    // };
+  }, [])
+
+
   /**
    * Invoked when the user isn't authenticated to access a K8 cluster
    * Invoke electron's main process to access any credentials on the
    * user's local computer.
+   * @argument loadConfig if the local config file should be loaded
    */
   // const parseLocalCredentials = () => {
   //   //window.electronAPI.onConfig('Button Clicked');
   //   window.electronAPI.getConfig();
   // }
 
-  const loginUser = () => {
+  const loginUser = (loadConfig : boolean) => {
     //alert('id:' + accessKey + ' secret:' + secretKey);
 
     fetch('http://localhost:3000/authenticate', {
@@ -54,16 +73,19 @@ function Login() {
         if (response.status !== 200) {
           console.log('bad credentials...');
           // Leverage Electron to parse authentication data from local files
-          window.electronAPI.getConfig();
+          if(loadConfig) window.electronAPI.getConfig();
+          return;
         }
         else {
           console.log('Valid creds!');
           navigate('/app');
+          return;
         }
       }).catch(err => {
         console.log('bad credentials...');
         // Leverage Electron to parse authentication data from local files
-        window.electronAPI.getConfig();       
+        if(loadConfig) window.electronAPI.getConfig();
+        return;       
       })
   }
 
@@ -91,15 +113,14 @@ function Login() {
 
     // // Use the non-empty inputs to configure local files
     // if(accessKey && secretKey) {
-
+    //loginUser();
     // }
-
-    loginUser();
+    return;
   }
 
   // Need an environmental condition to avoid logging in user if they just logged out
   // Need to render the background with the "loading icon"
-  loginUser();
+  //loginUser();
 
   return (
     <div id="login" >
@@ -141,8 +162,6 @@ function Login() {
       </div>
     </div>
   );
-
-
 }
 
 export default Login;

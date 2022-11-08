@@ -39,7 +39,11 @@ const exposedAPI = {
    */
   onSendConfig: (event, func) => {
     ipcRenderer.on(event, func);
-  }
+  },
+  // removeEventListeners: (event, func) => {
+  //   ipcRenderer.removeListener('onConfigResp', () => {});
+  //   ipcRenderer.removeListener('onSendConfig', () => {});
+  // }
 };
 
 // Exposes API key:value functions to the renderer process

@@ -45,9 +45,8 @@ async function getAWSField(field) {
     return stdout.slice(0, stdout.length - 1);
   } catch (e) {
     console.log('err:', e);
+    return '';
   }
-  // Returns an empty string if nothing is found or an error
-  return '';
 }
 
 function createWindow() {
@@ -80,6 +79,7 @@ function createWindow() {
   }
 }
 
+
 app.whenReady().then(() => {
   /**
      * @remarks
@@ -89,15 +89,16 @@ app.whenReady().then(() => {
      * @param arg - how to configure the client's local files
      * @returns True if success, otherwise False
      */
-  ipcMain.on('on-config', (event, arg) => {
+  ipcMain.on('on-config', async (event, arg) => {
     console.log('arg', arg);
-    setAWSField('aws_access_key_id', arg[0])
-    setAWSField('aws_secret_access_key', arg[1])
-    setAWSField('region', arg[3])
-
+    const keyResp = await setAWSField('aws_access_key_id', arg[0])
+    const secretResp = await setAWSField('aws_secret_access_key', arg[1])
+    const regionResp = await setAWSField('region', arg[3])
+    const outputResp = await setAWSField('output', 'json')
+    console.log('on-config!');
     // event.reply('config-aws-result', configAWS());
     // Trigger another IPC event back to the render process
-    event.sender.send('onConfigResp', 'my goodness watson!');
+    event.sender.send('onConfigResp', [keyResp, secretResp, regionResp, outputResp]);
   });
 
   /**
@@ -108,9 +109,13 @@ app.whenReady().then(() => {
    * @returns True if success, otherwise False
    */
   ipcMain.on('get-config', async (event) => {
-    console.log("hi?");
+    console.log("get-config");
     // Retrieve the user's Access Key, Secret Key, and Region from their local files
-    const data = [await getAWSField('aws_access_key_id'), await getAWSField('aws_secret_access_key'), await getAWSField('region')];
+    const access_key = await getAWSField('aws_access_key_id');
+    const secret_key = await getAWSField('aws_secret_access_key');
+    const region = await getAWSField('region');
+
+    const data = [access_key, secret_key, region];
     console.log('sending config:', data);
 
     // Send the information to Login.tsx
