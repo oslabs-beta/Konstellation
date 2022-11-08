@@ -50,11 +50,6 @@
 	}
 }
 
-
-
-
-
-
 #searchBar {
 	color: #919191;
   flex-grow: 4;
@@ -64,6 +59,7 @@
 }
 
 #searchText {
+	color: #919191;
 	border: 1px solid #919191;
 	padding-top: 19px;
 	padding-bottom: 19px;
@@ -78,6 +74,7 @@
 	width: 70%;
 	height: 54px;
 	border: 1px solid #919191;
+  font-weight: 400;
 }
 #searchBarInput:focus{
 	outline: none;
