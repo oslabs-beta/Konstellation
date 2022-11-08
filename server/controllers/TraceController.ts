@@ -21,6 +21,22 @@ export class TraceController {
         });
       }
     }
+    public static getSearchBarTraceView(req: Request, res: Response, next: NextFunction) {
+      try{
+        console.log("In Tracecontroller");
+        TraceModel.getSearchBarTraceView(req, res, next);
+      }
+      catch(err) {
+        return next({
+          log: `Error in TraceController.getCluster: ${err}`,
+          status: 500,
+          message: {
+            err: 'Error occured while retrieving search bar trace data in TraceController',
+          },
+        });
+      }
+    }
+    
 
     public static getTraceViewData(req: Request, res: Response, next: NextFunction) {
       try{

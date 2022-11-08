@@ -1,5 +1,6 @@
 import { appendFile } from "fs";
 import {v4 as uuidv4}  from 'uuid';
+import {TraceViewPodsData} from '../types/TraceViewData'
 // import { Http2ServerRequest } from "http2";
 // import { nextTick, traceDeprecation } from "process";
 // import { axios } from "../../types";
@@ -87,7 +88,7 @@ export class TraceModel {
     console.log("jaeger query-ing");
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/bc49af7b971eeee4bed8652b78eba0a2')
+    const response = await fetch('http://localhost:16686/api/traces/5f80fe3a9a6f8d7d41140e2588c9e8a7')
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
@@ -116,17 +117,14 @@ export class TraceModel {
     const spanToProcess: SpanCache = {};
     // associate each span with a process 
     currentTraceSpans.forEach((indivSpan: any) => {
+      const currRef = indivSpan.references[0];
       const currSpan = indivSpan.spanID;
       const currProcess = indivSpan.processID;
       spanToProcess[currSpan] = currProcess;
     });
-    // SpanToProcess is dictionary to access which pod each span is referencing
-    // console.log(spanToProcess)
-    // Make Edges below
-    // Can we reduce time complexity of this? Possibly refactor to combine with spanToProcess to reduce iteration on traceSpans 
-    // const edgesArray: { data: { source: any; target: any; type: string; label: any; }; classes: string; }[] = [];
     // For some reason, forEach on currentTraceSpans is returning an error here despite being used above to generate spanToProcess
     // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
+  
     for (let k = 0; k < currentTraceSpans.length; k++){
       let indivSpan = currentTraceSpans[k];
       if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
@@ -142,9 +140,45 @@ export class TraceModel {
         })
       };
     }
-    // console.log(traceViewArray);
     res.locals.traceViewArray = traceViewArray;
-    console.log('traceviewArray: ', traceViewArray);
+    res.locals.currentTraceSpans = currentTraceSpans;
+    // console.log('traceviewArray: ', traceViewArray);
+    return next();
+  }
+
+  public static async getSearchBarTraceView(req: Request, res: Response, next: NextFunction){
+    const currentTraceSpans = res.locals.currentTraceSpans;
+    const traceViewArray = res.locals.traceViewArray
+    let spanCountData = 0;
+    let traceID;
+    let traceStart;
+    let traceDuration;
+    currentTraceSpans.forEach((indivSpan: any) => {
+      spanCountData ++; 
+      const currRef = indivSpan.references[0];
+      if (currRef.refType === "FOLLOWS_FROM") {
+        console.log('follows from: ' + indivSpan.traceID);
+        traceID = indivSpan.traceID;
+        traceStart = indivSpan.startTime;
+        traceDuration = indivSpan.duration;
+      }
+    });
+    const searchTraceData : TraceViewPodsData = {
+      data: {
+        id: "searchBarData",
+        type: "searchBarData",
+        traceID: traceID,
+        traceStart: traceStart,
+        traceDuration: traceDuration,
+        serviceCount: traceViewArray.length,
+        spanCount: spanCountData,
+        label: undefined
+      },
+      classes: "label"
+    }
+    console.log('spanCountData', spanCountData);
+    console.log(searchTraceData) 
+    res.locals.searchBarTraceView = searchTraceData;
     return next();
   }
   // Want to pass back id when calling individual PodData; will contain the process # 
@@ -193,12 +227,12 @@ export class TraceModel {
     // SpanToProcess is dictionary to access which pod each span is referencing
     // console.log(spanToProcess)
     // processSpecificSpans is looping throuh all spans & accessing it by reverse now, so that when we click on a node, it will reutrn the different spans associated with that process 
-    const processSpecificSpans = [];
-    for (let span in spanToProcess) {
-      if (spanToProcess[span] === processTarget)
-        processSpecificSpans.push(span);
-    }
-    console.log('processSpecificSpans: ', processSpecificSpans)
+    const processSpecificSpans: never[] = [];
+    // for (let span in spanToProcess) {
+    //   if (spanToProcess[span] === processTarget)
+    //     processSpecificSpans.push(span);
+    // }
+    // console.log('processSpecificSpans: ', processSpecificSpans)
     res.locals.processSpecificSpans = processSpecificSpans;
     return next();
   }

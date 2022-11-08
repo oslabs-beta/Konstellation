@@ -19,6 +19,14 @@ router.get('/getTraceView',
   }
 );
 
+router.get('/searchbarTraceView', 
+  TraceController.getTraceViewData, TraceController.getSearchBarTraceView,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json(res.locals.searchBarTraceView)
+  }
+);
+
+
 // Will need to pass in req.body the specific pod name, req.body.traceID 
 router.get('/getSpansInProcess',
   TraceController.getPodDetails,
