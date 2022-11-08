@@ -32,6 +32,8 @@ export class TraceModel {
     const responseJson = await response.json();
     const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
     console.log('responseJson.data.length: ' + responseJson.data.length)
+    console.log("TRACEID:")
+    console.log(responseJson.data[0])
     // Using forEach renders error: Cannot read properties of undefined (reading 'length') despite responseJson.data.length returning length # value
     // Uncomment code below for final version to retrieve all trace logs instead of first 3
     // for (let i = 0; i < responseJson.data.length; i++){
@@ -88,7 +90,11 @@ export class TraceModel {
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     try {
-      const sampleTrace = '8cdaf814531d89f0486a332fbe7b254a' //update this as needed
+      console.log("REQUEST TRACEID:")
+      console.log(req.params.traceId)
+      const sampleTrace = req.params.traceId //update this as needed
+      const url = 'http://localhost:16686/api/traces/' + sampleTrace;
+      console.log(url);
       const response = await fetch('http://localhost:16686/api/traces/' + sampleTrace)
       if (!response.ok) {
         throw new Error(`Error retrieving traceview! Status: ${response.status}`)
@@ -150,7 +156,7 @@ export class TraceModel {
       return next();
     }
     catch (err){
-      console.log("Unable to Fetch this Trace. Error: " + err)
+      console.log("Error when processing data: \n" + err)
     }
   }
   
