@@ -9,10 +9,11 @@ import './styles/login.scss';
 
 function Login() {
   let navigate = useNavigate();
-  // Don't autoload user back in if they just logged out
+  // State will be null, but won't be if navigated from app
+  // Don't autoload user into app if they navigated from app
   let { state } = useLocation();
   const autoLoad = state === null ? true : false;
-  console.log('Login autoLoad:', state);
+
   const [accessKey, setAccessKey] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [clusterName, setClusterName] = useState("");
@@ -31,26 +32,32 @@ function Login() {
     // Don't load user in if they just logged out
     if(autoLoad !== false) {
       loginUser(true);
-    } 
-    // Then load their config
-    else {
+    } else {
+      // Then load config
       window.electronAPI.getConfig();
     }
     // Why is this executing twice?
     // Response after trying to update local cred/config files
     window.electronAPI.onConfigResp('onConfigResp', (event: any, data: any) => {
       console.log("From server:", data)
-      loginUser(false);
+      // The fourth datapoint is whether the kube config was set properly
+      // Only attempt to log the user in if kube config was created
+      if(data[4]) {
+        loginUser(false);
+      } else {
+        alert('Invalid credentials');
+      }
       // If error, then electron internally broke
     })
     // Why is this executing twice?
     // Response after parsing local cred/config files
-    window.electronAPI.onSendConfig('onSendConfig', (event: any, data: [string, string, string]) => {
+    window.electronAPI.onSendConfig('onSendConfig', (event: any, data: [string, string, string, string]) => {
       console.log("Parsed from local files:", data);
       // Update each input field
       setAccessKey(data[0]);
       setSecretKey(data[1]);
-      setRegionName(data[2]);
+      setClusterName(data[2]);
+      setRegionName(data[3]);
     })
     return;
     // return () => {
