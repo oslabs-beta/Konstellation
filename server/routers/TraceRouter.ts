@@ -12,7 +12,7 @@ router.get('/getAll',
   }
 );
 
-router.get('/getTraceView', 
+router.get('/getTraceView/:traceId', 
   TraceController.getTraceViewData,
   (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json(res.locals.traceViewArray)

@@ -25,62 +25,70 @@ export class TraceModel {
     // const serviceQuery = req.body.service;
     // const lookbackParam = req.body.lookbackParam; 
     // Can limit results by changing results, currently set to 20000 results shown. 
-    const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=frontend')
-    if (!response.ok) {
-      throw new Error(`Error retrieving trace! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
-    console.log('responseJson.data.length: ' + responseJson.data.length)
-    // Using forEach renders error: Cannot read properties of undefined (reading 'length') despite responseJson.data.length returning length # value
-    // Uncomment code below for final version to retrieve all trace logs instead of first 3
-    // for (let i = 0; i < responseJson.data.length; i++){
-    for (let i = 0; i < 3; i++){
-      const currentTrace = responseJson.data[i];
-      const traceID = currentTrace.traceID;
-      // setting index to 0 to get origin trace for aggregate traceLog 
-      const traceSpans = currentTrace.spans[0];
-      const traceDuration = traceSpans.duration;
-      const timeStamp = traceSpans.startTime;
-      let traceMethod = 'unknown';
-      let traceResponse = 'unknown';
-      let traceURL = 'unknown';
-      // console.log('traceSpans: ' + traceSpans);
-      // console.log('traceDuration: ' + traceDuration);
-      // console.log('Spans.Duration: ' + traceSpans.duration);
-      // console.log('timeStamp: ' + timeStamp)
-      // console.log(traceSpans);
-      // need to convert timeStamp from linux t
-      // traceSpans[0] to get origin trace data for aggregate trace log; 
-      const traceTags = traceSpans.tags;
-      for (let j = 0; j < traceTags.length; j++) {
-        if (traceTags[j].key === 'http.method' || traceTags[j].key === 'rpc.method') {
-          traceMethod = traceTags[j].value;
-        }
-        else if (traceTags[j].key === 'http.status_code'|| traceTags[j].key === 'rpc.grpc.status_code') {
-          traceResponse = traceTags[j].value;
-          }
-        else if (traceTags[j].key === 'http.url'){
-          traceURL = traceTags[j].value;
-        }
+    try {
+      const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=frontend')
+      if (!response.ok) {
+        throw new Error(`Error retrieving trace! Status: ${response.status}`)
       }
-      tracesArray.push({
-        data: {
-          id: traceID,
-          label: traceID,
-          type: 'temp',
-          response: traceResponse,
-          method: traceMethod,
-          url: traceURL,
-          duration: traceDuration,
-          timestamp: new Date(timeStamp/1000).toString(),
+      const responseJson = await response.json();
+      const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
+      console.log('responseJson.data.length: ' + responseJson.data.length)
+      console.log("TRACEID:")
+      console.log(responseJson.data)
+      // Using forEach renders error: Cannot read properties of undefined (reading 'length') despite responseJson.data.length returning length # value
+      // Uncomment code below for final version to retrieve all trace logs instead of first 3
+      // for (let i = 0; i < responseJson.data.length; i++){
+      for (let i = 0; i < responseJson.data.length; i++){
+        const currentTrace = responseJson.data[i];
+        const traceID = currentTrace.traceID;
+        // setting index to 0 to get origin trace for aggregate traceLog 
+        const traceSpans = currentTrace.spans[0];
+        const traceDuration = traceSpans.duration;
+        const timeStamp = traceSpans.startTime;
+        let traceMethod = 'unknown';
+        let traceResponse = 'unknown';
+        let traceURL = 'unknown';
+        // console.log('traceSpans: ' + traceSpans);
+        // console.log('traceDuration: ' + traceDuration);
+        // console.log('Spans.Duration: ' + traceSpans.duration);
+        // console.log('timeStamp: ' + timeStamp)
+        // console.log(traceSpans);
+        // need to convert timeStamp from linux t
+        // traceSpans[0] to get origin trace data for aggregate trace log; 
+        const traceTags = traceSpans.tags;
+        for (let j = 0; j < traceTags.length; j++) {
+          if (traceTags[j].key === 'http.method' || traceTags[j].key === 'rpc.method') {
+            traceMethod = traceTags[j].value;
+          }
+          else if (traceTags[j].key === 'http.status_code'|| traceTags[j].key === 'rpc.grpc.status_code') {
+            traceResponse = traceTags[j].value;
+            }
+          else if (traceTags[j].key === 'http.url'){
+            traceURL = traceTags[j].value;
+          }
         }
-      })
-    console.log(tracesArray);
-    res.locals.tracesArray = tracesArray;
-    // console.log('res.locals.tracesArray: ', tracesArray);
-    return next();
-  }};
+        tracesArray.push({
+          data: {
+            id: traceID,
+            label: traceID,
+            type: 'temp',
+            response: traceResponse,
+            method: traceMethod,
+            url: traceURL,
+            duration: traceDuration,
+            timestamp: new Date(timeStamp/1000).toString(),
+          }
+        })
+        // console.log('res.locals.tracesArray: ', tracesArray);
+      }
+      console.log(tracesArray);
+      res.locals.tracesArray = tracesArray;
+      return next();
+    }
+    catch (err){
+      console.log('TraceModel.getTraceLogsFromJaeger:\n' + err)
+    }
+};
   
   public static async getIndividualTraceView(req: Request, res: Response, next: NextFunction) {
     const traceViewArray = [];
@@ -88,7 +96,9 @@ export class TraceModel {
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     try {
-      const sampleTrace = '8cdaf814531d89f0486a332fbe7b254a' //update this as needed
+      const sampleTrace = req.params.traceId //update this to test specific traceIds
+      const url = 'http://localhost:16686/api/traces/' + sampleTrace;
+      console.log(url);
       const response = await fetch('http://localhost:16686/api/traces/' + sampleTrace)
       if (!response.ok) {
         throw new Error(`Error retrieving traceview! Status: ${response.status}`)
@@ -150,7 +160,7 @@ export class TraceModel {
       return next();
     }
     catch (err){
-      console.log("Unable to Fetch this Trace. Error: " + err)
+      console.log("TraceModel.getIndividualTraceView:\n" + err)
     }
   }
   
