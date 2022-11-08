@@ -2,13 +2,13 @@ import React, { JSXElementConstructor, useEffect } from 'react';
 import { changeView, selectSourceMap } from './sourceMapSlice';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { selectTraceView, getTraceDataAsync } from './traceViewSlice';
-import { selectSearchTraceResult } from './searchBarSlice';
+import { selectSearchTraceResult, SearchData } from './searchBarSlice';
 
 const SearchBarTrace = (): JSX.Element => {
 	
 
   const traceViewData = useAppSelector(selectSearchTraceResult); 
-	const exportedtraceViewData = traceViewData[0].data
+	const exportedtraceViewData= traceViewData.data
 
 	const dispatch = useAppDispatch();
   const submitTrace = (traceID:string):any => {
@@ -31,7 +31,7 @@ const SearchBarTrace = (): JSX.Element => {
 	//after the async call to get the individual trace info, populate the trace data state in our component to utilize the newly updated info.
 	useEffect (() => {
     const traceViewData = useAppSelector(selectSearchTraceResult);
-		const exportedtraceViewData = traceViewData[0].data 
+		const exportedtraceViewData = traceViewData.data 
 	})
  //create a use effect that upon render, grabs the actual trace data store in the store and display it on top
   //const traceData = useAppSelector(selectTraceViewData);
@@ -67,31 +67,31 @@ const SearchBarTrace = (): JSX.Element => {
 						Trace ID:
 					  </div>
 					  <div className='searchData'>
-						{exportedtraceViewData.parentId}
+						{exportedtraceViewData?.traceId}
 					  </div>
 					  <div className="searchTextPrefix">
 						Trace Start:
 					  </div>
 				  	<div className='searchData'>
-						{exportedtraceViewData.start}
+						{exportedtraceViewData?.traceStart}
 					  </div>
 					  <div className="searchTextPrefix">
 						Total Duration:
 					  </div>
 					  <div className='searchData'>
-						{exportedtraceViewData.duration}
+						{exportedtraceViewData?.traceDuration}
 					  </div>
 					  <div className="searchTextPrefix">
 						Services:
 					  </div>
 					  <div className='searchData'>
-						{exportedtraceViewData.services}
+						{exportedtraceViewData?.serviceCount}
 					  </div>
 					  <div className="searchTextPrefix">
 						Total Spans:
 					  </div>
 					  <div className='searchData'>
-						{exportedtraceViewData.totalSpans}
+						{exportedtraceViewData?.spanCount}
 					  </div>
 					  </div>
 					<div>

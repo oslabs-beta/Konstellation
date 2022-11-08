@@ -5,21 +5,25 @@ import { stat } from "fs";
 
 export type NamespaceData = NamespaceElement[];
 
-export type SearchResult = SearchData[]
 
 export interface NamespaceElement {
 	name: string
 }
 
 export interface SearchData {
-	data: {
-		parentId?: string,
-    start?: string,
-		duration?: string | number,
-		services?: string | number,
-		totalSpans?: string | number
-		
-	}
+	id: string,
+	type: string,
+	traceId?: string,
+	traceStart?: string,
+	traceDuration?: string | number,
+	serviceCount?: string | number,
+	spanCount?: string | number,
+	label: undefined
+}
+
+export interface SearchResult {
+	data?: SearchData,
+	label?: undefined
 }
 
 export interface Search {
@@ -33,7 +37,7 @@ const initialState: Search = {
 	type: 'cluster',
 	status: 'idle',
 	namespace: undefined,
-	data: []
+	data: {}
 }
 
 
@@ -42,7 +46,7 @@ export const getTraceViewInfo = createAsyncThunk(
   'searchBar/traceInfo',
   async (traceId:string) => {
 		//Endpoint is a work in progress
-    const response = await fetch(config.url + `/api/searchtraceresult/${traceId}`)
+    const response = await fetch(config.url + `/api/searchbarTraceView/${traceId}`)
     const data = await response.json();
     return data;
   }
