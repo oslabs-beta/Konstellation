@@ -4,6 +4,7 @@ import sourceMapReducer from './components/sourceMapSlice'
 import searchReducer from './components/searchBarSlice'
 import drawerReducer from './components/trace-table/drawerSlice'
 import traceViewReducer from './components/traceViewSlice'
+import traceTableReducer from './components/trace-table/tableListSlice'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
 		search: searchReducer,
     traceDrawer: drawerReducer,
     traceView: traceViewReducer,
+    traceTable: traceTableReducer,
   },
 })
 

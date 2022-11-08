@@ -22,132 +22,175 @@ export class TraceModel {
       // const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=' + serviceQuery + '&lookback=' + lookbackParam)
   public static async getTraceLogsFromJaeger(req: Request, res: Response, next: NextFunction) {
     console.log("jaeger query-ing");
+    
+    // µs = microseconds
+    const µsPerDay = 86400000000
+    const µsPerHour = 3600000000
+    const µsPerMinute = 60000000
+
+    const nowInµs = Date.now() * 1000;
+
+    let startInµs;
+    switch (req.params.lookback) {
+      case "2d" : startInµs = nowInµs - (µsPerDay * 2); break;
+      case "1d" : startInµs = nowInµs - (µsPerDay); break;
+      case "12h" :startInµs = nowInµs - (µsPerHour * 12); break;
+      case "4h" : startInµs = nowInµs - (µsPerHour * 4); break;
+      case "2h" : startInµs = nowInµs - (µsPerHour * 2); break;
+      case "1h" : startInµs = nowInµs - (µsPerHour * 1); break;
+      case "30m" :startInµs = nowInµs - (µsPerMinute * 30); break;
+      case "15m" :startInµs = nowInµs - (µsPerMinute * 15); break;
+      case "10m" :startInµs = nowInµs - (µsPerMinute * 10); break;
+      case "5m" : startInµs = nowInµs - (µsPerMinute * 5); break;
+      case "2m" : startInµs = nowInµs - (µsPerMinute * 2); break;
+      case "1m" : startInµs = nowInµs - (µsPerMinute * 1); break;
+    } 
+    
+    const url = `http://localhost:16686/api/traces?end=${nowInµs}&limit=20000&service=frontend&lookback=${req.params.lookback}&start=${startInµs}`
+
     // const serviceQuery = req.body.service;
     // const lookbackParam = req.body.lookbackParam; 
     // Can limit results by changing results, currently set to 20000 results shown. 
-    const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=frontend')
-    if (!response.ok) {
-      throw new Error(`Error retrieving trace! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
-    console.log('responseJson.data.length: ' + responseJson.data.length)
-    // Using forEach renders error: Cannot read properties of undefined (reading 'length') despite responseJson.data.length returning length # value
-    // Uncomment code below for final version to retrieve all trace logs instead of first 3
-    // for (let i = 0; i < responseJson.data.length; i++){
-    for (let i = 0; i < 3; i++){
-      const currentTrace = responseJson.data[i];
-      const traceID = currentTrace.traceID;
-      // setting index to 0 to get origin trace for aggregate traceLog 
-      const traceSpans = currentTrace.spans[0];
-      const traceDuration = traceSpans.duration;
-      const timeStamp = traceSpans.startTime;
-      let traceMethod = 'unknown';
-      let traceResponse = 'unknown';
-      let traceURL = 'unknown';
-      // console.log('traceSpans: ' + traceSpans);
-      // console.log('traceDuration: ' + traceDuration);
-      // console.log('Spans.Duration: ' + traceSpans.duration);
-      // console.log('timeStamp: ' + timeStamp)
-      // console.log(traceSpans);
-      // need to convert timeStamp from linux t
-      // traceSpans[0] to get origin trace data for aggregate trace log; 
-      const traceTags = traceSpans.tags;
-      for (let j = 0; j < traceTags.length; j++) {
-        if (traceTags[j].key === 'http.method' || traceTags[j].key === 'rpc.method') {
-          traceMethod = traceTags[j].value;
-        }
-        else if (traceTags[j].key === 'http.status_code'|| traceTags[j].key === 'rpc.grpc.status_code') {
-          traceResponse = traceTags[j].value;
-          }
-        else if (traceTags[j].key === 'http.url'){
-          traceURL = traceTags[j].value;
-        }
+    try {
+      console.log("FETCHING JAEGER from: " + url)
+      const response = await fetch(url)
+      if (!response.ok) {
+        throw new Error(`Error retrieving trace! Status: ${response.status}`)
       }
-      tracesArray.push({
-        data: {
-          id: traceID,
-          label: traceID,
-          type: 'temp',
-          response: traceResponse,
-          method: traceMethod,
-          url: traceURL,
-          duration: traceDuration,
-          timestamp: timeStamp,
+      const responseJson = await response.json();
+      const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
+      console.log('responseJson.data.length: ' + responseJson.data.length)
+      // console.log("TRACEID:")
+      // console.log(responseJson.data)
+      // Using forEach renders error: Cannot read properties of undefined (reading 'length') despite responseJson.data.length returning length # value
+      // Uncomment code below for final version to retrieve all trace logs instead of first 3
+      // for (let i = 0; i < responseJson.data.length; i++){
+      for (let i = 0; i < responseJson.data.length; i++){
+        const currentTrace = responseJson.data[i];
+        const traceID = currentTrace.traceID;
+        // setting index to 0 to get origin trace for aggregate traceLog 
+        const traceSpans = currentTrace.spans[0];
+        const traceDuration = traceSpans.duration;
+        const timeStamp = traceSpans.startTime;
+        let traceMethod = 'unknown';
+        let traceResponse = 'unknown';
+        let traceURL = 'unknown';
+        // console.log('traceSpans: ' + traceSpans);
+        // console.log('traceDuration: ' + traceDuration);
+        // console.log('Spans.Duration: ' + traceSpans.duration);
+        // console.log('timeStamp: ' + timeStamp)
+        // console.log(traceSpans);
+        // need to convert timeStamp from linux t
+        // traceSpans[0] to get origin trace data for aggregate trace log; 
+        const traceTags = traceSpans.tags;
+        for (let j = 0; j < traceTags.length; j++) {
+          if (traceTags[j].key === 'http.method' || traceTags[j].key === 'rpc.method') {
+            traceMethod = traceTags[j].value;
+          }
+          else if (traceTags[j].key === 'http.status_code'|| traceTags[j].key === 'rpc.grpc.status_code') {
+            traceResponse = traceTags[j].value;
+            }
+          else if (traceTags[j].key === 'http.url'){
+            traceURL = traceTags[j].value;
+          }
         }
-      })
-    console.log(tracesArray);
-    res.locals.tracesArray = tracesArray;
-    // console.log('res.locals.tracesArray: ', tracesArray);
-    return next();
-  }};
+        tracesArray.push({
+          data: {
+            id: traceID,
+            label: traceID,
+            type: 'temp',
+            response: traceResponse,
+            method: traceMethod,
+            url: traceURL,
+            duration: traceDuration,
+            timestamp: new Date(timeStamp/1000).toString(),
+          }
+        })
+        // console.log('res.locals.tracesArray: ', tracesArray);
+      }
+      // console.log(tracesArray);
+      res.locals.tracesArray = tracesArray;
+      return next();
+    }
+    catch (err){
+      console.log('TraceModel.getTraceLogsFromJaeger:\n' + err)
+    }
+};
   
   public static async getIndividualTraceView(req: Request, res: Response, next: NextFunction) {
     const traceViewArray = [];
     console.log("jaeger query-ing");
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/6f8827897e5c6b7e44f284aa9a233d41')
-    if (!response.ok) {
-      throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const currentTraceData = responseJson.data[0]
-    const currentTraceSpans = currentTraceData.spans;
-    const currentTraceProcesses = currentTraceData.processes;
-    // make pods first
-    // const podsArray: { data: { id: string; label: any; type: string; }; classes: string; }[] = [];
-    for (const process in currentTraceProcesses){
-      const currProcess = currentTraceProcesses[process];
-      const currProcessTags = currProcess.tags;
-      for (let i = 0; i < currProcessTags.length; i++){
-        if (currProcessTags[i].key === 'k8s.pod.name')
-        traceViewArray.push({
-          data: {
-            id: process,
-            label: currProcessTags[i].value,
-            type: 'trace',
-          },
-          classes: 'label'
-        })
+    try {
+      const sampleTrace = req.params.traceId //update this to test specific traceIds
+      const url = 'http://localhost:16686/api/traces/' + sampleTrace;
+      console.log(url);
+      const response = await fetch('http://localhost:16686/api/traces/' + sampleTrace)
+      if (!response.ok) {
+        throw new Error(`Error retrieving traceview! Status: ${response.status}`)
       }
+      const responseJson = await response.json();
+      const currentTraceData = responseJson.data[0]
+      const currentTraceSpans = currentTraceData.spans;
+      const currentTraceProcesses = currentTraceData.processes;
+      // make pods first
+      // const podsArray: { data: { id: string; label: any; type: string; }; classes: string; }[] = [];
+      for (const process in currentTraceProcesses){
+        const currProcess = currentTraceProcesses[process];
+        const currProcessTags = currProcess.tags;
+        for (let i = 0; i < currProcessTags.length; i++){
+          if (currProcessTags[i].key === 'k8s.pod.name')
+          traceViewArray.push({
+            data: {
+              id: process,
+              label: currProcessTags[i].value,
+              type: 'trace',
+            },
+            classes: 'label'
+          })
+        }
+      }
+      type SpanCache = {[key: string] : string}
+      const spanToProcess: SpanCache = {};
+      // associate each span with a process 
+      currentTraceSpans.forEach((indivSpan: any) => {
+        const currSpan = indivSpan.spanID;
+        const currProcess = indivSpan.processID;
+        spanToProcess[currSpan] = currProcess;
+      });
+      // SpanToProcess is dictionary to access which pod each span is referencing
+      // console.log(spanToProcess)
+      // Make Edges below
+      // Can we reduce time complexity of this? Possibly refactor to combine with spanToProcess to reduce iteration on traceSpans 
+      // const edgesArray: { data: { source: any; target: any; type: string; label: any; }; classes: string; }[] = [];
+      // For some reason, forEach on currentTraceSpans is returning an error here despite being used above to generate spanToProcess
+      // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
+      for (let k = 0; k < currentTraceSpans.length; k++){
+        let indivSpan = currentTraceSpans[k];
+        if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
+          traceViewArray.push({
+            data: {
+              id: uuidv4(),
+              source: spanToProcess[indivSpan.spanID],
+              target: spanToProcess[indivSpan.references[0].spanID],
+              type: 'arrow',
+              label: indivSpan.duration,
+            },
+            classes: 'background'
+          })
+        };
+      }
+      // console.log(traceViewArray);
+      res.locals.traceViewArray = traceViewArray;
+      console.log('traceviewArray: ', traceViewArray);
+      return next();
     }
-    type SpanCache = {[key: string] : string}
-    const spanToProcess: SpanCache = {};
-    // associate each span with a process 
-    currentTraceSpans.forEach((indivSpan: any) => {
-      const currSpan = indivSpan.spanID;
-      const currProcess = indivSpan.processID;
-      spanToProcess[currSpan] = currProcess;
-    });
-    // SpanToProcess is dictionary to access which pod each span is referencing
-    // console.log(spanToProcess)
-    // Make Edges below
-    // Can we reduce time complexity of this? Possibly refactor to combine with spanToProcess to reduce iteration on traceSpans 
-    // const edgesArray: { data: { source: any; target: any; type: string; label: any; }; classes: string; }[] = [];
-    // For some reason, forEach on currentTraceSpans is returning an error here despite being used above to generate spanToProcess
-    // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
-    for (let k = 0; k < currentTraceSpans.length; k++){
-      let indivSpan = currentTraceSpans[k];
-      if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
-        traceViewArray.push({
-          data: {
-            id: uuidv4(),
-            source: spanToProcess[indivSpan.spanID],
-            target: spanToProcess[indivSpan.references[0].spanID],
-            type: 'arrow',
-            label: indivSpan.duration,
-          },
-          classes: 'background'
-        })
-      };
+    catch (err){
+      console.log("TraceModel.getIndividualTraceView:\n" + err)
     }
-    // console.log(traceViewArray);
-    res.locals.traceViewArray = traceViewArray;
-    console.log('traceviewArray: ', traceViewArray);
-    return next();
   }
-
+  
   public static async getIndividualPodData(req: Request, res: Response, next: NextFunction) {
     const traceViewArray = [];
     console.log("jaeger query-ing");

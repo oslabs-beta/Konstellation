@@ -1,17 +1,10 @@
 import React from 'react'
+import { render } from 'react-dom';
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../lib/hooks';
 import { changeView, ViewType } from '../sourceMapSlice';
 import { getTraceDataAsync } from '../traceViewSlice';
-
-export type TraceData = {
-  timestamp: string,
-  traceId: string,
-  responseTime: string,
-  response: string,
-  method: string,
-  url: string,
-  namespaces: string,
-}
+import { selectTableList, TraceTableEntry } from './tableListSlice';
 
 /** 
    * Renders the list of elements contained within the Trace Table Drawer
@@ -19,27 +12,9 @@ export type TraceData = {
    */
 const tableList = () => {
 
+  const { data } = useSelector(selectTableList)
   const dispatch = useAppDispatch();
   
-  const traceData: TraceData[] = [];
-
-  //TEMP
-  //Populates Fake Trace Data
-  for(let i = 0; i < 50; i++) {
-    traceData[i] = {
-      timestamp: '10/12/2022 10:12 AM',
-      traceId: '0412jk3401925e92929',
-      responseTime: '727 ms',
-      response: '200',
-      method: 'GET',
-      url: 'http://apple.com/...iphone-11',
-      namespaces: 'Default, Front-End, Back-End...'
-    }
-    
-    //For Testing if different TraceIds Generate Different Trace Maps. Delete after real trace data is being sent.
-    traceData[i].traceId = i === 0 ? '8jfjh1hfhj21-fhj2h' : traceData[i].traceId;
-  }
-
   function loadNewTraceSourceMap(type: ViewType, traceId: string) {
     dispatch(changeView({type: ViewType.trace}))
     dispatch(getTraceDataAsync(traceId));
@@ -50,22 +25,39 @@ const tableList = () => {
 
     result.push([<div key="trace-table-spacer-entry" className='entry-spacer'> </div>])
 
-    traceData.forEach((e, i) => {
+    const validMethods = ['GET', 'POST', 'CREATE', 'DELETE']
+    for (let i = 0; i < data.length; i++) {
+      const e = data[i];
+      const maxUrlLength = 40;
+      let renderedUrl = e.data.url;
+
+      //NOTE: Some data being filtered due to issues with JaegerQuery. 
+      //Temporary band-aid to hide bugged results.
+      const trimFrontLength = 20;
+      if(e.data.url == 'unknown' || !validMethods.includes(e.data.method)) {
+        continue;
+      }
+      renderedUrl = renderedUrl.indexOf('http://') != -1 ? renderedUrl.slice(trimFrontLength, renderedUrl.length) : renderedUrl 
+      if(renderedUrl.length > maxUrlLength) {
+        renderedUrl = renderedUrl.slice(0, maxUrlLength) + '...'
+      }
+
       const entryKey = `trace-table-entry-${i}`
       const fieldKeys = [];
       for(let j = 0; j < 7; j++) {fieldKeys.push(`trace-table-entry-${i}-field-${j}`)}
+
       result.push([
         <div key={entryKey} className='trace-table-entry'>
-          <div key={fieldKeys[0]} className='timestamp'>{e.timestamp}</div>
-          <div key={fieldKeys[1]} className='traceId' onClick={()=>loadNewTraceSourceMap(ViewType.trace, e.traceId)}>{e.traceId}</div>
-          <div key={fieldKeys[2]} className='response-time'>{e.responseTime}</div>
-          <div key={fieldKeys[3]} className='response'>{e.response}</div>
-          <div key={fieldKeys[4]} className='method'>{e.method}</div>
-          <div key={fieldKeys[5]} className='url'>{e.url}</div>
-          <div key={fieldKeys[6]} className='namespaces'>{e.namespaces}</div>
+          <div key={fieldKeys[0]} className='timestamp'>{e.data.timestamp.slice(0, e.data.timestamp.indexOf("-") +3)}</div>
+          <div key={fieldKeys[1]} className='traceId' onClick={()=>loadNewTraceSourceMap(ViewType.trace, e.data.id)}>{e.data.id}</div>
+          <div key={fieldKeys[2]} className='response-time'>{e.data.duration}ms</div>
+          <div key={fieldKeys[3]} className='response'>{e.data.response}</div>
+          <div key={fieldKeys[4]} className='method'>{e.data.method}</div>
+          <div key={fieldKeys[5]} className='url'>{renderedUrl}</div>
+          <div key={fieldKeys[6]} className='namespaces'>{e.data.namespaces}</div>
         </div>
       ])
-    })
+    }
 
     return result;
   })()

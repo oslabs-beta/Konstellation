@@ -70,7 +70,7 @@ $selector-size: 4.72vh;
 }
 
 .duration-selector-active {
-  
+  cursor: pointer;
   font-size: $selector-font-size;
   display: flex;
   width: 100%;

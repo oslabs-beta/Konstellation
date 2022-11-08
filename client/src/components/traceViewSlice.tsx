@@ -22,7 +22,7 @@ export type Data = {
 export const getTraceDataAsync = createAsyncThunk(
   'traceView/getTraceData',
   async (traceId: string) => {
-    const url = config.url + '/api/traces/getTraceView'
+    const url = config.url + '/api/traces/getTraceView/' + traceId
 
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     console.log("Fetching Data From: ")
