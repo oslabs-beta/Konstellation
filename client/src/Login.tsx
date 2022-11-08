@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './styles/login.scss';
 
 /**
@@ -9,6 +9,10 @@ import './styles/login.scss';
 
 function Login() {
   let navigate = useNavigate();
+  // Don't autoload user back in if they just logged out
+  let { state } = useLocation();
+  const autoLoad = state === null ? true : false;
+  console.log('Login autoLoad:', state);
   const [accessKey, setAccessKey] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [clusterName, setClusterName] = useState("");
@@ -21,9 +25,17 @@ function Login() {
     // On mount
     //const removeEventListener = window.electronAPI.receive('fromMain', (data : any) => onEvent(data));
 
-    console.log("useEffect!");
+    console.log("useEffect!", autoLoad);
 
-    loginUser(true);
+
+    // Don't load user in if they just logged out
+    if(autoLoad !== false) {
+      loginUser(true);
+    } 
+    // Then load their config
+    else {
+      window.electronAPI.getConfig();
+    }
     // Why is this executing twice?
     // Response after trying to update local cred/config files
     window.electronAPI.onConfigResp('onConfigResp', (event: any, data: any) => {

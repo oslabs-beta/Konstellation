@@ -8,6 +8,7 @@ const exec = util.promisify(require('child_process').exec);
 const { config } = require("dotenv");
 const k8s = require('@kubernetes/client-node');
 const fs = require('fs');
+const { webFrame } = require('electron');
 
 let win;
 

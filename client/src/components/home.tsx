@@ -1,6 +1,7 @@
 import React from 'react'
 import SourceMap from './sourceMap'
 import FooterDrawer from './trace-table/footerDrawer'
+import Logout from './logout'
 import '../styles/home.scss'
 
 /**
@@ -12,6 +13,7 @@ const home  = () => {
   return (
     <>
       <SourceMap />
+      <Logout />
       <div className="overlay" id="trace-table-overlay">
         <FooterDrawer />
       </div>
