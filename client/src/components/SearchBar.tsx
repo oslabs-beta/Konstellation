@@ -11,7 +11,7 @@ const SearchBar = (props:any) => {
 	const dispatch = useAppDispatch();
   const viewType = useAppSelector(selectSourceMap);
   
-	const view = viewType.type === ViewType.cluster ? <SearchBarCluster /> : <SearchBarTrace />
+	const view = viewType.type === ViewType.cluster ? <SearchBarCluster /> : <SearchBarCluster />
 
 
     return (

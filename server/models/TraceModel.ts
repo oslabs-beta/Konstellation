@@ -87,7 +87,7 @@ export class TraceModel {
     console.log("jaeger query-ing");
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/4b3f58a4fa634084e715b4ac96db9717')
+    const response = await fetch('http://localhost:16686/api/traces/6f8827897e5c6b7e44f284aa9a233d41')
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
@@ -154,7 +154,7 @@ export class TraceModel {
     const processTarget = req.body.processTarget;
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/fac23e04baca3badb014d7e063507cd3')
+    const response = await fetch('http://localhost:16686/api/traces/1fc4030495ca5e911274093019bb553c')
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
