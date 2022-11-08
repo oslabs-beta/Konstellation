@@ -36,6 +36,8 @@ const tableList = () => {
       if(e.data.url == 'unknown' || !validMethods.includes(e.data.method)) {
         continue;
       }
+
+      //NOTE: Trimming URL to prevent overflow in table
       else if(e.data.url.length > maxUrlLength) {
         renderedUrl = (e.data.url).slice(0, maxUrlLength) + '...'
         renderedUrl = renderedUrl.indexOf('http://') != -1 ? renderedUrl.slice(7, renderedUrl.length) : renderedUrl 
