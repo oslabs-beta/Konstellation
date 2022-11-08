@@ -3,6 +3,7 @@ import clusterReducer from './components/clusterViewSlice'
 import sourceMapReducer from './components/sourceMapSlice'
 import drawerReducer from './components/trace-table/drawerSlice'
 import traceViewReducer from './components/traceViewSlice'
+import traceTableReducer from './components/trace-table/tableListSlice'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     cluster: clusterReducer,
     traceDrawer: drawerReducer,
     traceView: traceViewReducer,
+    traceTable: traceTableReducer,
   },
 })
 

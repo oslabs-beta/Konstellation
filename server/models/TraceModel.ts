@@ -73,7 +73,7 @@ export class TraceModel {
           method: traceMethod,
           url: traceURL,
           duration: traceDuration,
-          timestamp: timeStamp,
+          timestamp: new Date(timeStamp/1000).toString(),
         }
       })
     console.log(tracesArray);
