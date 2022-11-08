@@ -121,14 +121,15 @@ function createWindow() {
  * @returns True if created successfully, otherwise false
  */
 async function updateKubeConfig(region, myCluster) {
-  console.log("updating kube config!");
+
   try {
     const { stdout, stderr } = await exec(`aws eks update-kubeconfig --region ${region} --name ${myCluster}`);
 
-    if (stdout.includes('Could not connect')) {
+    if(stdout.includes('Updated context')) {
+      return true;
+    } else {
       return false;
     }
-    return true;
   } catch (e) {
     return false;
   }
@@ -144,19 +145,40 @@ app.whenReady().then(() => {
      * @returns True if success, otherwise False
      */
   ipcMain.on('on-config', async (event, arg) => {
-    console.log('arg', arg);
-
+  
+    // If .kube/config was updated or threw an error
     let kubeconfigResp = false;
 
+    // First create a backup of the local AWS fields
+    const keyBack = await getAWSField('aws_access_key_id');
+    const secretBack = await getAWSField('aws_secret_access_key');
+    const regionBack = await getAWSField('region');
+    // let user change 'output' from json here
+
+    // Then update each field
     const keyResp = await setAWSField('aws_access_key_id', arg[0])
     const secretResp = await setAWSField('aws_secret_access_key', arg[1])
     const regionResp = await setAWSField('region', arg[3])
     const outputResp = await setAWSField('output', 'json')
-    console.log('on-config!');
+
+    // Reload the backup AWS fields
+    const reloadBackups = async () => {
+      await setAWSField('aws_access_key_id', keyBack);
+      await setAWSField('aws_secret_access_key', secretBack);
+      await setAWSField('region', regionBack);
+    }
 
     // If no bad responses, then set the Kube Config file
     if (!keyResp && !secretResp && !regionResp && !outputResp) {
       kubeconfigResp = await updateKubeConfig(arg[3], arg[2]);
+        // If the kube config couldn't be updated reload backups
+      if(!kubeconfigResp) {
+        reloadBackups();
+      }
+    } 
+    // If one of the fields was invalid reload backups
+    else {
+      reloadBackups();
     }
 
     // Trigger another IPC event back to the render process

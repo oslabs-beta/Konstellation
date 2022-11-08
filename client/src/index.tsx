@@ -17,6 +17,7 @@ declare global {
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = createRoot(document.getElementById('root')!);
 root.render(
+  <React.StrictMode>
     <Provider store={store}>
       <HashRouter>
         <Routes>
@@ -25,4 +26,5 @@ root.render(
         </Routes>
       </HashRouter>
     </Provider>
+  </React.StrictMode>
 );
