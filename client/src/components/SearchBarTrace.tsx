@@ -51,7 +51,7 @@ const SearchBarTrace = (): JSX.Element => {
 					  />
 				  <button id="submitButton" onClick={()=>{
 						const input = document.getElementById('searchBarInput') as HTMLInputElement;
-						submitTrace(input.value)}}> submit</button>
+						submitTrace(input.value)}}> Submit</button>
 					<button id="returnButton" onClick={()=>returnToCLusterView()}>Cluster View</button>
 			  </div>
 			</div>

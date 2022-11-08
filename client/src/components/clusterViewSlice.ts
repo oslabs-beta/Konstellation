@@ -4,19 +4,20 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 import cytoscape from 'cytoscape';
 import { config } from '../constants/config'
 import { Cluster } from './clusterView'
+import { stat } from "fs";
 
-export type ClusterData = Data[];
+export type ClusterData = ClusterElement[];
 
 
 export interface ClusterElement {
-  id: string,
-  label: string,
-  type: string,
+  data: {
+		id: string,
+		label: string,
+		type: string,
+	}
 }
 
-export interface Data {
-	data: ClusterElement
-}
+
 
 const initialState: Cluster = {
   data: [],
@@ -51,7 +52,10 @@ export const clusterViewSlice = createSlice({
   reducers: { 
     updateData:  (state, action: PayloadAction<ClusterData>) => {
       state.data = action.payload;
-    }
+    },
+		updateNameSpace: (state, action: PayloadAction<string>) => {
+      state.namespace = action.payload;
+		}
   },
 
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -75,5 +79,5 @@ export const clusterViewSlice = createSlice({
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.getClusterAsnyc.data)`
 export const selectCluster = (state: RootState) => state.cluster;
-
+export const { updateNameSpace } = clusterViewSlice.actions;
 export default clusterViewSlice.reducer;

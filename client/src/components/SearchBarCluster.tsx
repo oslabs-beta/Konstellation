@@ -4,8 +4,7 @@ import {getNamespaceAsync, selectNameSpace} from './searchBarSlice'
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { trace } from 'console';
 import { getTraceDataAsync } from './traceViewSlice'
-import { selectCluster } from './clusterViewSlice';
-
+import { selectCluster, updateNameSpace } from './clusterViewSlice';
 
 const SearchBarCluster = ():JSX.Element => {
 	
@@ -23,6 +22,12 @@ const SearchBarCluster = ():JSX.Element => {
 		dispatch(getTraceDataAsync(traceID))
 		return
 	}
+
+	//handles changing the namespace state
+	const changeNameSpace = (e:any) => {
+    console.log("this is the dropdown dlement", e.target.value)
+		dispatch(updateNameSpace(e.target.value))
+	} 
 
   //populates the dropdown menu with namespaces
   //adds only the namespace elements to the array
@@ -47,7 +52,7 @@ return (
 			  namespace:
 				</div>
 			  <div className="dropdown">
-                <select className='dropDownOptions'required>
+                <select className='dropDownOptions'required onChange={(e)=>{changeNameSpace(e)}}>
                 <option className='options'>all</option>
 			{DropDownOptions}
                 </select>
