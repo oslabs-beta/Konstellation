@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../lib/hooks'
 import { selectTraceTableDrawerIsOpen, toggleIsOpen } from './drawerSlice'
 import FooterDrawerHandle, {DrawerTabProps} from './footerDrawerTab'
 import TraceTable from './traceTableContent'
+import { getTraceTableDataAsync } from './tableListSlice'
 
 /**
    * Parent level component for managing "Drawer"-type elements in the window's Footer.
@@ -24,6 +25,7 @@ export const footerDrawer = () => {
 
   const handleClick = () => {
     dispatch(toggleIsOpen())
+    dispatch(getTraceTableDataAsync())
   }
 
   return (

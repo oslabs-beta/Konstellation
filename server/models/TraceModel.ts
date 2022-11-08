@@ -73,7 +73,7 @@ export class TraceModel {
           method: traceMethod,
           url: traceURL,
           duration: traceDuration,
-          timestamp: timeStamp,
+          timestamp: new Date(timeStamp/1000).toString(),
         }
       })
     console.log(tracesArray);
@@ -87,67 +87,73 @@ export class TraceModel {
     console.log("jaeger query-ing");
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/07c2272e42aea16d223398ce4a574455')
-    if (!response.ok) {
-      throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const currentTraceData = responseJson.data[0]
-    const currentTraceSpans = currentTraceData.spans;
-    const currentTraceProcesses = currentTraceData.processes;
-    // make pods first
-    // const podsArray: { data: { id: string; label: any; type: string; }; classes: string; }[] = [];
-    for (const process in currentTraceProcesses){
-      const currProcess = currentTraceProcesses[process];
-      const currProcessTags = currProcess.tags;
-      for (let i = 0; i < currProcessTags.length; i++){
-        if (currProcessTags[i].key === 'k8s.pod.name')
-        traceViewArray.push({
-          data: {
-            id: process,
-            label: currProcessTags[i].value,
-            type: 'trace',
-          },
-          classes: 'label'
-        })
+    try {
+      const sampleTrace = '8cdaf814531d89f0486a332fbe7b254a' //update this as needed
+      const response = await fetch('http://localhost:16686/api/traces/' + sampleTrace)
+      if (!response.ok) {
+        throw new Error(`Error retrieving traceview! Status: ${response.status}`)
       }
+      const responseJson = await response.json();
+      const currentTraceData = responseJson.data[0]
+      const currentTraceSpans = currentTraceData.spans;
+      const currentTraceProcesses = currentTraceData.processes;
+      // make pods first
+      // const podsArray: { data: { id: string; label: any; type: string; }; classes: string; }[] = [];
+      for (const process in currentTraceProcesses){
+        const currProcess = currentTraceProcesses[process];
+        const currProcessTags = currProcess.tags;
+        for (let i = 0; i < currProcessTags.length; i++){
+          if (currProcessTags[i].key === 'k8s.pod.name')
+          traceViewArray.push({
+            data: {
+              id: process,
+              label: currProcessTags[i].value,
+              type: 'trace',
+            },
+            classes: 'label'
+          })
+        }
+      }
+      type SpanCache = {[key: string] : string}
+      const spanToProcess: SpanCache = {};
+      // associate each span with a process 
+      currentTraceSpans.forEach((indivSpan: any) => {
+        const currSpan = indivSpan.spanID;
+        const currProcess = indivSpan.processID;
+        spanToProcess[currSpan] = currProcess;
+      });
+      // SpanToProcess is dictionary to access which pod each span is referencing
+      // console.log(spanToProcess)
+      // Make Edges below
+      // Can we reduce time complexity of this? Possibly refactor to combine with spanToProcess to reduce iteration on traceSpans 
+      // const edgesArray: { data: { source: any; target: any; type: string; label: any; }; classes: string; }[] = [];
+      // For some reason, forEach on currentTraceSpans is returning an error here despite being used above to generate spanToProcess
+      // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
+      for (let k = 0; k < currentTraceSpans.length; k++){
+        let indivSpan = currentTraceSpans[k];
+        if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
+          traceViewArray.push({
+            data: {
+              id: uuidv4(),
+              source: spanToProcess[indivSpan.spanID],
+              target: spanToProcess[indivSpan.references[0].spanID],
+              type: 'arrow',
+              label: indivSpan.duration,
+            },
+            classes: 'background'
+          })
+        };
+      }
+      // console.log(traceViewArray);
+      res.locals.traceViewArray = traceViewArray;
+      console.log('traceviewArray: ', traceViewArray);
+      return next();
     }
-    type SpanCache = {[key: string] : string}
-    const spanToProcess: SpanCache = {};
-    // associate each span with a process 
-    currentTraceSpans.forEach((indivSpan: any) => {
-      const currSpan = indivSpan.spanID;
-      const currProcess = indivSpan.processID;
-      spanToProcess[currSpan] = currProcess;
-    });
-    // SpanToProcess is dictionary to access which pod each span is referencing
-    // console.log(spanToProcess)
-    // Make Edges below
-    // Can we reduce time complexity of this? Possibly refactor to combine with spanToProcess to reduce iteration on traceSpans 
-    // const edgesArray: { data: { source: any; target: any; type: string; label: any; }; classes: string; }[] = [];
-    // For some reason, forEach on currentTraceSpans is returning an error here despite being used above to generate spanToProcess
-    // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
-    for (let k = 0; k < currentTraceSpans.length; k++){
-      let indivSpan = currentTraceSpans[k];
-      if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
-        traceViewArray.push({
-          data: {
-            id: uuidv4(),
-            source: spanToProcess[indivSpan.spanID],
-            target: spanToProcess[indivSpan.references[0].spanID],
-            type: 'arrow',
-            label: indivSpan.duration,
-          },
-          classes: 'background'
-        })
-      };
+    catch (err){
+      console.log("Unable to Fetch this Trace. Error: " + err)
     }
-    // console.log(traceViewArray);
-    res.locals.traceViewArray = traceViewArray;
-    console.log('traceviewArray: ', traceViewArray);
-    return next();
   }
-
+  
   public static async getIndividualPodData(req: Request, res: Response, next: NextFunction) {
     const traceViewArray = [];
     console.log("jaeger query-ing");
