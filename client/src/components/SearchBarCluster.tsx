@@ -25,7 +25,6 @@ const SearchBarCluster = ():JSX.Element => {
 
 	//handles changing the namespace state
 	const changeNameSpace = (e:any) => {
-    console.log("this is the dropdown dlement", e.target.value)
 		dispatch(updateNameSpace(e.target.value))
 	} 
 
