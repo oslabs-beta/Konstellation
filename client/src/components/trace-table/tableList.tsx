@@ -24,10 +24,30 @@ const tableList = () => {
 
     result.push([<div key="trace-table-spacer-entry" className='entry-spacer'> </div>])
 
-    data.forEach((e: TraceTableEntry, i: number) => {
+    // data.forEach((e: TraceTableEntry, i: number) => {
+    const validMethods = ['GET', 'POST', 'CREATE', 'DELETE']
+    for (let i = 0; i < data.length; i++) {
+      const e = data[i];
+      const maxUrlLength = 40;
+      let renderedUrl = 'tempShortenedUrl'
+
+      //NOTE: Some data being filtered due to issues with JaegerQuery. 
+      //Temporary band-aid to hide bugged results.
+      if(e.data.url == 'unknown' || !validMethods.includes(e.data.method)) {
+        continue;
+      }
+      else if(e.data.url.length > maxUrlLength) {
+        renderedUrl = (e.data.url).slice(0, maxUrlLength) + '...'
+        renderedUrl = renderedUrl.indexOf('http://') != -1 ? renderedUrl.slice(7, renderedUrl.length) : renderedUrl 
+      }
+      else {
+        renderedUrl = e.data.url;
+      }
+
       const entryKey = `trace-table-entry-${i}`
       const fieldKeys = [];
       for(let j = 0; j < 7; j++) {fieldKeys.push(`trace-table-entry-${i}-field-${j}`)}
+
       result.push([
         <div key={entryKey} className='trace-table-entry'>
           <div key={fieldKeys[0]} className='timestamp'>{e.data.timestamp.slice(0, e.data.timestamp.indexOf("-") +3)}</div>
@@ -35,11 +55,11 @@ const tableList = () => {
           <div key={fieldKeys[2]} className='response-time'>{e.data.duration}ms</div>
           <div key={fieldKeys[3]} className='response'>{e.data.response}</div>
           <div key={fieldKeys[4]} className='method'>{e.data.method}</div>
-          <div key={fieldKeys[5]} className='url'>{e.data.url}</div>
+          <div key={fieldKeys[5]} className='url'>{renderedUrl}</div>
           <div key={fieldKeys[6]} className='namespaces'>{e.data.namespaces}</div>
         </div>
       ])
-    })
+    }
 
     return result;
   })()

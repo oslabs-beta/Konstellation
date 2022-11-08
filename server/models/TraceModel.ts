@@ -34,11 +34,11 @@ export class TraceModel {
       const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
       console.log('responseJson.data.length: ' + responseJson.data.length)
       console.log("TRACEID:")
-      console.log(responseJson.data[0])
+      console.log(responseJson.data)
       // Using forEach renders error: Cannot read properties of undefined (reading 'length') despite responseJson.data.length returning length # value
       // Uncomment code below for final version to retrieve all trace logs instead of first 3
       // for (let i = 0; i < responseJson.data.length; i++){
-      for (let i = 0; i < 3; i++){
+      for (let i = 0; i < responseJson.data.length; i++){
         const currentTrace = responseJson.data[i];
         const traceID = currentTrace.traceID;
         // setting index to 0 to get origin trace for aggregate traceLog 
@@ -79,11 +79,11 @@ export class TraceModel {
             timestamp: new Date(timeStamp/1000).toString(),
           }
         })
-        console.log(tracesArray);
-        res.locals.tracesArray = tracesArray;
         // console.log('res.locals.tracesArray: ', tracesArray);
-        return next();
       }
+      console.log(tracesArray);
+      res.locals.tracesArray = tracesArray;
+      return next();
     }
     catch (err){
       console.log('TraceModel.getTraceLogsFromJaeger:\n' + err)
