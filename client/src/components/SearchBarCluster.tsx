@@ -14,12 +14,13 @@ const SearchBarCluster = ():JSX.Element => {
   const { data } = useAppSelector(selectCluster);
   
 
-  const submitTrace = (traceID:string):any => {
+  const submitTrace = (traceId:string):any => {
 		//changes the state from cluster to trace view
 		//update view so that the data property is updated to the inputted trace view and changes the view type
 		dispatch(changeView({type: 1}))
 		//dispatches an action to call on the asynchoronous funciton of getting tracedata
-		dispatch(getTraceDataAsync(traceID))
+		dispatch(getTraceDataAsync(traceId))
+		dispatch(getTraceViewInfo(traceId))
 		return
 	}
 

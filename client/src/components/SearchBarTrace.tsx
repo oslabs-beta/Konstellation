@@ -8,7 +8,7 @@ const SearchBarTrace = (): JSX.Element => {
 	
 
   const traceViewData = useAppSelector(selectSearchTraceResult); 
-	const traceData: TraceData[] = [];
+	const exportedtraceViewData = traceViewData[0].data
 
 	const dispatch = useAppDispatch();
   const submitTrace = (traceID:string):any => {
@@ -30,13 +30,11 @@ const SearchBarTrace = (): JSX.Element => {
 	
 	//after the async call to get the individual trace info, populate the trace data state in our component to utilize the newly updated info.
 	useEffect (() => {
-
-
-
+    const traceViewData = useAppSelector(selectSearchTraceResult);
+		const exportedtraceViewData = traceViewData[0].data 
 	})
  //create a use effect that upon render, grabs the actual trace data store in the store and display it on top
   //const traceData = useAppSelector(selectTraceViewData);
-	console.log(traceData)
 
   return (
 		<div className="searchBar" id="traceSearchBar">
@@ -69,31 +67,31 @@ const SearchBarTrace = (): JSX.Element => {
 						Trace ID:
 					  </div>
 					  <div className='searchData'>
-						A1290809809
+						{exportedtraceViewData.parentId}
 					  </div>
 					  <div className="searchTextPrefix">
 						Trace Start:
 					  </div>
 				  	<div className='searchData'>
-						10/12/2022 10:21 AM
+						{exportedtraceViewData.start}
 					  </div>
 					  <div className="searchTextPrefix">
 						Total Duration:
 					  </div>
 					  <div className='searchData'>
-						4.03 ms
+						{exportedtraceViewData.duration}
 					  </div>
 					  <div className="searchTextPrefix">
 						Services:
 					  </div>
 					  <div className='searchData'>
-						3
+						{exportedtraceViewData.services}
 					  </div>
 					  <div className="searchTextPrefix">
 						Total Spans:
 					  </div>
 					  <div className='searchData'>
-						6
+						{exportedtraceViewData.totalSpans}
 					  </div>
 					  </div>
 					<div>

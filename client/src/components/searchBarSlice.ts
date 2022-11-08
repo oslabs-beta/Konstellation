@@ -15,7 +15,10 @@ export interface SearchData {
 	data: {
 		parentId?: string,
     start?: string,
-		duration?: string | number
+		duration?: string | number,
+		services?: string | number,
+		totalSpans?: string | number
+		
 	}
 }
 
