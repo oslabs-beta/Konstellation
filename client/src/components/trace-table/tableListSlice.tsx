@@ -28,8 +28,8 @@ export interface TraceTable {
 }
 export const getTraceTableDataAsync = createAsyncThunk(
   'traceTable/getTraceTableData',
-  async () => {
-    const url = config.url + '/api/traces/getAll'
+  async (lookback: string) => {
+    const url = config.url + '/api/traces/getAll/' + lookback
 
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     console.log("Fetching Data From: ")

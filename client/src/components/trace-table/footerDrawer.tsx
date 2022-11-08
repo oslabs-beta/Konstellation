@@ -24,8 +24,10 @@ export const footerDrawer = () => {
   let cssId = drawerIsOpen ? 'drawer-opened' : 'drawer-closed'
 
   const handleClick = () => {
+    const defaultLookback = "1m"
+
     dispatch(toggleIsOpen())
-    dispatch(getTraceTableDataAsync())
+    dispatch(getTraceTableDataAsync(defaultLookback))
   }
 
   return (

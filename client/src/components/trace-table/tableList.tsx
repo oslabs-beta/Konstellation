@@ -1,4 +1,5 @@
 import React from 'react'
+import { render } from 'react-dom';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../lib/hooks';
 import { changeView, ViewType } from '../sourceMapSlice';
@@ -24,26 +25,21 @@ const tableList = () => {
 
     result.push([<div key="trace-table-spacer-entry" className='entry-spacer'> </div>])
 
-    // data.forEach((e: TraceTableEntry, i: number) => {
     const validMethods = ['GET', 'POST', 'CREATE', 'DELETE']
     for (let i = 0; i < data.length; i++) {
       const e = data[i];
       const maxUrlLength = 40;
-      let renderedUrl = 'tempShortenedUrl'
+      let renderedUrl = e.data.url;
 
       //NOTE: Some data being filtered due to issues with JaegerQuery. 
       //Temporary band-aid to hide bugged results.
+      const trimFrontLength = 20;
       if(e.data.url == 'unknown' || !validMethods.includes(e.data.method)) {
         continue;
       }
-
-      //NOTE: Trimming URL to prevent overflow in table
-      else if(e.data.url.length > maxUrlLength) {
-        renderedUrl = (e.data.url).slice(0, maxUrlLength) + '...'
-        renderedUrl = renderedUrl.indexOf('http://') != -1 ? renderedUrl.slice(7, renderedUrl.length) : renderedUrl 
-      }
-      else {
-        renderedUrl = e.data.url;
+      renderedUrl = renderedUrl.indexOf('http://') != -1 ? renderedUrl.slice(trimFrontLength, renderedUrl.length) : renderedUrl 
+      if(renderedUrl.length > maxUrlLength) {
+        renderedUrl = renderedUrl.slice(0, maxUrlLength) + '...'
       }
 
       const entryKey = `trace-table-entry-${i}`
