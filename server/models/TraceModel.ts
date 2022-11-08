@@ -22,19 +22,46 @@ export class TraceModel {
       // const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=' + serviceQuery + '&lookback=' + lookbackParam)
   public static async getTraceLogsFromJaeger(req: Request, res: Response, next: NextFunction) {
     console.log("jaeger query-ing");
+    
+    // µs = microseconds
+    const µsPerDay = 86400000000
+    const µsPerHour = 3600000000
+    const µsPerMinute = 60000000
+
+    const nowInµs = Date.now() * 1000;
+
+    let startInµs;
+    switch (req.params.lookback) {
+      case "2d" : startInµs = nowInµs - (µsPerDay * 2); break;
+      case "1d" : startInµs = nowInµs - (µsPerDay); break;
+      case "12h" :startInµs = nowInµs - (µsPerHour * 12); break;
+      case "4h" : startInµs = nowInµs - (µsPerHour * 4); break;
+      case "2h" : startInµs = nowInµs - (µsPerHour * 2); break;
+      case "1h" : startInµs = nowInµs - (µsPerHour * 1); break;
+      case "30m" :startInµs = nowInµs - (µsPerMinute * 30); break;
+      case "15m" :startInµs = nowInµs - (µsPerMinute * 15); break;
+      case "10m" :startInµs = nowInµs - (µsPerMinute * 10); break;
+      case "5m" : startInµs = nowInµs - (µsPerMinute * 5); break;
+      case "2m" : startInµs = nowInµs - (µsPerMinute * 2); break;
+      case "1m" : startInµs = nowInµs - (µsPerMinute * 1); break;
+    } 
+    
+    const url = `http://localhost:16686/api/traces?end=${nowInµs}&limit=20000&service=frontend&lookback=${req.params.lookback}&start=${startInµs}`
+
     // const serviceQuery = req.body.service;
     // const lookbackParam = req.body.lookbackParam; 
     // Can limit results by changing results, currently set to 20000 results shown. 
     try {
-      const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=frontend')
+      console.log("FETCHING JAEGER from: " + url)
+      const response = await fetch(url)
       if (!response.ok) {
         throw new Error(`Error retrieving trace! Status: ${response.status}`)
       }
       const responseJson = await response.json();
       const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
       console.log('responseJson.data.length: ' + responseJson.data.length)
-      console.log("TRACEID:")
-      console.log(responseJson.data)
+      // console.log("TRACEID:")
+      // console.log(responseJson.data)
       // Using forEach renders error: Cannot read properties of undefined (reading 'length') despite responseJson.data.length returning length # value
       // Uncomment code below for final version to retrieve all trace logs instead of first 3
       // for (let i = 0; i < responseJson.data.length; i++){
@@ -81,7 +108,7 @@ export class TraceModel {
         })
         // console.log('res.locals.tracesArray: ', tracesArray);
       }
-      console.log(tracesArray);
+      // console.log(tracesArray);
       res.locals.tracesArray = tracesArray;
       return next();
     }
