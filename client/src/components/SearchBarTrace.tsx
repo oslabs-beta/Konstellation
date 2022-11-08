@@ -1,22 +1,20 @@
 import React, { JSXElementConstructor, useEffect } from 'react';
 import { changeView, selectSourceMap } from './sourceMapSlice';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-import { selectTraceView } from './traceViewSlice';
-import { TraceData } from './trace-table/tableList';
+import { selectTraceView, getTraceDataAsync } from './traceViewSlice';
+import { selectSearchTraceResult } from './searchBarSlice';
 
 const SearchBarTrace = (): JSX.Element => {
 	
 
-  const traceViewData = useAppSelector(selectTraceView); 
+  const traceViewData = useAppSelector(selectSearchTraceResult); 
 	const traceData: TraceData[] = [];
 
 	const dispatch = useAppDispatch();
-  const submitTrace = (traceID?:string | undefined):any => {
-    //updates the view data to reflect the new trace
-		console.log(traceID)
-		//dispatch(updateData({type: 1, data:traceID}))
+  const submitTrace = (traceID:string):any => {
+				//dispatches an action to call on the asynchoronous funciton of getting tracedata
+		dispatch(getTraceDataAsync(traceID))
 		return
-		
 	}
 
   const returnToCLusterView = ():any => {
@@ -27,9 +25,15 @@ const SearchBarTrace = (): JSX.Element => {
 
 	const handleClick = ():any => {
 		//closes this trace details view?
-		//need to decide what to do withi this 
+		//the darrk bottom bar goes back up so that you can hide the details view so you can see more of the map
 	}
 	
+	//after the async call to get the individual trace info, populate the trace data state in our component to utilize the newly updated info.
+	useEffect (() => {
+
+
+
+	})
  //create a use effect that upon render, grabs the actual trace data store in the store and display it on top
   //const traceData = useAppSelector(selectTraceViewData);
 	console.log(traceData)

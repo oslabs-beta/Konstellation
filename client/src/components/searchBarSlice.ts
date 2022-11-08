@@ -1,37 +1,45 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
 import { config } from '../constants/config'
+import { stat } from "fs";
 
 export type NamespaceData = NamespaceElement[];
+
+export type SearchResult = SearchData[]
 
 export interface NamespaceElement {
 	name: string
 }
 
+export interface SearchData {
+	data: {
+		parentId?: string,
+    start?: string,
+		duration?: string | number
+	}
+}
+
 export interface Search {
   type: 'cluster' | 'trace',
-	namespace: NamespaceData | undefined
+	status: 'idle' | 'loading' | 'failed',
+	namespace: NamespaceData | undefined,
+	data: SearchResult
 }
 
 const initialState: Search = {
 	type: 'cluster',
-	namespace: undefined
+	status: 'idle',
+	namespace: undefined,
+	data: []
 }
 
-//sends a fetch request to the backend to get the traces for 1 trace
-// export const getTraceAsync = (traceID:string | undefined) =>  createAsyncThunk(
-//   'searchBar/getTraces',
-//   async () => {
-//     const response = await fetch(config.url + `/api/traces${traceID}`)
-//     const data = await response.json();
-//     return data;
-//   }
-// )
 
-export const getNamespaceAsync = createAsyncThunk(
-  'searchBar/getNamespace',
-  async () => {
-    const response = await fetch(config.url + '/api/cluster')
+//sends an async call to the backend to get the trace data that would show up on the search bar in the trace view screen
+export const getTraceViewInfo = createAsyncThunk(
+  'searchBar/traceInfo',
+  async (traceId:string) => {
+		//Endpoint is a work in progress
+    const response = await fetch(config.url + `/api/searchtraceresult/${traceId}`)
     const data = await response.json();
     return data;
   }
@@ -44,12 +52,25 @@ const searchReducer = createSlice({
 		updateData:  (state, action: PayloadAction<NamespaceData>) => {
       state.namespace = action.payload;
   	}
-  }
+  },
+
+	extraReducers: (builder) => {
+		builder
+		.addCase(getTraceViewInfo.pending, (state) => {
+			state.status = 'loading';
+		})
+		.addCase(getTraceViewInfo.fulfilled, (state, action: PayloadAction<SearchResult>) => {
+			state.status = 'idle';
+			state.data = action.payload;
+		})
+		.addCase(getTraceViewInfo.rejected, (state) => {
+			state.status = 'failed';
+		});
+	}
 })
-
-
+	
 
 export const selectNameSpace = (state: RootState) => state.search.namespace;
-
+export const selectSearchTraceResult = (state: RootState) => state.search.data;
 
 export default searchReducer.reducer;

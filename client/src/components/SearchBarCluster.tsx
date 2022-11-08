@@ -1,6 +1,6 @@
 import React, { JSXElementConstructor, useEffect } from 'react';
 import { selectSourceMap, ViewType, changeView } from './sourceMapSlice'
-import {getNamespaceAsync, selectNameSpace} from './searchBarSlice'
+import {getTraceViewInfo, selectNameSpace} from './searchBarSlice'
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { trace } from 'console';
 import { getTraceDataAsync } from './traceViewSlice'
@@ -70,17 +70,14 @@ return (
 				  <button id="submitButton" onClick={()=>{
 						const input = document.getElementById('searchBarInput') as HTMLInputElement;
 						submitTrace(input.value)
-						}}> submit
-					</button>
+						}}> Submit
+						</button>
 			</div>
 		</div>
 	)
 }
 
 
-/* <option value="photospot">Photospot</option>
-<option value="food">Food</option>
-<option value="hiking">Hiking</option>
-<option value="other">Other</option> */
+
 
 export default SearchBarCluster;
