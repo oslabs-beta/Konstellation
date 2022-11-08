@@ -1,4 +1,5 @@
 import { appendFile } from "fs";
+import {v4 as uuidv4}  from 'uuid';
 // import { Http2ServerRequest } from "http2";
 // import { nextTick, traceDeprecation } from "process";
 // import { axios } from "../../types";
@@ -86,7 +87,7 @@ export class TraceModel {
     console.log("jaeger query-ing");
     // const traceID = req.body.traceID;
     // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/10139efeb84c1674a76f681e7050dade')
+    const response = await fetch('http://localhost:16686/api/traces/bc49af7b971eeee4bed8652b78eba0a2')
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
@@ -131,6 +132,7 @@ export class TraceModel {
       if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
         traceViewArray.push({
           data: {
+            id: uuidv4(),
             source: spanToProcess[indivSpan.spanID],
             target: spanToProcess[indivSpan.references[0].spanID],
             type: 'arrow',
@@ -145,28 +147,49 @@ export class TraceModel {
     console.log('traceviewArray: ', traceViewArray);
     return next();
   }
-
+  // Want to pass back id when calling individual PodData; will contain the process # 
   public static async getIndividualPodData(req: Request, res: Response, next: NextFunction) {
-    const traceViewArray = [];
-    console.log("jaeger query-ing");
-    const processTarget = req.body.processTarget;
+    // 
+    const processTarget = 'p1'
+    // const processTarget = req.body.podName;
     // const traceID = req.body.traceID;
-    // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    const response = await fetch('http://localhost:16686/api/traces/fac23e04baca3badb014d7e063507cd3')
+    const response = await fetch('http://localhost:16686/api/traces/69b123e3393ad39627e0ae01f9d389e4')
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
     const responseJson = await response.json();
     const currentTraceData = responseJson.data[0]
     const currentTraceSpans = currentTraceData.spans;
-    type SpanCache = {[key: string] : string}
-    const spanToProcess: SpanCache = {};
+    type SpanCache = {
+      processNum:string,
+      spanIds: Array<string>
+    }
+
+    type SpanData = SpanCache[];
+    
+    const spanToProcess: SpanData = [];
+
+    // spanToProcess = [
+    //   {'p1': [spanID, spanID, spanID]},
+    //   {'p2': []}
+
     // associate each span with a process 
-    currentTraceSpans.forEach((indivSpan: any) => {
-      const currSpan = indivSpan.spanID;
-      const currProcess = indivSpan.processID;
-      spanToProcess[currSpan] = currProcess;
-    });
+    // currentTraceSpans.forEach((indivSpan: any) => {
+    //   console.log('indivSpan.spanID: ', indivSpan.spanID)
+    //   console.log('indivSpan.processID: ', indivSpan.processID)
+    //   const currSpan = indivSpan.spanID;
+    //   const currProcess = indivSpan.processID;
+    //   for (let i = 0; i < spanToProcess.length; i++){
+    //     const currProcessIteration = spanToProcess[i];
+    //     if (spanToProcess.hasOwnProperty(currProcess)){
+    //        const spanArray =  
+    //     }
+    //   // }
+    //   if (spanToProcess[currProcess])
+    //   spanToProcess[currSpan] = currProcess;
+    // });
+    console.log('spanToProcess: ', spanToProcess);
+
     // SpanToProcess is dictionary to access which pod each span is referencing
     // console.log(spanToProcess)
     // processSpecificSpans is looping throuh all spans & accessing it by reverse now, so that when we click on a node, it will reutrn the different spans associated with that process 
@@ -175,9 +198,12 @@ export class TraceModel {
       if (spanToProcess[span] === processTarget)
         processSpecificSpans.push(span);
     }
+    console.log('processSpecificSpans: ', processSpecificSpans)
     res.locals.processSpecificSpans = processSpecificSpans;
     return next();
   }
+
+  // works if we can middleware chain this to after getindivTrace or getAll & pass in the SpanIDobj as a res.local.object; 
   public static getIndivSpanDetails(req: Request, res:Response, next:NextFunction){
     const currentSpanIdObj = res.locals.spanID;
     let operationName: any;
@@ -209,6 +235,7 @@ export class TraceModel {
     const indivSpanArray = []
     indivSpanArray.push({
         data: {
+          id: uuidv4(),
           operationName: operationName,
           references: references,
           startTime: startTime,
@@ -222,6 +249,7 @@ export class TraceModel {
           rpcGrpcStatusCode: rpcGrpcStatusCode
         }
       })
+    res.locals.indivSpanDetails = indivSpanArray;
   }
   // public static async getSpanDetails(req: Request, res: Response, next: NextFunction) {
   //   const spanDetails = [];
@@ -246,39 +274,36 @@ export class TraceModel {
   //         const startTime = spanDetail[startTime];
   //         const duration = spanDetail[duration];
   //         const spanTags = spanDetail[tags];
-  //         // spanTags.forEach((indivTag) => {
-  //         //   if (indivTag.key === 'http.method'){
-  //         //     const httpMethod = indivTag.value;
-  //         //   }
-  //         //   else if (indivTag.key === 'http.url'){
-  //         //     const httpUrl = indivTag.value;
-  //         //   }
-  //         //   else if (indivTag.key === 'http.target'){
-  //         //     const httpTarget = indivTag.value;
-  //         //   }
-  //         //   else if (indivTag.key === 'http.status_code'){
-  //         //     const httpStatusCode = indivTag.value;
-  //         //   }
-  //         // })
-  //         // spanDetails.push({
-  //         //   data: {
-  //         //     operationName: operationName,
-  //         //     references: references,
-  //         //     startTime: startTime,
-  //         //     duration: duration,
-  //         //     httpMethod: httpMethod,
-  //         //     httpUrl: httpUrl,
-  //         //     httpTarget: httpTarget,
-  //         //     httpStatusCode: httpStatusCode,
-  //         //   }
-  //         // })
-  //       // }
-  //       // res.locals.spanDetails = spanDetails;
-  //       // return next();
-  //     }
-  //   }
-  // }
-  // }
+  //         spanTags.forEach((indivTag) => {
+  //           if (indivTag.key === 'http.method'){
+  //             const httpMethod = indivTag.value;
+  //           }
+  //           else if (indivTag.key === 'http.url'){
+  //             const httpUrl = indivTag.value;
+  //           }
+  //           else if (indivTag.key === 'http.target'){
+  //             const httpTarget = indivTag.value;
+  //           }
+  //           else if (indivTag.key === 'http.status_code'){
+  //             const httpStatusCode = indivTag.value;
+  //           }
+  //         })
+  //         spanDetails.push({
+  //           data: {
+  //             operationName: operationName,
+  //             references: references,
+  //             startTime: startTime,
+  //             duration: duration,
+  //             httpMethod: httpMethod,
+  //             httpUrl: httpUrl,
+  //             httpTarget: httpTarget,
+  //             httpStatusCode: httpStatusCode,
+  //           }
+  //         })
+  //       }
+  //       res.locals.spanDetails = spanDetails;
+  //       return next();
+  //     }}}
 
   public static saveDataToTextFile(req: Request, res: Response, next: NextFunction) {
     // console.log(req.socket.remoteAddress); // Use this if not using a server proxy (ex: ngrok)
