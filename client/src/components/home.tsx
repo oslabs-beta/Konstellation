@@ -2,6 +2,7 @@ import React from 'react'
 import SourceMap from './sourceMap'
 import SearchBar from './SearchBar';
 import FooterDrawer from './trace-table/footerDrawer'
+import Logout from './logout'
 import '../styles/home.scss'
 import { useAppSelector } from '../lib/hooks'
 import { selectSourceMap, ViewType } from './sourceMapSlice'
@@ -24,6 +25,7 @@ const home  = () => {
       <SearchBar/>
       <SourceMap />
       {uiElements}
+      <Logout />
     </>
   )
 }
