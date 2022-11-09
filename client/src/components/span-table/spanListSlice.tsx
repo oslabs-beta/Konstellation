@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../store";
 import { config } from '../../constants/config'
+import { useSelector } from "react-redux";
+import sourceMapSlice, { selectSourceMap } from "../sourceMapSlice";
 
 
 const initialState: SpanTable = {
@@ -18,10 +20,12 @@ type SpanNames = String
 type SpanTableData = SpanNames[]
 
 
+
 export const getSpanTableAsync = createAsyncThunk(
-  'spanTable/getSpansInProcess',
-  async (processTarget: string) => {
-    const url = config.url + '/api/traces/getSpansInProcess' + processTarget
+  'spanList/getSpansInProcess',
+  async (traceData: any) => {
+    const { processTarget, traceId } = traceData
+    const url = config.url + '/api/traces/getSpansInProcess' + traceId + processTarget
 
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     console.log("Fetching Data From: ")

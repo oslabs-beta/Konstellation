@@ -15,7 +15,7 @@ import { selectSpanMap } from './spanMapSlice';
 const spanHeader = () => {
 
   const { data, id } = useSelector(selectSpanMap)
-  console.log('spanHeaderData: ', data)
+  // console.log('spanHeaderData: ', data)
   const traceId = useSelector(selectSourceMap)
 
 
@@ -23,8 +23,8 @@ const spanHeader = () => {
     <div id="span-table-header">
       <div className='spanHeader'>Span Details</div>
       <div className='spanHeaderPodName'>Pod Name: {data}</div>
-      <div className='spanHeaderPodName'>TargetProcess Name: {id}</div>
-      <div className='spanHeaderPodName'>TraceID Name: {traceId.data}</div>
+      <div className='spanHeaderPodName'>TargetProcess: {id}</div>
+      <div className='spanHeaderPodName'>TraceID: {traceId.data}</div>
     </div>
   )
 }

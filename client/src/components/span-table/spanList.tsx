@@ -14,10 +14,7 @@ const spanList = () => {
   const { data } = useSelector(selectSpanTableList)
   const dispatch = useAppDispatch();
 
-  //to fetch span names on load
-  // function loadSpanDataTable(spanName: any) {
-  //   dispatch(getSpanTableAsync());
-  // }
+  
 
   const jsxElements = (() => {
     const result: Array<Array<JSX.Element>> = []

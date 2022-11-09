@@ -10,6 +10,7 @@ import { useAppDispatch } from '../lib/hooks';
 import { changeRenderView, RenderType } from './span-table/spanMapSlice';
 import { getSpanTableAsync } from './span-table/spanListSlice';
 import { node } from 'webpack';
+import { selectSourceMap } from './sourceMapSlice';
 
 export interface Trace {
   data: TraceData
@@ -29,11 +30,13 @@ cytoscape.use(coseBilkent);
 
   const dispatch = useAppDispatch();
 
-  function loadNewSpanTable(type: RenderType, data: string, id: string) {
+  function loadNewSpanTable(type: RenderType, data: string, id: string, traceData: any) {
     dispatch(changeRenderView({type: RenderType.render, data, id}))
-    dispatch(getSpanTableAsync(id));
+    dispatch(getSpanTableAsync(traceData));
   }
 
+  const trace = useSelector(selectSourceMap)
+  const traceId = trace.data
 
   let myCyRef;
 
@@ -69,9 +72,9 @@ cytoscape.use(coseBilkent);
   
           cy.on("dblclick", "node", evt => {
             var node = evt.target;
-            console.log("EVT", evt);
-            console.log("TARGET", node.data());
-            console.log("TARGET TYPE", typeof node[0]);
+            // console.log("EVT", evt);
+            // console.log("TARGET", node.data());
+            // console.log("TARGET TYPE", typeof node[0]);
             cy.fit( cy.$(':selected'), 50 );
             setTimeout( function(){
               cy.panBy({
@@ -84,8 +87,13 @@ cytoscape.use(coseBilkent);
             //   cy.$('').unselect();
             //   cy.fit(cy.$(''),50);
             // }, 5000 );
-            loadNewSpanTable(RenderType.render, nodeData.label, nodeData.id)
-            
+            const traceData = {
+              targetProcess : nodeData.id, 
+              traceId : traceId
+            }
+
+            loadNewSpanTable(RenderType.render, nodeData.label, nodeData.id, traceData)
+            console.log('traceData from nodeClick', traceData)
           });
         }}
 

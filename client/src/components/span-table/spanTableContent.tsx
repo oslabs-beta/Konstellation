@@ -12,7 +12,7 @@ const traceTableContent = () => {
   return (
     <div id="span-table-content">
       <SpanHeader />
-      {/* <SpanList /> */}
+      <SpanList />
     </div>
   )
 }
