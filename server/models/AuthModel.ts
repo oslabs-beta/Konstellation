@@ -23,6 +23,7 @@ export default class AuthModel {
       next();
     }
     catch(err) {
+      console.log('Error in Auth model!');
       // If there is an error, then the user doesn't have access to the EKS
       return next(err);
     }

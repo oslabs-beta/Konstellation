@@ -1,18 +1,27 @@
 @use "./theme" as theme;
 
+
 #login {
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: absolute;
   width: 100%;
   height: 100%;
-  left: 0px;
-  top: 0px;
-
-  background: radial-gradient(79.58% 79.58% at 50% 50%, #000000 0%, rgba(0, 0, 0, 0) 100%), url(images/login-background.png);
+  background-position: center;
+  margin: 0px;
+  padding:0px;
 }
+
+// * {
+//   font-family: SF Pro;
+//   font-size: 16px;
+//   font-weight: 700;
+//   line-height: 19px;
+//   letter-spacing: 0em;
+//   text-align: left;
+//   color: #F4F4F4;
+// }
 
 #login-container {
   @include theme.container;
@@ -22,12 +31,23 @@
   height: 640.08px;
 }
 
-#logo {
-  @include theme.logo;
+#login-logo {
+  width: 400px;
+  height: 53px;
+  left: 0px;
+  top: 0px;
+
+  font-family: 'Noto Serif';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 39.0261px;
+  line-height: 53px;
+  letter-spacing: 0.15em;
+
+  color: #EFEFEF;  
 }
 
 #login-label {
-  //styleName: H3;
   font-family: SF Pro;
   font-size: 22px;
   font-weight: 510;
@@ -44,16 +64,58 @@ form {
   @include theme.placeholder-style
 }
 
-input {
-  @include theme.input;
+.login-input {
+  box-sizing: border-box;
+  background-color: #3C3C3C;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px;
+  gap: 8px;
+  border: 1px solid #919191;
+  border-radius: 8px;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
   width: 436px;
 }
 
-#login-button {
-  /* Button */
-  @include theme.button-style;
+.passwordContainer {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
 
+.eye-close {
+  background: url(images/eye-closed.png);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 10;
+  padding-right: 10px;
+}
+
+.eye-open {
+  background: url(images/eye-open.png);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 10;
+  padding-right: 10px;
+}
+
+#login-button {
+  @include theme.button-style;
   width: 436px;
   height: 56px;
+}
 
+#loading-screen {
+  z-index: 10;
+  position:absolute;
 }
