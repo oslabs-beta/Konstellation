@@ -11,6 +11,10 @@
     grid-row-gap: 0px;
 }
 
+// .span-entry-spacer {
+//   height: 1vh;
+// }
+
 .spanHeader {
   padding-top: 1.1vh;
   padding-left: 1vw;
@@ -21,4 +25,9 @@
   font-size: 1.4vh;
   padding-top: 0.7vh;
   padding-left: 1vw;
+}
+
+.span-pod-entry {
+  padding-left: 1vw;
+  padding-top: 1vh
 }

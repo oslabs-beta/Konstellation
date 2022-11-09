@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../lib/hooks';
 // import { changeView, ViewType } from '../sourceMapSlice';
 import { getSpanTableAsync } from './spanListSlice';
 import { selectSpanTableList } from './spanListSlice';
+import '../../styles/spanTable.scss'
 
 /** 
    * Defines the contents of the Trace Table Headers

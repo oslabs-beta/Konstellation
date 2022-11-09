@@ -71,7 +71,7 @@ export class TraceController {
     }
     public static getPodDetails(req: Request, res: Response, next: NextFunction) {
       try{
-        console.log("In Tracecontroller");
+        console.log("In Tracecontroller GetPodDetails");
         TraceModel.getIndividualPodData(req, res, next);
       }
       catch(err) {

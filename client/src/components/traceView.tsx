@@ -54,6 +54,7 @@ cytoscape.use(coseBilkent);
       }}
     >
       <CytoscapeComponent
+        
         elements={traceViewData.data}
         stylesheet={styleSheet}
         layout={layout}
@@ -65,9 +66,11 @@ cytoscape.use(coseBilkent);
         }}
         maxZoom={3}
         minZoom={0.1}
+        
         cy={cy => {
           myCyRef = cy;
-  
+          const reset = () => {cy.elements().remove()}
+          
           // console.log("EVT", cy);
   
           cy.on("dblclick", "node", evt => {
@@ -88,7 +91,7 @@ cytoscape.use(coseBilkent);
             //   cy.fit(cy.$(''),50);
             // }, 5000 );
             const traceData = {
-              targetProcess : nodeData.id, 
+              processTarget : nodeData.id, 
               traceId : traceId
             }
 

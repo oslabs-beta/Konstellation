@@ -22,10 +22,10 @@ type SpanTableData = SpanNames[]
 
 
 export const getSpanTableAsync = createAsyncThunk(
-  'spanList/getSpansInProcess',
+  'spanList/getSpanNames',
   async (traceData: any) => {
     const { processTarget, traceId } = traceData
-    const url = config.url + '/api/traces/getSpansInProcess' + traceId + processTarget
+    const url = config.url + '/api/traces/getSpansInProcess/' + traceId + '/' + processTarget
 
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     console.log("Fetching Data From: ")
