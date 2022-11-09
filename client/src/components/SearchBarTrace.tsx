@@ -3,6 +3,7 @@ import { changeView, selectSourceMap } from './sourceMapSlice';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { selectTraceView, getTraceDataAsync } from './traceViewSlice';
 import { selectSearchTraceResult, SearchData, getTraceViewInfo } from './searchBarSlice';
+import logo from '../../../images/konstellation-logo.png'
 
 const SearchBarTrace = (): JSX.Element => {
 	
@@ -36,20 +37,20 @@ const SearchBarTrace = (): JSX.Element => {
   return (
 		<div className="searchBar" id="traceSearchBar">
 			<div id="traceSearchBarTopHalf">
-			  <div id='logo'>
-			  </div>
-			  <div id="searchBar">
+			  <img id='logo' src={logo}>
+			  </img>
+			  <div id="searchBarTrace">
 				  <span id='searchText'>
 					  Search:
 				  </span>
 				  <input
-				    id="searchBarInput"
+				    id="searchBarInputTrace"
 				    type='text'
 					  name='traceID'
 					  placeholder='Enter TraceID, node, pod, or service name'  
 					  />
 				  <button id="submitButton" onClick={()=>{
-						const input = document.getElementById('searchBarInput') as HTMLInputElement;
+						const input = document.getElementById('searchBarInputTrace') as HTMLInputElement;
 						submitTrace(input.value)}}> Submit</button>
 					<button id="returnButton" onClick={()=>returnToCLusterView()}>Cluster View</button>
 			  </div>
@@ -96,7 +97,6 @@ const SearchBarTrace = (): JSX.Element => {
 					</div>
 				</div>
 			</div>
-
 		</div>
 	)
 
