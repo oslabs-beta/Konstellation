@@ -1,11 +1,10 @@
 // @use "./theme" as theme;
-
+$font-input-size: 1.48vh;
 $color-font: #F4F4F4;
 $font-family: SF Pro;
 $font-weight: 700;
 $eye-width: 24px;
 $eye-height: 24px;
-$font-input-size: 16px;
 $letter-spacing: 0em;
 $line-height: 19px;
 
@@ -41,14 +40,17 @@ $line-height: 19px;
   justify-content: center;
   align-items: center;
 
+  min-width: 420px;
   padding: 8px;
-  width: 500px;
+  width: 26.04vw;
   height: 640.08px;
 }
 
 #login-logo {
-  width: 400px;
-  height: 53px;
+  // width: 400px;
+  // height: 53px;
+  height: auto;
+  min-width: 20.83vw;
   left: 0px;
   top: 0px;
 
@@ -104,7 +106,8 @@ form {
   order: 1;
   align-self: stretch;
   flex-grow: 0;
-  width: 436px;
+  width: 0.2271vw;
+  min-width: 350px;
 
   font-family: $font-family;
   font-size: $font-input-size;
@@ -163,7 +166,8 @@ form {
   &:active {
     background: #1a66c9;
   }  
-  width: 436px;
+  width: 0.2271vw;
+  min-width: 350px;
   height: 56px;
   font-family: $font-family;
   font-size: $font-input-size;
