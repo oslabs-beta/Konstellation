@@ -1,5 +1,6 @@
 import React from 'react'
 import SourceMap from './sourceMap'
+import SearchBar from './SearchBar';
 import FooterDrawer from './trace-table/footerDrawer'
 import Logout from './logout'
 import '../styles/home.scss'
@@ -21,6 +22,7 @@ const home  = () => {
 
   return (
     <>
+      <SearchBar/>
       <SourceMap />
       {uiElements}
       <Logout />

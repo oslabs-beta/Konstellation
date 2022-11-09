@@ -88,7 +88,7 @@ function createWindow() {
   // Create the browser window
   // Sets the dimensions and contextBridge between main and renderer processes
   win = new BrowserWindow({
-    width: 1400, height: 900,
+    width: 1600, height: 900,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }

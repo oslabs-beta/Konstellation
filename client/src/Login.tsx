@@ -2,7 +2,8 @@ import React, { FormEvent, MouseEventHandler, useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 import './styles/login.scss';
 import LoadingScreen, { LoadingScreenType } from './components/loadingScreen';
-
+import logo from '../../images/konstellation-logo.png'
+import background from './styles/images/login-background.png'
 /**
  * Catch their respective event from the electron main process
  * Need to be outside of the Login component, otherwise they will fire twice
@@ -134,10 +135,11 @@ function Login() {
   //loginUser();
 
   return (
-    <div id="login" >
+    <div id="login" style={{backgroundImage: 'url(' + background + ')'}}>
       <RenderLoadingScreen />
       <div id="login-container">
-        <div id="logo" />
+			<img id="logo" src={logo}>
+			</img>
         <h3 id="login-label">Login</h3>
         <form onSubmit={buttonPressed}>
 
