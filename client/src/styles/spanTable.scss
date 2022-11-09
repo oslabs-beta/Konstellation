@@ -11,9 +11,21 @@
     grid-row-gap: 0px;
 }
 
-// .span-entry-spacer {
-//   height: 1vh;
-// }
+.spanButton {
+  background: #3C3C3C;
+  color: white;
+  font-weight: 100;
+  border: none;
+}
+
+.span-data-entry {
+  padding-left: 3vw;
+  font-weight: 200;
+}
+
+.span-entry {
+  display: flex
+}
 
 .spanHeader {
   padding-top: 1.1vh;
@@ -29,5 +41,5 @@
 
 .span-pod-entry {
   padding-left: 1vw;
-  padding-top: 1vh
+  padding-top: 1vh;
 }

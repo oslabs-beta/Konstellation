@@ -1,10 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../lib/hooks';
-// import { changeView, ViewType } from '../sourceMapSlice';
-import { getSpanTableAsync } from './spanListSlice';
+import { changeSpanDataView, selectSpanResultsMap, spanViewType } from './spanResultsMapSlice';
+import { getSpanDataAsync } from './spanDataSlice';
 import { selectSpanTableList } from './spanListSlice';
 import '../../styles/spanTable.scss'
+import SpanData from './spanData'
+import SpanResultsMap from './spanResultsMap';
+import { ViewType } from '../sourceMapSlice';
+
 
 /** 
    * Defines the contents of the Trace Table Headers
@@ -15,10 +19,22 @@ const spanList = () => {
   const { data } = useSelector(selectSpanTableList)
   const dispatch = useAppDispatch();
 
-  
+  function loadNewSpanResults(type: spanViewType, traceId: String) {
+    console.log('in loadNewSpanResults')
+    dispatch(changeSpanDataView({type}))
+    dispatch(getSpanDataAsync(traceId))
+  }
+
+  // interface Props {
+  //   traceId? : String
+  // }
+
+  const { type } = useSelector(selectSpanResultsMap)
 
   const jsxElements = (() => {
     const result: Array<Array<JSX.Element>> = []
+
+   
 
     result.push([<div key="span-table-spacer-entry" className='span-entry-spacer'> </div>])
 
@@ -26,11 +42,17 @@ const spanList = () => {
       const e = data[i];
 
       const entryKey = `span-table-entry-${i}`
-      
+      console.log(e)
+
+      const spanData = 'hello'
 
       result.push([
         <div key={entryKey} className='span-pod-entry'>
-          <div key={entryKey} className='span-Pod-entry' >{data[i]}</div>
+          <div className="span-entry">
+          <button className="spanButton" onClick={() => {if (type === spanViewType.noRender) {loadNewSpanResults(spanViewType.render, data[i])} else {loadNewSpanResults(spanViewType.noRender, data[i])}}}>^</button>
+          <div key={entryKey} className='span-name' >{data[i]}</div>
+          </div>
+          <SpanResultsMap traceId={data[i]}/>
         </div>
       ])
     }

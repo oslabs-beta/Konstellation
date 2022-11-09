@@ -6,6 +6,8 @@ import traceViewReducer from './components/traceViewSlice'
 import traceTableReducer from './components/trace-table/tableListSlice'
 import spanTableReducer from './components/span-table/spanListSlice'
 import spanMapReducer from './components/span-table/spanMapSlice'
+import spanResultsMapReducer from './components/span-table/spanResultsMapSlice'
+import spanDataReducer from './components/span-table/spanDataSlice'
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +17,9 @@ export const store = configureStore({
     traceView: traceViewReducer,
     traceTable: traceTableReducer,
     spanTable: spanTableReducer,
-    spanMap: spanMapReducer
+    spanMap: spanMapReducer,
+    spanResultsMap: spanResultsMapReducer,
+    spanData: spanDataReducer
   },
 })
 

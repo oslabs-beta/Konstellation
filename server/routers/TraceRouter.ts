@@ -42,8 +42,8 @@ router.get('/getSpansInProcess/:traceId/:processTarget',
   }
 )
 
-// router.get('/getSpanDetails', 
-//   TraceController.getSpanDetails,
+// router.get('/getIndivSpanDetails/:traceId', 
+//   TraceController.getIndivSpanDetails,
 //   (req: Request, res: Response, next: NextFunction) => {
 //     res.status(200).json(res.locals.spanDetails)
 //   } 
