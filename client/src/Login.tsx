@@ -135,7 +135,9 @@ function Login() {
   //loginUser();
 
   return (
-    <div id="login" style={{backgroundImage: 'url(' + background + ')'}}>
+    
+    <div id="login" style={{background: 'url(' + background + ') no-repeat center center fixed',
+    backgroundSize : 'cover'}}>
       <RenderLoadingScreen />
       <div id="login-container">
 			<img id="logo" src={logo}>
