@@ -17,7 +17,7 @@ function Login() {
   // Don't autoload user into app if they navigated from app
   let { state } = useLocation();
   const autoLoad = state === null ? true : false;
-
+  // Input fields
   const [accessKey, setAccessKey] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [clusterName, setClusterName] = useState("");
@@ -25,7 +25,7 @@ function Login() {
   // Toggling Password visiblity
   const [hideEye, toggleEye] = useState(true);
   const [hidePassword, togglePassword] = useState(true);
-  // Whether to show the loading screen
+  // Toggle loading screen
   const [isLoading, setLoading] = useState(false);
 
   // Only fire on initial render
