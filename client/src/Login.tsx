@@ -1,6 +1,7 @@
 import React, { FormEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './styles/login.scss';
+import LoadingScreen, { LoadingScreenType } from './components/loadingScreen';
 
 /**
  * Catch their respective event from the electron main process
@@ -20,8 +21,11 @@ function Login() {
   const [secretKey, setSecretKey] = useState("");
   const [clusterName, setClusterName] = useState("");
   const [regionName, setRegionName] = useState("");
+  // Toggling Password visiblity
   const [hideEye, toggleEye] = useState(true);
   const [hidePassword, togglePassword] = useState(true);
+  // Whether to show the loading screen
+  const [isLoading, setLoading] = useState(false);
 
   // Only fire on initial render
   // Executes twice because of React.Strict
@@ -31,12 +35,14 @@ function Login() {
     if(autoLoad !== false) {
       loginUser(true);
     } else {
+      setLoading(true);
       // Then load config
       window.electronAPI.getConfig();
     }
     // Response after trying to update local cred/config files
     window.electronAPI.onConfigResp('onConfigResp', (event: any, data: any) => {
       console.log("From server:", data)
+      setLoading(false);
       // The fourth datapoint is whether the kube config was set properly
       // Only attempt to log the user in if kube config was created
       if(data[4]) {
@@ -49,6 +55,7 @@ function Login() {
     // Response after parsing local cred/config files
     window.electronAPI.onSendConfig('onSendConfig', (event: any, data: [string, string, string, string]) => {
       console.log("Parsed from local files:", data);
+      setLoading(false);
       // Update each input field
       setAccessKey(data[0]);
       setSecretKey(data[1]);
@@ -108,25 +115,18 @@ function Login() {
       return;
     }
 
+    setLoading(true);
     // Configure the user's local files with the input fields
     window.electronAPI.onConfig([accessKey, secretKey, clusterName, regionName]);
 
     return;
   }
 
-
-  const eyeClicked = (event : React.MouseEvent) => {
-    console.log('eye clicked!', event, event.target, );
-
-    if(event.currentTarget.className === 'eye-close') {
-      event.currentTarget.className = 'eye-open';
+  const RenderLoadingScreen = () => {
+    if(isLoading) {
+      return (<LoadingScreen type={LoadingScreenType.cyclingStops} />);
     }
-    else {
-      event.currentTarget.className = 'eye-close';
-      let secret_input = document.getElementById('secret_key');
-      if(secret_input) {
-      }
-    }
+    return (<></>);
   }
 
   // Need an environmental condition to avoid logging in user if they just logged out
@@ -135,6 +135,7 @@ function Login() {
 
   return (
     <div id="login" >
+      <RenderLoadingScreen />
       <div id="login-container">
         <div id="logo" />
         <h3 id="login-label">Login</h3>
