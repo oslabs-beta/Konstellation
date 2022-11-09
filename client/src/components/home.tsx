@@ -19,7 +19,7 @@ const home  = () => {
   // Make sure to overwite clickable elements with 'pointer-events: auto'
   if(sourceMap.type == ViewType.cluster){
     uiElements.push(<div className="overlay" id="trace-table-overlay" key="overlay-1"><FooterDrawer /></div>)
-    uiElements.push(<div className="overlay button-container" id="logout-button-container"><Logout /></div>)
+    uiElements.push(<div className="overlay button-container" id="logout-button-container" key='logout-button'><Logout /></div>)
   }
 
   return (
@@ -30,6 +30,5 @@ const home  = () => {
     </>
   )
 }
-//<Logout />
 
 export default home

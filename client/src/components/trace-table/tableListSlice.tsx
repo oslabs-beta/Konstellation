@@ -51,7 +51,6 @@ export const getServicesAsync = createAsyncThunk(
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     const response = await fetch(url)
     const data = await response.json();
-    console.log(data);
     return data;
   }
 )

@@ -28,12 +28,11 @@ const tableDropDownMenu = ():JSX.Element => {
 
 	useEffect(() => {
     //update the active service to servicesdata[0];
-		console.log('in use effect')
     dispatch(updateService(servicesData[0]));
   },[servicesData])
 
 		servicesData.forEach(element => {
-			DropDownOptions.push (<option className='options'>{element}</option>)
+			DropDownOptions.push (<option className='options' key={'table'+ element}>{element}</option>)
 		})
 
 
