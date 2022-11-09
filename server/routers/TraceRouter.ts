@@ -37,10 +37,13 @@ router.get('/getSearchbarTraceView/:traceId', (req: Request, res: Response, next
 );
 
 //TEST ROUTE please delete later when actual route is added
-router.get('/getTraceViewServices/', (req: Request, res: Response, next: NextFunction) => {
+router.get('/getTraceViewServices/', async(req: Request, res: Response, next: NextFunction) => {
 	console.log("getTraceViewServices endpoint hit")
-const mockData = ['frontend', 'checkoutservice', 'currencyservice']
-	res.status(200).json(mockData)
+	const response:any = await fetch('http://localhost:16686/api/services')
+  const responseJson= await response.json();
+	const data =responseJson.data
+  console.log('fetched data from jaeger', data)
+	res.status(200).json(data)
 }
 );
 

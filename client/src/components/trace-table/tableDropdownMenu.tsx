@@ -39,9 +39,6 @@ const tableDropDownMenu = ():JSX.Element => {
 
 	return (
 		<div>
-			<div>
-			Services:
-			</div>
 			  <div className="dropdown">
           <select className='dropDownOptions'required onChange={(e)=>{changeService(e)}}>           
 			     {DropDownOptions}
