@@ -19,6 +19,22 @@ router.get('/getTraceView/:traceId',
   }
 );
 
+router.get('/searchbarTraceView/:traceId', (req: Request, res: Response, next: NextFunction) => {
+	  console.log("searchbarTrace endpoint hit")
+	const fakeData = {data: {
+			id: 'searchBarData',
+			type: 'searchBarData',
+			traceID: req.params.traceId,
+			traceStart: '1000',
+			traceDuration: '200',
+			serviceCount: 2,
+			spanCount: 3,
+			label: undefined
+		}}
+    res.status(200).json(fakeData)
+  }
+);
+
 // router.get('/getSpansInProcess',
 //   TraceController.getPodDetails,
 //   (req: Request, res: Response, next: NextFunction) => {
