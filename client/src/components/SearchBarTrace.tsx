@@ -50,7 +50,7 @@ const SearchBarTrace = (): JSX.Element => {
 					  placeholder='Enter TraceID, node, pod, or service name'  
 					  />
 				  <button id="submitButton" onClick={()=>{
-						const input = document.getElementById('searchBarInput') as HTMLInputElement;
+						const input = document.getElementById('searchBarInputTrace') as HTMLInputElement;
 						submitTrace(input.value)}}> Submit</button>
 					<button id="returnButton" onClick={()=>returnToCLusterView()}>Cluster View</button>
 			  </div>
