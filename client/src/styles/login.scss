@@ -1,5 +1,13 @@
 @use "./theme" as theme;
 
+$color-font: #F4F4F4;
+$font-family: SF Pro;
+$font-weight: 700;
+$eye-width: 24px;
+$eye-height: 24px;
+$font-input-size: 16px;
+$letter-spacing: 0em;
+$line-height: 19px;
 
 #login {
   display: flex;
@@ -13,15 +21,15 @@
   padding:0px;
 }
 
-* {
-  font-family: SF Pro;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 19px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #F4F4F4;
-}
+// * {
+//   font-family: SF Pro;
+//   font-size: 16px;
+//   font-weight: 700;
+//   line-height: 19px;
+//   letter-spacing: 0em;
+//   text-align: left;
+//   color: #F4F4F4;
+// }
 
 #login-container {
   @include theme.container;
@@ -48,11 +56,11 @@
 }
 
 #login-label {
-  font-family: SF Pro;
+  font-family: $font-family;
   font-size: 22px;
   font-weight: 510;
   line-height: 26px;
-  letter-spacing: 0em;
+  letter-spacing: $letter-spacing;
   text-align: left;
 }
 
@@ -60,9 +68,16 @@ form {
   @include theme.form-style;
 }
 
-::placeholder {
-  @include theme.placeholder-style
+.login-font {
+  font-family: $font-family;
+  font-size: $font-input-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+  text-align: left;
+  color: $color-font;
 }
+
 
 .login-input {
   box-sizing: border-box;
@@ -79,6 +94,14 @@ form {
   align-self: stretch;
   flex-grow: 0;
   width: 436px;
+
+  font-family: $font-family;
+  font-size: $font-input-size;
+  font-weight: $font-weight;
+  line-height: 19px;
+  letter-spacing: $letter-spacing;
+  text-align: left;
+  color: $color-font;
 }
 
 .passwordContainer {
@@ -89,8 +112,8 @@ form {
 
 .eye-close {
   background: url(images/eye-closed.png);
-  width: 24px;
-  height: 24px;
+  width: $eye-width;
+  height: $eye-height;
   cursor: pointer;
   background-repeat: no-repeat;
   position: absolute;
@@ -100,8 +123,8 @@ form {
 
 .eye-open {
   background: url(images/eye-open.png);
-  width: 24px;
-  height: 24px;
+  width: $eye-width;
+  height: $eye-height;
   cursor: pointer;
   background-repeat: no-repeat;
   position: absolute;
@@ -113,9 +136,16 @@ form {
   @include theme.button-style;
   width: 436px;
   height: 56px;
+  font-family: $font-family;
+  font-size: $font-input-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+  text-align: left;
+  color: $color-font;
 }
 
 #loading-screen {
   z-index: 10;
-  position:absolute;
+  position: absolute;
 }
