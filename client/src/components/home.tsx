@@ -21,7 +21,7 @@ const home  = () => {
 
   return (
     <>
-			<SearchBar/>
+      <SearchBar/>
       <SourceMap />
       {uiElements}
     </>

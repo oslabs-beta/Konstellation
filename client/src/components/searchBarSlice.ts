@@ -13,17 +13,17 @@ export interface NamespaceElement {
 export interface SearchData {
 	id: string,
 	type: string,
-	traceId?: string,
+	traceID?: string,
 	traceStart?: string,
-	traceDuration?: string | number,
-	serviceCount?: string | number,
-	spanCount?: string | number,
-	label: undefined
+	traceDuration?: string,
+	serviceCount?:number,
+	spanCount?:number,
+	label: any
 }
 
 export interface SearchResult {
 	data?: SearchData,
-	label?: undefined
+	classes?: any
 }
 
 export interface Search {
@@ -46,7 +46,7 @@ export const getTraceViewInfo = createAsyncThunk(
   'searchBar/traceInfo',
   async (traceId:string) => {
 		//Endpoint is a work in progress
-    const response = await fetch(config.url + `/api/searchbarTraceView/${traceId}`)
+    const response = await fetch(config.url + `/api/traces/searchbarTraceView/${traceId}`)
     const data = await response.json();
     return data;
   }

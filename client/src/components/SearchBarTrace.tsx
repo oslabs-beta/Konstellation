@@ -2,13 +2,13 @@ import React, { JSXElementConstructor, useEffect } from 'react';
 import { changeView, selectSourceMap } from './sourceMapSlice';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { selectTraceView, getTraceDataAsync } from './traceViewSlice';
-import { selectSearchTraceResult, SearchData } from './searchBarSlice';
+import { selectSearchTraceResult, SearchData, getTraceViewInfo } from './searchBarSlice';
 
 const SearchBarTrace = (): JSX.Element => {
 	
 
-  const traceViewData = useAppSelector(selectSearchTraceResult); 
-	const exportedtraceViewData= traceViewData.data
+  let traceViewData = useAppSelector(selectSearchTraceResult); 
+	let exportedtraceViewData= traceViewData.data
 
 	const dispatch = useAppDispatch();
   const submitTrace = (traceID:string):any => {
@@ -27,15 +27,11 @@ const SearchBarTrace = (): JSX.Element => {
 		//closes this trace details view?
 		//the darrk bottom bar goes back up so that you can hide the details view so you can see more of the map
 	}
-	
-	//after the async call to get the individual trace info, populate the trace data state in our component to utilize the newly updated info.
-	useEffect (() => {
-    const traceViewData = useAppSelector(selectSearchTraceResult);
-		const exportedtraceViewData = traceViewData.data 
-	})
+
  //create a use effect that upon render, grabs the actual trace data store in the store and display it on top
   //const traceData = useAppSelector(selectTraceViewData);
 
+	console.log ('this is the exported trace view data', exportedtraceViewData)
   return (
 		<div className="searchBar" id="traceSearchBar">
 			<div id="traceSearchBarTopHalf">
@@ -67,7 +63,7 @@ const SearchBarTrace = (): JSX.Element => {
 						Trace ID:
 					  </div>
 					  <div className='searchData'>
-						{exportedtraceViewData?.traceId}
+						{exportedtraceViewData?.traceID}
 					  </div>
 					  <div className="searchTextPrefix">
 						Trace Start:
