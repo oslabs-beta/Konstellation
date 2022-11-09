@@ -121,7 +121,7 @@ function Login() {
     return;
   }
 
-  const RenderLoadingScreen = () => {
+  const ConditionalLoadingScreen = () => {
     if(isLoading) {
       return (<LoadingScreen type={LoadingScreenType.cyclingStops} />);
     }
@@ -131,7 +131,7 @@ function Login() {
   return (
     
     <div id="login" style={{background: 'url(' + background + ') no-repeat center center fixed', backgroundSize : 'cover'}}>
-      <RenderLoadingScreen />
+      <ConditionalLoadingScreen />
       <div id="login-container">
 			<img id="login-logo" src={logo}>
 			</img>
