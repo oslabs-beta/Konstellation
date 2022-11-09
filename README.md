@@ -15,7 +15,7 @@ Prerequisites:
 
 
 *Note*
-- If your App is not instrumented with Opentelemetry instrumentation, the following instructions will instrument a NodeJS, Python, or Java app with Opentelemetry Autoinstrumentation. Do note that errors may arise do due to a known issue with NodeJS native fetch and Opentelemetry's Autostrumentation, inter-pod traces will not correctly propagate.
+- If your App is not instrumented with Opentelemetry instrumentation, the following instructions will provide a method to instrument a NodeJS, Python, or Java app with Opentelemetry Autoinstrumentation. Do note that errors may arise do due to a known issue with NodeJS native fetch and Opentelemetry's Autostrumentation, inter-pod traces will not correctly propagate.
 
 
 # Installing Kubectl
@@ -53,10 +53,11 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 ```
 
 # Setting up Opentelemetry Operator and Collector
-- Insert Opentelemetry Operator github and link to opentelemetry's website here
-To install the operator and collector. Please ensure cert-manager is installed.
+- Detailed instructions to installing the Opentelemetry Operator and Collector are found [here](https://github.com/open-telemetry/opentelemetry-operator)
 
-## (Optiontal) Install Via Helm chart
+To install the operator and collector. Please ensure cert-manager is installed. The Opentelemetry Operator and Collector may be installed via  helm chart or manually
+
+## (Optional) Install Via Helm chart
 You can install Opentelemetry Operator via [Helm Chart](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-operator) from the opentelemetry-helm-charts repository. More information is available in [here](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-operator).
 
 ## Install Opentelemetry Operator
@@ -64,15 +65,16 @@ Once cert-manager is installed:
 ```bash
 kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 ```
+
 Once the `opentelemetry-operator` deployment is ready, create an OpenTelemetry Collector (otelcol) instance:
 
-The OpenTelemetry collector file is provided in the Yamlfiles Folder. Navigate to the Yamlfiles Folder and run the following command: 
+The OpenTelemetry collector yaml file is provided in the konstellation-yaml Folder. Run the following command: 
 
 ```
-kubectl apply -f opentelemetryCollector.yaml
+kubectl apply -f ./konstellation-yaml/setup/opentelemetry-collector.yaml
 ```
 
-
+Alternatively, the following command can be run to set up the collector on the cluster.
 
 ```yaml
 kubectl apply -f - <<EOF
@@ -112,6 +114,7 @@ spec:
 EOF
 ```
 
+This will create an OpenTelemetry instance named `otel`, exposing a `jaeger-grpc` port to consume spans from your instrumented applications and exporting those spans via `logging`, which writes the spans to the console (`stdout`) of the OpenTelemetry Collector instance that receives the span and to the `jaeger-collector`.
 
 
 # Setting up Opentelemetry Autoinstrumentation Injection
@@ -119,7 +122,16 @@ EOF
 
 The operator can inject and configure OpenTelemetry auto-instrumentation libraries. Currently DotNet, Java, NodeJS and Python are supported.
 
+
 To use auto-instrumentation, configure an `Instrumentation` resource with the configuration for the SDK and instrumentation.
+
+The requisite autoinstrumentation yaml file is located in the konstellation-yaml folder. To apply the instrumentation run:
+
+```bash
+kubectl apply -f ./konstellation-yaml/konstellation-autoinstrumentation.yaml
+```
+
+Alternatively, the following command will install the OpenTelemetry Autoinstrumentattion.
 
 ```yaml
 kubectl apply -f - <<EOF
@@ -140,14 +152,28 @@ spec:
 EOF
 ```
 
-Alternatively, the YAML file is provided in the YAML files folder.
+Then add an annotation to a pod to enable injection. The annotation can be added to a namespace, so that all pods within that namespace wil get instrumentation, or by adding the annotation to individual PodSpec objects, available as part of Deployment, Statefulset, and other resources.
 
-Navigate to the YAMLfiles folder and run the following command to apply the yaml file.
-
-```bash
-kubectl apply -f autoinstrumentation.yaml
+Java:
+```
+instrumentation.opentelemetry.io/inject-java: "true"
 ```
 
+NodeJS:
+```
+instrumentation.opentelemetry.io/inject-nodejs: "true"
+```
+
+Python:
+```
+instrumentation.opentelemetry.io/inject-python: "true"
+```
+
+DotNet:
+```
+instrumentation.opentelemetry.io/inject-dotnet: "true"
+```
+(Include the actual instructions to annotate a namespace with the instrumentation (ask kat))
 
 
 # Setting up Jaeger Operator
@@ -196,9 +222,13 @@ WHAT WE SHOULD DO:
 PUT ALL THE YAML FILES IN A BIG FOLDER SO THAT THEY CAN JUST RUN 
 
 ```bash
-kubect apply -f ./KonstellationYaml
+kubect apply -f ./konstellation-yaml/setup
 ```
+Maybe a quick start question that assumes 1. cert manager and kubectl set up. But not otel.
+This will set up opentelemetry operator/collector (in default), jaeger operator in observability and jaeger collector (in default).
 
+Question for kat: 
+(Sets up autoinstrumentation) but not the injection? Sets up autoinstrumentation in default. Or should we not do this, because autinstrumentation injection is broken for nodejs.
 
 # Using Konstellation
 1. On successfull startup, if you are not connected please enter your AWS credentials
