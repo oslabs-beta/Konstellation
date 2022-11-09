@@ -19,17 +19,33 @@ router.get('/getTraceView/:traceId',
   }
 );
 
-// router.get('/getSpansInProcess',
-//   TraceController.getPodDetails,
-//   (req: Request, res: Response, next: NextFunction) => {
-//     res.status(200).json(res.locals.processSpecificSpans)
-//   }
-// )
+router.get('/getSearchBarTraceView', 
+  TraceController.getTraceViewData, TraceController.getSearchBarTraceView,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json(res.locals.searchBarTraceView)
+  }
+);
+
+router.get('/getTraceViewServices', 
+  TraceController.getTraceViewServices,
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log('router complete getAll');
+    res.status(200).json(res.locals.traceViewServices);
+  }
+)
+// Will need to pass in req.body the specific pod name, req.body.traceID 
+router.get('/getSpansInProcess',
+  TraceController.getPodDetails,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json(res.locals.processSpecificSpans)
+  }
+)
+
 // router.get('/getSpanDetails', 
 //   TraceController.getSpanDetails,
 //   (req: Request, res: Response, next: NextFunction) => {
 //     res.status(200).json(res.locals.spanDetails)
-// } 
+//   } 
 // )
 // router.post('/post', 
 //   TraceController.saveData, 
