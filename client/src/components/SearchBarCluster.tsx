@@ -5,6 +5,8 @@ import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { trace } from 'console';
 import { getTraceDataAsync } from './traceViewSlice'
 import { selectCluster, updateNameSpace } from './clusterViewSlice';
+import '../styles/searchBar.scss'
+import logo from '../../../images/konstellation-logo.png'
 
 const SearchBarCluster = ():JSX.Element => {
 	
@@ -45,11 +47,11 @@ const SearchBarCluster = ():JSX.Element => {
 
 return (
 		<div className="searchBar">
-			<div id='logo'>
-			</div>
+			<img id='logo' src={logo}>
+			</img>
 			<div id="namespaceDropDown">
 				<div id="namespaceText">
-			  namespace:
+			  Namespace:
 				</div>
 			  <div className="dropdown">
                 <select className='dropDownOptions'required onChange={(e)=>{changeNameSpace(e)}}>
@@ -66,7 +68,7 @@ return (
 				    id="searchBarInput"
 				    type='text'
 					  name='traceID'
-					  placeholder='Enter TraceID, node, pod, or service name'  
+					  placeholder='Enter TraceID,  node,  pod,  or service name'  
 					  />
 				  <button id="submitButton" onClick={()=>{
 						const input = document.getElementById('searchBarInput') as HTMLInputElement;

@@ -39,6 +39,13 @@ module.exports = (env: any, argv:any) => {
       
       rules: [
         {
+          test: /\.(png|jpe?g|gif|jp2|webp)$/,
+          loader: 'file-loader',
+          options: {
+          name: 'images/[name].[ext]'
+        },
+        },
+        {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           use: ['babel-loader'],
@@ -76,7 +83,7 @@ module.exports = (env: any, argv:any) => {
         publicPath: '/',
       },
       proxy: {
-        '/api': 'http://localhost:3000',
+        '/api': 'http://localhost:3001',
         secure: false,
       },
       compress: false,
