@@ -16,8 +16,10 @@ const home  = () => {
   const sourceMap = useAppSelector(selectSourceMap)
   const uiElements: Array<JSX.Element> = [];
 
+  // Make sure to overwite clickable elements with 'pointer-events: auto'
   if(sourceMap.type == ViewType.cluster){
     uiElements.push(<div className="overlay" id="trace-table-overlay" key="overlay-1"><FooterDrawer /></div>)
+    uiElements.push(<div className="overlay button-container" id="logout-button-container"><Logout /></div>)
   }
 
   return (
@@ -25,7 +27,6 @@ const home  = () => {
       <SearchBar/>
       <SourceMap />
       {uiElements}
-      <Logout />
     </>
   )
 }
