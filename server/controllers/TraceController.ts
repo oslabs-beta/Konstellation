@@ -37,6 +37,22 @@ export class TraceController {
       }
     }
     
+    public static getTraceViewServices(req: Request, res: Response, next: NextFunction) {
+      try{
+        console.log("In Tracecontroller");
+        TraceModel.getTraceViewServices(req, res, next);
+      }
+      catch(err) {
+        return next({
+          log: `Error in TraceController.getCluster: ${err}`,
+          status: 500,
+          message: {
+            err: 'Error occured while retrieving trace view services data in TraceController',
+          },
+        });
+      }
+    }
+    
 
     public static getTraceViewData(req: Request, res: Response, next: NextFunction) {
       try{
