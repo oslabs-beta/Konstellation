@@ -95,7 +95,7 @@ export class TraceModel {
       const currProcess = indivSpan.processID;
       spanToProcess[currSpan] = currProcess;
     });
-    
+
     // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
   
     for (let k = 0; k < currentTraceSpans.length; k++){
@@ -158,8 +158,8 @@ export class TraceModel {
   // Want to pass back id when calling individual PodData; will contain the process # 
   public static async getIndividualPodData(req: Request, res: Response, next: NextFunction) {
     const processTarget = req.body.processTarget;
-    // const traceID = req.body.traceID;
-    const response = await fetch('http://localhost:16686/api/traces/f4693c25923823dae91e7f1e4a2c8862')
+    const traceID = req.body.traceID;
+    const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
