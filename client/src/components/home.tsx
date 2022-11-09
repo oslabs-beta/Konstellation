@@ -1,5 +1,6 @@
 import React from 'react'
 import SourceMap from './sourceMap'
+import SearchBar from './SearchBar';
 import FooterDrawer from './trace-table/footerDrawer'
 import '../styles/home.scss'
 import { useAppSelector } from '../lib/hooks'
@@ -20,6 +21,7 @@ const home  = () => {
 
   return (
     <>
+      <SearchBar/>
       <SourceMap />
       {uiElements}
     </>

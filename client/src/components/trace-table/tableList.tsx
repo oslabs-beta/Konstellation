@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../lib/hooks';
 import { changeView, ViewType } from '../sourceMapSlice';
 import { getTraceDataAsync } from '../traceViewSlice';
 import { selectTableList, TraceTableEntry } from './tableListSlice';
+import { getTraceViewInfo } from '../searchBarSlice';
 
 /** 
    * Renders the list of elements contained within the Trace Table Drawer
@@ -18,6 +19,7 @@ const tableList = () => {
   function loadNewTraceSourceMap(type: ViewType, traceId: string) {
     dispatch(changeView({type: ViewType.trace}))
     dispatch(getTraceDataAsync(traceId));
+		dispatch(getTraceViewInfo(traceId))
   }
 
   const jsxElements = (() => {
