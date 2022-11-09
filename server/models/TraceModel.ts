@@ -83,28 +83,36 @@ export class TraceModel {
   public static async getIndividualTraceView(req: Request, res: Response, next: NextFunction) {
     const traceViewArray = [];
     console.log("jaeger query-ing");
-    const traceID = req.body.traceID;
-    const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    if (!response.ok) {
-      throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const currentTraceData = responseJson.data[0];
-    const currentTraceSpans = currentTraceData.spans;
-    const currentTraceProcesses = currentTraceData.processes;
-    for (const process in currentTraceProcesses){
-      const currProcess = currentTraceProcesses[process];
-      const currProcessTags = currProcess.tags;
-      for (let i = 0; i < currProcessTags.length; i++){
-        if (currProcessTags[i].key === 'k8s.pod.name')
-        traceViewArray.push({
-          data: {
-            id: process,
-            label: currProcessTags[i].value,
-            type: 'trace',
-          },
-          classes: 'label'
-        })
+    // const traceID = req.body.traceID;
+    // const response = await fetch('http://localhost:16686/api/traces/' + traceID)
+    try {
+      const sampleTrace = req.params.traceId //update this to test specific traceIds
+      const url = 'http://localhost:16686/api/traces/' + sampleTrace;
+      console.log(url);
+      const response = await fetch('http://localhost:16686/api/traces/' + sampleTrace)
+      if (!response.ok) {
+        throw new Error(`Error retrieving traceview! Status: ${response.status}`)
+      }
+      const responseJson = await response.json();
+      const currentTraceData = responseJson.data[0]
+      const currentTraceSpans = currentTraceData.spans;
+      const currentTraceProcesses = currentTraceData.processes;
+      // make pods first
+      // const podsArray: { data: { id: string; label: any; type: string; }; classes: string; }[] = [];
+      for (const process in currentTraceProcesses){
+        const currProcess = currentTraceProcesses[process];
+        const currProcessTags = currProcess.tags;
+        for (let i = 0; i < currProcessTags.length; i++){
+          if (currProcessTags[i].key === 'k8s.pod.name')
+          traceViewArray.push({
+            data: {
+              id: process,
+              label: currProcessTags[i].value,
+              type: 'trace',
+            },
+            classes: 'label'
+          })
+        }
       }
       type SpanCache = {[key: string] : string}
       const spanToProcess: SpanCache = {};
@@ -141,36 +149,9 @@ export class TraceModel {
       console.log('traceviewArray: ', traceViewArray);
       return next();
     }
-    type SpanCache = {[key: string] : string}
-    const spanToProcess: SpanCache = {};
-    currentTraceSpans.forEach((indivSpan: any) => {
-      const currSpan = indivSpan.spanID;
-      const currProcess = indivSpan.processID;
-      spanToProcess[currSpan] = currProcess;
-    });
-
-    // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
-  
-    for (let k = 0; k < currentTraceSpans.length; k++){
-      let indivSpan = currentTraceSpans[k];
-      if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
-        traceViewArray.push({
-          data: {
-            id: uuidv4(),
-            source: spanToProcess[indivSpan.spanID],
-            target: spanToProcess[indivSpan.references[0].spanID],
-            type: 'arrow',
-            label: indivSpan.duration,
-          },
-          classes: 'background'
-        })
-      };
+    catch (err){
+      console.log("TraceModel.getIndividualTraceView:\n" + err)
     }
-    res.locals.spanToProcess = spanToProcess;
-    res.locals.traceViewArray = traceViewArray;
-    res.locals.currentTraceSpans = currentTraceSpans;
-    console.log('traceviewArray: ', traceViewArray);
-    return next();
   }
 
   public static async getSearchBarTraceView(req: Request, res: Response, next: NextFunction){
