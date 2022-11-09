@@ -1,5 +1,6 @@
 @use "./theme" as theme;
 
+
 #login {
   display: flex;
   justify-content: center;
@@ -27,7 +28,6 @@
 }
 
 #login-label {
-  //styleName: H3;
   font-family: SF Pro;
   font-size: 22px;
   font-weight: 510;
@@ -49,11 +49,36 @@ input {
   width: 436px;
 }
 
-#login-button {
-  /* Button */
-  @include theme.button-style;
+.passwordContainer {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
 
+.eye-close {
+  background: url(images/eye-closed.png);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 10;
+  padding-right: 10px;
+}
+
+.eye-open {
+  background: url(images/eye-open.png);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 10;
+  padding-right: 10px;
+}
+
+#login-button {
+  @include theme.button-style;
   width: 436px;
   height: 56px;
-
 }

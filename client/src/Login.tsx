@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './styles/login.scss';
 
@@ -15,11 +15,13 @@ function Login() {
   // Don't autoload user into app if they navigated from app
   let { state } = useLocation();
   const autoLoad = state === null ? true : false;
-
+  
   const [accessKey, setAccessKey] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [clusterName, setClusterName] = useState("");
   const [regionName, setRegionName] = useState("");
+  const [hideEye, toggleEye] = useState(true);
+  const [hidePassword, togglePassword] = useState(true);
 
   // Only fire on initial render
   // Executes twice because of React.Strict
@@ -112,6 +114,21 @@ function Login() {
     return;
   }
 
+
+  const eyeClicked = (event : React.MouseEvent) => {
+    console.log('eye clicked!', event, event.target, );
+
+    if(event.currentTarget.className === 'eye-close') {
+      event.currentTarget.className = 'eye-open';
+    }
+    else {
+      event.currentTarget.className = 'eye-close';
+      let secret_input = document.getElementById('secret_key');
+      if(secret_input) {
+      }
+    }
+  }
+
   // Need an environmental condition to avoid logging in user if they just logged out
   // Need to render the background with the "loading icon"
   //loginUser();
@@ -133,7 +150,10 @@ function Login() {
           <div>
             <label>
               AWS Secret Access Key:
-              <input type="password" placeholder="Enter your secret access key" value={secretKey} onChange={(e) => setSecretKey(e.target.value)} />
+              <div className="passwordContainer">
+                <input type={hidePassword ? 'password' : 'text'} placeholder="Enter your secret access key" value={secretKey} onChange={(e) => setSecretKey(e.target.value)} />
+                <div className={hideEye ? 'eye-close' : 'eye-open'} onClick={() => {toggleEye(!hideEye); togglePassword(!hidePassword)}}></div>
+              </div>
             </label>
           </div>
 
