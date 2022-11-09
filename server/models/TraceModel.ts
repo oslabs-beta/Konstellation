@@ -10,6 +10,10 @@ export class TraceModel {
    // final fetch call should be line below
       // const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=' + serviceQuery + '&lookback=' + lookbackParam)
   public static async getTraceLogsFromJaeger(req: Request, res: Response, next: NextFunction) {
+    console.log("jaeger query-ing");
+    // const serviceQuery = req.body.service;
+    // const lookbackParam = req.body.lookbackParam; 
+    // Can limit results by changing results, currently set to 20000 results shown. 
     try {
       const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=frontend')
       if (!response.ok) {
@@ -33,7 +37,13 @@ export class TraceModel {
         let traceMethod = 'unknown';
         let traceResponse = 'unknown';
         let traceURL = 'unknown';
- 
+        // console.log('traceSpans: ' + traceSpans);
+        // console.log('traceDuration: ' + traceDuration);
+        // console.log('Spans.Duration: ' + traceSpans.duration);
+        // console.log('timeStamp: ' + timeStamp)
+        // console.log(traceSpans);
+        // need to convert timeStamp from linux t
+        // traceSpans[0] to get origin trace data for aggregate trace log; 
         const traceTags = traceSpans.tags;
         for (let j = 0; j < traceTags.length; j++) {
           if (traceTags[j].key === 'http.method' || traceTags[j].key === 'rpc.method') {
@@ -45,16 +55,29 @@ export class TraceModel {
           else if (traceTags[j].key === 'http.url'){
             traceURL = traceTags[j].value;
           }
-        else if (traceTags[j].key === 'http.url'){
-          traceURL = traceTags[j].value;
         }
+        tracesArray.push({
+          data: {
+            id: traceID,
+            label: traceID,
+            type: 'temp',
+            response: traceResponse,
+            method: traceMethod,
+            url: traceURL,
+            duration: traceDuration,
+            timestamp: new Date(timeStamp/1000).toString(),
+          }
+        })
+        // console.log('res.locals.tracesArray: ', tracesArray);
       }
-    console.log(tracesArray);
-    res.locals.tracesArray = tracesArray;
-    return next();
-  }}
-  catch{};
-}
+      console.log(tracesArray);
+      res.locals.tracesArray = tracesArray;
+      return next();
+    }
+    catch (err){
+      console.log('TraceModel.getTraceLogsFromJaeger:\n' + err)
+    }
+};
 
 
   public static async getIndividualTraceView(req: Request, res: Response, next: NextFunction) {
