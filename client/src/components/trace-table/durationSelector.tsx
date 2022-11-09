@@ -14,6 +14,21 @@ const durationSelector = (props: Props) => {
 
   const dispatch = useAppDispatch();
   const [activeDuration, setActiveDuration] = useState(-1)
+  const {all, long, medium, short, micro} = {
+    all: 'All', 
+    long: '15m',
+    medium: '5m',
+    short: '2m',
+    micro: '1m',
+  }
+
+  const {allId, longId, mediumId, shortId, microId} = {
+    allId: `duration-selector-${all}`,
+    longId: `duration-selector-${long}`,
+    mediumId: `duration-selector-${medium}`,
+    shortId: `duration-selector-${short}`,
+    microId: `duration-selector-${micro}`
+  }
   
   const refs = [
     useRef<HTMLDivElement>(null),
@@ -30,11 +45,11 @@ const durationSelector = (props: Props) => {
   });
 
   const durations = [
-    <div ref={refs[0]} id="duration-selector-all" onClick={() => handleClick(0)} key="duration-selector-all">All</div>,
-    <div ref={refs[1]} id="duration-selector-15m" onClick={() => handleClick(1)} key="duration-selector-15m">15m</div>,
-    <div ref={refs[2]} id="duration-selector-5m" onClick={() => handleClick(2)} key="duration-selector-5m">5m</div>,
-    <div ref={refs[3]} id="duration-selector-2m" onClick={() => handleClick(3)} key="duration-selector-2m">2m</div>,
-    <div ref={refs[4]} id="duration-selector-1m" onClick={() => handleClick(4)} key="duration-selector-1m">1m</div>,
+    <div ref={refs[0]} id={allId} onClick={() => handleClick(0)} key={allId}>{all}</div>,
+    <div ref={refs[1]} id={longId} onClick={() => handleClick(1)} key={longId}>{long}</div>,
+    <div ref={refs[2]} id={mediumId} onClick={() => handleClick(2)} key={mediumId}>{medium}</div>,
+    <div ref={refs[3]} id={shortId} onClick={() => handleClick(3)} key={shortId}>{short}</div>,
+    <div ref={refs[4]} id={microId} onClick={() => handleClick(4)} key={microId}>{micro}</div>,
   ]
 
   function handleClick(index: number): any {
@@ -59,10 +74,10 @@ const durationSelector = (props: Props) => {
     console.log(`INDEX = ${index}`)
     switch(index) {
       case 0: lookback = "2d"; break;
-      case 1: lookback = "15m"; break;
-      case 2: lookback = "5m"; break;
-      case 3: lookback = "2m"; break;
-      case 4: lookback = "1m"; break;
+      case 1: lookback = long; break;
+      case 2: lookback = medium; break;
+      case 3: lookback = short; break;
+      case 4: lookback = micro; break;
       default: lookback = "2d"; break;
     }
     dispatch(getTraceTableDataAsync(lookback))
