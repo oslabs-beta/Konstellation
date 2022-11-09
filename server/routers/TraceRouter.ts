@@ -36,6 +36,14 @@ router.get('/getSearchbarTraceView/:traceId', (req: Request, res: Response, next
   }
 );
 
+//TEST ROUTE please delete later when actual route is added
+router.get('/getTraceViewServices/', (req: Request, res: Response, next: NextFunction) => {
+	console.log("getTraceViewServices endpoint hit")
+const mockData = ['frontend', 'checkoutservice', 'currencyservice']
+	res.status(200).json(mockData)
+}
+);
+
 // router.get('/getSpansInProcess',
 //   TraceController.getPodDetails,
 //   (req: Request, res: Response, next: NextFunction) => {
