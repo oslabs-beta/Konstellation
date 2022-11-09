@@ -1,7 +1,8 @@
 import e from 'express'
 import React, {useEffect, useRef, useState} from 'react'
-import { useAppDispatch } from '../../lib/hooks';
-import { getTraceTableDataAsync } from './tableListSlice';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { getTraceTableDataAsync, selectService, updateLookback, Lookback} from './tableListSlice';
+
 
 type Props = {}
 
@@ -14,6 +15,7 @@ const durationSelector = (props: Props) => {
 
   const dispatch = useAppDispatch();
   const [activeDuration, setActiveDuration] = useState(-1)
+	const activeService = useAppSelector(selectService);
   const {all, long, medium, short, micro} = {
     all: 'All', 
     long: '15m',
@@ -57,30 +59,31 @@ const durationSelector = (props: Props) => {
     fetchDurationTraceData(index);
   }
   function updateActiveDuration(index: number) {
-    setActiveDuration(index);
+		setActiveDuration(index);
     console.log("INDEX IS" + index + " in updateActiveDuration")
     refs.forEach((ref, i)=> {
-      if (i === index) {
-        ref.current?.setAttribute('class', 'duration-selector-active')
+			if (i === index) {
+				ref.current?.setAttribute('class', 'duration-selector-active')
       }
       else {
-        ref.current?.setAttribute('class', 'duration-selector')
+				ref.current?.setAttribute('class', 'duration-selector')
       }
     })
   }
-
+	
   function fetchDurationTraceData(index: number) {
-    let lookback:string;
+		let lookback:Lookback;
     console.log(`INDEX = ${index}`)
     switch(index) {
-      case 0: lookback = "2d"; break;
-      case 1: lookback = long; break;
-      case 2: lookback = medium; break;
-      case 3: lookback = short; break;
-      case 4: lookback = micro; break;
+			case 0: lookback = "2d"; break;
+      case 1: lookback = "15m"; break;
+      case 2: lookback = "5m"; break;
+      case 3: lookback = "2m"; break;
+      case 4: lookback = "1m"; break;
       default: lookback = "2d"; break;
     }
-    dispatch(getTraceTableDataAsync(lookback))
+		dispatch(updateLookback(lookback))
+    dispatch(getTraceTableDataAsync({activeService:activeService, lookback:lookback}))
   }
 
   return (

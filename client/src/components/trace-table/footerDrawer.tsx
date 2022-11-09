@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../lib/hooks'
 import { selectTraceTableDrawerIsOpen, toggleIsOpen } from './drawerSlice'
 import FooterDrawerHandle, {DrawerTabProps} from './footerDrawerTab'
 import TraceTable from './traceTableContent'
-import { getTraceTableDataAsync } from './tableListSlice'
+import { getTraceTableDataAsync, selectService } from './tableListSlice'
 
 /**
    * Parent level component for managing "Drawer"-type elements in the window's Footer.
@@ -14,6 +14,7 @@ import { getTraceTableDataAsync } from './tableListSlice'
 export const footerDrawer = () => {
   const dispatch = useAppDispatch();
   const drawerIsOpen = useAppSelector(selectTraceTableDrawerIsOpen);
+	const activeService = useAppSelector(selectService);
   
   const data: DrawerTabProps = getDrawerTabData();
 
@@ -27,7 +28,7 @@ export const footerDrawer = () => {
     const defaultLookback = "1m"
 
     dispatch(toggleIsOpen())
-    dispatch(getTraceTableDataAsync(defaultLookback))
+    dispatch(getTraceTableDataAsync({activeService: activeService, lookback: defaultLookback}))
   }
 
   return (
