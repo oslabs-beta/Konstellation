@@ -15,7 +15,7 @@ function Login() {
   // Don't autoload user into app if they navigated from app
   let { state } = useLocation();
   const autoLoad = state === null ? true : false;
-  
+
   const [accessKey, setAccessKey] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [clusterName, setClusterName] = useState("");
@@ -86,7 +86,7 @@ function Login() {
           return;
         }
       }).catch(err => {
-        console.log('bad credentials...');
+        alert('Unable to log in. Please ensure the server is running.')
         // Leverage Electron to parse authentication data from local files
         if(loadConfig) window.electronAPI.getConfig();
         return;       
