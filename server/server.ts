@@ -37,6 +37,6 @@ app.use((req: Request, res: Response) => {
   res.status(404).send('404 Page Not Found')
 });
 
-app.listen(3001, () => console.log('SERVER is listening on port 3000'));
+app.listen(3000, () => console.log('SERVER is listening on port 3000'));
 
 export default app;

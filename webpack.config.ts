@@ -83,7 +83,7 @@ module.exports = (env: any, argv:any) => {
         publicPath: '/',
       },
       proxy: {
-        '/api': 'http://localhost:3001',
+        '/api': 'http://localhost:3000',
         secure: false,
       },
       compress: false,
