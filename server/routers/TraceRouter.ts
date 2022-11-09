@@ -19,6 +19,7 @@ router.get('/getTraceView/:traceId',
   }
 );
 
+//TEST ROUTE please delete later when the actual route is added
 router.get('/searchbarTraceView/:traceId', (req: Request, res: Response, next: NextFunction) => {
 	  console.log("searchbarTrace endpoint hit")
 	const fakeData = {data: {
