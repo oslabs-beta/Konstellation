@@ -6,6 +6,10 @@ import styleSheet from '../styles/Stylesheet'
 import options from '../constants/CytoscapeConfig'
 import { useSelector } from 'react-redux';
 import { selectTraceView, TraceData } from './traceViewSlice';
+import { useAppDispatch } from '../lib/hooks';
+import { changeRenderView, RenderType } from './span-table/spanMapSlice';
+import { getSpanTableAsync } from './span-table/spanListSlice';
+import { node } from 'webpack';
 
 export interface Trace {
   data: TraceData
@@ -22,6 +26,14 @@ cytoscape.use(coseBilkent);
   
   const traceViewData = useSelector(selectTraceView); 
   const layout = options();
+
+  const dispatch = useAppDispatch();
+
+  function loadNewSpanTable(type: RenderType, data: string) {
+    dispatch(changeRenderView({type: RenderType.render, data}))
+    dispatch(getSpanTableAsync());
+  }
+
 
   let myCyRef;
 
@@ -67,12 +79,16 @@ cytoscape.use(coseBilkent);
                 y: 0
               })
             }, 10)
-            setTimeout( function(){
-              cy.$('').unselect();
-              cy.fit(cy.$(''),50);
-            }, 5000 );
+            const nodeData = node.data()
+            // setTimeout( function(){
+            //   cy.$('').unselect();
+            //   cy.fit(cy.$(''),50);
+            // }, 5000 );
+            loadNewSpanTable(RenderType.render, nodeData.label)
+            
           });
         }}
+
       ></CytoscapeComponent>
     </div>
     )
