@@ -1,6 +1,7 @@
 export type SpanCache = {
     processNum:string,
     spanIds: Array<string>
+    spanData: Array<string>
   };
 
 export type EdgeData = {
@@ -15,6 +16,8 @@ export type EdgeData = {
 
 export type SpanData = {
     data: {
+      traceID: string,
+      spanID: string,
       operationName: string,
       references: string,
       startTime: string,

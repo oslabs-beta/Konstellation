@@ -47,6 +47,7 @@ router.get('/getSpansInProcess',
 //     res.status(200).json(res.locals.spanDetails)
 //   } 
 // )
+
 // router.post('/post', 
 //   TraceController.saveData, 
 //   (req: Request, res: Response, next: NextFunction) => {res.status(200).json("Trace Data Added")}
