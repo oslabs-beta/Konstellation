@@ -14,6 +14,7 @@ const SearchBarTrace = (): JSX.Element => {
   const submitTrace = (traceID:string):any => {
 				//dispatches an action to call on the asynchoronous funciton of getting tracedata
 		dispatch(getTraceDataAsync(traceID))
+		dispatch(getTraceViewInfo(traceID))
 		return
 	}
 
