@@ -21,7 +21,7 @@ interface DrawerData {
   method: string,
 }
 
-interface DrawerState {
+export interface DrawerState {
   isOpen: boolean,
   data: DrawerData | undefined
 }
@@ -31,10 +31,10 @@ interface DrawerState {
    * @remarks Asynchronously fetches data.
    * @returns A promise which yields a collection of Trace Data in the following format: {@link DrawerData}
    */
-export const getTraceDataAsync = createAsyncThunk(
+export const getTraceListAsync = createAsyncThunk(
   'traceTable/getTraceData',
   async () => {
-    const response = await fetch(config.url + '/api/trace')
+    const response = await fetch(config.url + '/api/traces')
     const data = await response.json();
     return data.data;
   }

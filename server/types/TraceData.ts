@@ -1,1 +1,7 @@
-type TraceData = (PodData | SpanData)[]
+type TraceData = {
+   data: {
+    id: string,
+    label: string,
+    type: string
+   }
+}
