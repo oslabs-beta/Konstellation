@@ -59,13 +59,12 @@ export const getServicesAsync = createAsyncThunk(
 export const getTraceTableDataAsync = createAsyncThunk(
   'traceTable/getTraceTableData',
   async (parameters:TraceDataTableParameters) => {
+		//enters the if statement if an async call is made to retrieve data from the backend before an active service is received
 		if (parameters.activeService === undefined){
-			console.log(parameters.lookback)
-			console.log('in the failed branch')
+			console.log('no active service available')
 			return [];
 		}
-		console.log('passed the if statement')
-		console.log(parameters.activeService)
+
 		console.log ('this is what the actual endpoint looks like', config.url + `/api/traces/getAll/${parameters.activeService}/${parameters.lookback}`)
    // const url = config.url + `/api/traces/getAll/${parameters.activeService}/${parameters.lookback}`
 	 const url = config.url + `/api/traces/getAll/${parameters.lookback}`

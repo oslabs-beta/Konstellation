@@ -42,7 +42,6 @@ router.get('/getTraceViewServices/', async(req: Request, res: Response, next: Ne
 	const response:any = await fetch('http://localhost:16686/api/services')
   const responseJson= await response.json();
 	const data =responseJson.data
-  console.log('fetched data from jaeger', data)
 	res.status(200).json(data)
 }
 );
