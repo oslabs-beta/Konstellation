@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import '../../styles/traceTable.scss'
 import DurationSelector from './durationSelector'
 import { selectTableList } from './tableListSlice'
+import TableDropDownMenu from './tableDropdownMenu'
 
 /**
    * @WIP Not yet implemented
@@ -14,7 +15,9 @@ const windowHeader = () => {
   return (
     <div id="trace-table-window-header">
       <h1>Trace View - {tableList.data.length} Results</h1>
-      <div id='trace-table-dropdown-menu'>DROPDOWN MENU HERE</div>
+      <div id='trace-table-dropdown-menu'>
+				<TableDropDownMenu/>
+			</div>
       <div id="trace-table-window-header__duration-container">
         Show:
         <DurationSelector />

@@ -20,16 +20,16 @@ router.get('/getTraceView/:traceId',
 );
 
 //TEST ROUTE please delete later when the actual route is added
-router.get('/searchbarTraceView/:traceId', (req: Request, res: Response, next: NextFunction) => {
+router.get('/getSearchbarTraceView/:traceId', (req: Request, res: Response, next: NextFunction) => {
 	  console.log("searchbarTrace endpoint hit")
 	const fakeData = {data: {
 			id: 'searchBarData',
 			type: 'searchBarData',
 			traceID: req.params.traceId,
-			traceStart: '1000',
-			traceDuration: '200',
-			serviceCount: 2,
-			spanCount: 3,
+			traceStart: 'November 8 2022, 21:19:11.716',
+			traceDuration: '164.25ms',
+			serviceCount: 10,
+			spanCount: 56,
 			label: undefined
 		}}
     res.status(200).json(fakeData)

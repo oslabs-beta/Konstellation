@@ -26,6 +26,7 @@ export interface TraceTable {
   status: string
   data: TraceTableData
 }
+
 export const getTraceTableDataAsync = createAsyncThunk(
   'traceTable/getTraceTableData',
   async ( lookback: string) => {
