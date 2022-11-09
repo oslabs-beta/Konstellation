@@ -6,12 +6,14 @@ export enum RenderType {noRender, render}
 
 const initialState: Render = {
   type: RenderType.noRender,
-  data: 'placeholder'
+  data: 'placeholder',
+  id: 'placeholder'
 }
 
 export interface Render {
   type: RenderType,
-  data: String
+  data: String,
+  id: String
 }
 
 /**
@@ -23,7 +25,8 @@ export const spanMapSlice = createSlice({
   reducers: {
     changeRenderView: (state, action: PayloadAction<Render>) => {
       state.type = action.payload.type,
-      state.data = action.payload.data
+      state.data = action.payload.data,
+      state.id = action.payload.id
     }
   }
 })

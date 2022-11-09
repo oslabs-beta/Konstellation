@@ -14,9 +14,9 @@ const tableList = () => {
   const { data } = useSelector(selectTableList)
   const dispatch = useAppDispatch();
   
-  function loadNewTraceSourceMap(type: ViewType, traceId: string) {
-    dispatch(changeView({type: ViewType.trace}))
-    dispatch(getTraceDataAsync(traceId));
+  function loadNewTraceSourceMap(type: ViewType, data: string) {
+    dispatch(changeView({type: ViewType.trace, data}))
+    dispatch(getTraceDataAsync(data));
   }
 
   const jsxElements = (() => {

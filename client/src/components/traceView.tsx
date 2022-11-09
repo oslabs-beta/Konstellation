@@ -29,9 +29,9 @@ cytoscape.use(coseBilkent);
 
   const dispatch = useAppDispatch();
 
-  function loadNewSpanTable(type: RenderType, data: string) {
-    dispatch(changeRenderView({type: RenderType.render, data}))
-    dispatch(getSpanTableAsync());
+  function loadNewSpanTable(type: RenderType, data: string, id: string) {
+    dispatch(changeRenderView({type: RenderType.render, data, id}))
+    dispatch(getSpanTableAsync(id));
   }
 
 
@@ -84,7 +84,7 @@ cytoscape.use(coseBilkent);
             //   cy.$('').unselect();
             //   cy.fit(cy.$(''),50);
             // }, 5000 );
-            loadNewSpanTable(RenderType.render, nodeData.label)
+            loadNewSpanTable(RenderType.render, nodeData.label, nodeData.id)
             
           });
         }}

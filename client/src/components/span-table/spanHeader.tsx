@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import '../../styles/spanTable.scss'
+import { selectSourceMap } from '../sourceMapSlice';
 import { selectSpanMap } from './spanMapSlice';
 
 
@@ -13,13 +14,17 @@ import { selectSpanMap } from './spanMapSlice';
 
 const spanHeader = () => {
 
-  const { data } = useSelector(selectSpanMap)
+  const { data, id } = useSelector(selectSpanMap)
   console.log('spanHeaderData: ', data)
+  const traceId = useSelector(selectSourceMap)
+
 
   return (
     <div id="span-table-header">
       <div className='spanHeader'>Span Details</div>
       <div className='spanHeaderPodName'>Pod Name: {data}</div>
+      <div className='spanHeaderPodName'>TargetProcess Name: {id}</div>
+      <div className='spanHeaderPodName'>TraceID Name: {traceId.data}</div>
     </div>
   )
 }
