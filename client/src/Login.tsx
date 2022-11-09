@@ -71,7 +71,6 @@ function Login() {
   }, [])
 
   const loginUser = (loadConfig : boolean) => {
-    //alert('id:' + accessKey + ' secret:' + secretKey);
 
     fetch('http://localhost:3000/authenticate', {
       method: 'GET'
@@ -101,7 +100,7 @@ function Login() {
       })
   }
 
-  // Returns true if the input string is empty
+  // Return true if the given string is empty
   const emptyString = (input : string ) => {
     if(input.trim() === '') return true;
     return false;    
@@ -110,7 +109,6 @@ function Login() {
   const buttonPressed = (event: FormEvent) => {
     event.preventDefault();
 
-    // Don't submit if any of the fields are empty
     if(emptyString(accessKey) || emptyString(secretKey) || emptyString(clusterName) || emptyString(regionName)) {
       alert('Please fill out all fields');
       return;
@@ -130,17 +128,12 @@ function Login() {
     return (<></>);
   }
 
-  // Need an environmental condition to avoid logging in user if they just logged out
-  // Need to render the background with the "loading icon"
-  //loginUser();
-
   return (
     
-    <div id="login" style={{background: 'url(' + background + ') no-repeat center center fixed',
-    backgroundSize : 'cover'}}>
+    <div id="login" style={{background: 'url(' + background + ') no-repeat center center fixed', backgroundSize : 'cover'}}>
       <RenderLoadingScreen />
       <div id="login-container">
-			<img id="logo" src={logo}>
+			<img id="login-logo" src={logo}>
 			</img>
         <h3 id="login-label">Login</h3>
         <form onSubmit={buttonPressed}>
@@ -148,7 +141,7 @@ function Login() {
           <div>
             <label>
               AWS Access Key ID:
-              <input type="text" placeholder="Enter your access key ID" value={accessKey} onChange={(e) => setAccessKey(e.target.value)} />
+              <input type="text" placeholder="Enter your access key ID" className="login-input" value={accessKey} onChange={(e) => setAccessKey(e.target.value)} />
             </label>
           </div>
 
@@ -156,7 +149,7 @@ function Login() {
             <label>
               AWS Secret Access Key:
               <div className="passwordContainer">
-                <input type={hidePassword ? 'password' : 'text'} placeholder="Enter your secret access key" value={secretKey} onChange={(e) => setSecretKey(e.target.value)} />
+                <input type={hidePassword ? 'password' : 'text'} className="login-input" placeholder="Enter your secret access key" value={secretKey} onChange={(e) => setSecretKey(e.target.value)} />
                 <div className={hideEye ? 'eye-close' : 'eye-open'} onClick={() => {toggleEye(!hideEye); togglePassword(!hidePassword)}}></div>
               </div>
             </label>
@@ -165,14 +158,14 @@ function Login() {
           <div >
             <label>
               Cluster Name:
-              <input type="text" placeholder="Enter the Cluster's name" value={clusterName} onChange={(e) => setClusterName(e.target.value)} />
+              <input type="text" placeholder="Enter the Cluster's name" className="login-input" value={clusterName} onChange={(e) => setClusterName(e.target.value)} />
             </label>
           </div>
 
           <div>
             <label>
               Region:
-              <input type="text" placeholder="Enter the Cluster's region" value={regionName} onChange={(e) => setRegionName(e.target.value)} />
+              <input type="text" placeholder="Enter the Cluster's region" className="login-input" value={regionName} onChange={(e) => setRegionName(e.target.value)} />
             </label>
           </div>
 
