@@ -43,8 +43,8 @@ cytoscape.use(coseBilkent);
         stylesheet={styleSheet}
         layout={layout}
         style={{
-          width: '100%',
-          height: '50rem',
+          width: '100vw',
+          height: '100vh',
           objectFit: 'cover',
           backgroundColor: '#161820'
         }}
