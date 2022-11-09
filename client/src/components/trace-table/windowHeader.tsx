@@ -14,7 +14,7 @@ const windowHeader = () => {
   return (
     <div id="trace-table-window-header">
       <h1>Trace View - {tableList.data.length} Results</h1>
-      
+      <div id='trace-table-dropdown-menu'>DROPDOWN MENU HERE</div>
       <div id="trace-table-window-header__duration-container">
         Show:
         <DurationSelector />

@@ -96,9 +96,7 @@ const SearchBarTrace = (): JSX.Element => {
 					</div>
 				</div>
 			</div>
-			<div className='barGraph'>
-				Bar Graph Here
-			</div>
+
 		</div>
 	)
 
