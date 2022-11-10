@@ -66,6 +66,9 @@
       cursor: pointer
     }
 
+.span-label {
+  margin-right: 8px;
+}
 .span-data-entry {
   padding-left: 3vw;
   font-weight: 200;
@@ -78,11 +81,11 @@
 
 .span-details {
   display: flex;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .span-entry {
-  display: flex
+  display: flex;
 }
 
 .spanHeader {
@@ -98,7 +101,7 @@
 .span-pod-entry {
   padding-top: 1vh;
   padding-bottom: 1vh;
-  overflow-y: scroll;
+  overflow-y: hidden;
   border-bottom: 1px solid white;
 }
 

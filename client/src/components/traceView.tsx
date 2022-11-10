@@ -71,7 +71,8 @@ cytoscape.use(coseBilkent);
           objectFit: 'cover',
           backgroundColor: '#161820'
         }}
-        maxZoom={3}
+        wheelSensitivity={0.08}
+        maxZoom={3.0}
         minZoom={0.1}
         
         cy={cy => {

@@ -40,7 +40,7 @@ const spanList = () => {
         <div key={entryKey} className='span-pod-entry'>
           <div className="span-entry">
           <button className="spanButton" onClick={() => {if (type === spanViewType.noRender) {loadNewSpanResults(spanViewType.render, data[i])} else {loadNewSpanResults(spanViewType.noRender, data[i].spanIds)}}}>{'>'}</button>
-          <div key={entryKey} className='span-name'><span className='boldSpanName'>SpanID: </span> {data[i].spanIds}</div>
+          <div key={entryKey} className='span-name'><span className='boldSpanName span-label'>SpanID: </span> {data[i].spanIds}</div>
           </div>
           <div className="span-details">
           <SpanResultsMap spanData={data[i].spanData}/>
