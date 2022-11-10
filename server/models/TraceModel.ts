@@ -146,18 +146,23 @@ export class TraceModel {
   
     for (let k = 0; k < currentTraceSpans.length; k++){
       let indivSpan = currentTraceSpans[k];
-      if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
-        traceViewArray.push({
-          data: {
-            id: uuidv4(),
-            source: spanToProcess[indivSpan.spanID],
-            target: spanToProcess[indivSpan.references[0].spanID],
-            type: 'arrow',
-            label: indivSpan.duration,
-          },
-          classes: 'background'
-        })
-      };
+			//console.log(spanToProcess[indivSpan])
+			 if (indivSpan.references[0]){
+				console.log('right before the arrow building ')
+				 if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
+					console.log('in the inner if statement')
+					 traceViewArray.push({
+						 data: {
+							 id: uuidv4(),
+							 source: spanToProcess[indivSpan.spanID],
+							 target: spanToProcess[indivSpan.references[0].spanID],
+							 type: 'arrow',
+							 label: indivSpan.duration,
+							},
+							classes: 'background'
+						})
+					};
+				}
     }
     res.locals.spanToProcess = spanToProcess;
     res.locals.traceViewArray = traceViewArray;
@@ -175,13 +180,15 @@ export class TraceModel {
     let traceDuration;
     currentTraceSpans.forEach((indivSpan: any) => {
       spanCountData ++; 
-      const currRef = indivSpan.references[0];
-      if (currRef.refType === "FOLLOWS_FROM") {
-        console.log('follows from: ' + indivSpan.traceID);
-        traceID = indivSpan.traceID;
-        traceStart = indivSpan.startTime;
-        traceDuration = indivSpan.duration;
-      }
+			if (indivSpan.references[0]){
+				const currRef = indivSpan.references[0];
+				if (currRef.refType === "FOLLOWS_FROM") {
+					console.log('follows from: ' + indivSpan.traceID);
+					traceID = indivSpan.traceID;
+					traceStart = indivSpan.startTime;
+					traceDuration = indivSpan.duration;
+				}
+			}
     });
     const searchTraceData : TraceViewPodsData = {
       data: {
