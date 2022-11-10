@@ -73,59 +73,16 @@
   }  
 }
 
-@mixin logo {
-  background: url(images/konstellation-logo.png);
-  /*position: absolute;*/
-  width: 400px;
-  height: 53px;
-  left: 0px;
-  top: 0px;
-
-  font-family: 'Noto Serif';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 39.0261px;
-  line-height: 53px;
-  letter-spacing: 0.15em;
-
-  color: #EFEFEF;  
-}
-
 /*
    Formats all font
 */
 * {
-  //styleName: Body Default Bold;
+ // styleName: Body Default Bold;
   font-family: SF Pro;
-  font-size: 16px;
+//  font-size: 16px;
   font-weight: 700;
-  line-height: 19px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #F4F4F4;
-}
-
-// Input selector for all input
-@mixin input {
-  box-sizing: border-box;
-  background-color: #3C3C3C;
-  /* Auto layout */
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 16px;
-  gap: 8px;
-
-  /* Mid Gray */
-
-  border: 1px solid #919191;
-  border-radius: 8px;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
+//  line-height: 19px;
+//  letter-spacing: 0em;
+//  text-align: left;
+//  color: #F4F4F4;
 }

@@ -10,6 +10,7 @@ import LoadingScreen, { LoadingScreenType } from './loadingScreen';
 export interface Cluster {
   data: ClusterData
   status: 'idle' | 'loading' | 'failed';
+	namespace: string;
 }
 
 /**
@@ -29,7 +30,7 @@ export default function clusterView(): JSX.Element {
     if(data.length === 0) {
       dispatch(getClusterAsync());
     }
-  })
+  },[])
 
   if (status === 'failed') {
     <div id="message-screen">Request Failed. Please confirm server is active.</div>

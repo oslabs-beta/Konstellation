@@ -4,7 +4,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/getAll', 
+router.get('/getAll/:service/:lookback', 
   TraceController.getAggregateData,
   (req: Request, res: Response, next: NextFunction) => {
     console.log('router complete getAll');
@@ -19,7 +19,7 @@ router.get('/getTraceView/:traceId',
   }
 );
 
-router.get('/getSearchBarTraceView', 
+router.get('/getSearchBarTraceView/:traceId', 
   TraceController.getTraceViewData, TraceController.getSearchBarTraceView,
   (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json(res.locals.searchBarTraceView)
