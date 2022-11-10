@@ -24,6 +24,8 @@ Check out our [QuickStart](#quickstart) section for instructions on how to quick
 
 - The app has been tested on both AWS Elastic Kubernetes Service as well as unmanaged clusters. While it is expected that this application will work with other managed Kubernetes providers, support on such platforms is not officially supported.
 
+- ENV templates have been provided in the client.zip and server.zip files
+
 # Installing Kubectl
 - Instructions to install kubectl [here](https://kubernetes.io/docs/tasks/tools/)
 
