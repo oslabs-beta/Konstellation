@@ -162,7 +162,7 @@ With these services deployed, and the service now ported to the local machine, w
 # Quickstart
 The quickstart instructions will require that [`kubectl`](#installing-kubectl) is set up and [`cert-manager`](#installing-cert-manager) is installed. 
 
-To begin, issue the following commands which will create and deploy the `Jaeger Operator` and `OpenTelemtry Operator` into the observability namespace:
+To begin, issue the following commands which will create and deploy the `Jaeger Operator` and `OpenTelemetry Operator` into the observability namespace:
 
 ```
 kubectl apply -f ./konstellation-yaml/setup/runFirst.yaml 
@@ -227,7 +227,7 @@ Additional information on this issue can be found [here](https://github.com/Auto
 
 # Authors
 
-Jonathan Le [Github](https://github.com/lejon1220)/[LinkedIn]
+Jonathan Le [Github](https://github.com/lejon1220)/[LinkedIn](https://www.linkedin.com/in/jonathan-le-bb38a3256/)
 
 Matthew Antosiak [Github](https://github.com/Jaitnium)/[LinkedIn](https://linkedin.com/in/matthewantosiak)
 
