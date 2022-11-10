@@ -1,11 +1,11 @@
 # ![Konstellation logo](./images/konstellation-logo.png)
 
 # Summary
-Konstellation is a Distributed Tracing tool for AWS EKS Kubernetes clusters and managed clusters.
+Konstellation is a Distributed Tracing tool for AWS EKS Kubernetes clusters and unmanaged Kubernetes clusters.
 
 This tool gathers telemetry data within a kubernetes cluster and displays the connections in an easy to understand User Graphical Interface.
 
-Please read the [website](insertlinkhere) and [medium](insertLinkHere) article for more information.
+Please read the [website](http://konstellationapp.com/) and [medium](https://medium.com/@katalystyt0/kubernetes-clusters-visualization-with-konstellation-647d61aa817b) article for more information.
 
 # Getting Started
 Prerequisites:
@@ -21,6 +21,8 @@ Check out our [QuickStart](#quickstart) section for instructions on how to quick
 - If your App is not instrumented with Opentelemetry instrumentation, the following instructions will provide a method to instrument a NodeJS, Python, or Java app with Opentelemetry Autoinstrumentation. Do note that errors may arise do due to a known issue with NodeJS native fetch and Opentelemetry's Autostrumentation, inter-pod traces will not correctly propagate.
 
 - Custom deployment of the Opentelemetry Operator Collector, and the deployment of the Jaeger Operator Operator and collector is possible. As long as the `Jaeger-frontend` is exposed on `localhost:16686`, Konstellation can be used.
+
+- The app has been tested to work on AWS EKS and unmanaged clusters, this application may work with other cloud kubernetes providers, but support for those systems has not yet been tested.
 
 # Installing Kubectl
 - Instructions to install kubectl [here](https://kubernetes.io/docs/tasks/tools/)
@@ -46,7 +48,7 @@ kubectl version --client
 ```
 
 # Installing cert-manager
-- Detailed Instructions to installing `cert-manager` [here](https://cert-manager.io/docs/installation/)
+- Detailed Instructions for installing `cert-manager` [here](https://cert-manager.io/docs/installation/)
 
 To install cert-manager run:
 
@@ -86,7 +88,6 @@ This will create an OpenTelemetry instance named `otel`, exposing a `jaeger-grpc
 
 The operator can inject and configure OpenTelemetry auto-instrumentation libraries. Currently DotNet, Java, NodeJS and Python are supported.
 
-
 To use auto-instrumentation, configure an `Instrumentation` resource with the configuration for the SDK and instrumentation.
 
 The requisite autoinstrumentation yaml file is located in the konstellation-yaml folder. To apply the instrumentation run:
@@ -95,7 +96,7 @@ The requisite autoinstrumentation yaml file is located in the konstellation-yaml
 kubectl apply -f ./konstellation-yaml/05-konstellation-autoinstrumentation.yaml
 ```
 
-Then add an annotation to a pod to enable injection. The annotation can be added to a namespace, so that all pods within that namespace wil get instrumentation, or by adding the annotation to individual PodSpec objects, available as part of Deployment, Statefulset, and other resources.
+Then add an annotation to a pod to enable injection. The annotation can be added to a namespace, so that all pods within that namespace will get instrumentation, or by adding the annotation to individual PodSpec objects, available as part of Deployment, Statefulset, and other resources.
 
 Java:
 ```
@@ -150,7 +151,7 @@ kubectl apply -f ./konstellation-yaml/setup/04-jaegerconfig.yaml
 
 Konstellation requires port-forwarding of Jaeger to `localhost:16686` to function.
 
-- Run the following command to port-forward Jaeger to your `localhost:16686`
+Run the following command to port-forward Jaeger to your `localhost:16686`
 
 ```bash
 kubectl port-forward jaeger-collector 16686:16686
@@ -164,25 +165,25 @@ Open a browser and navigate to  `http://localhost:16686`. The jaeger UI should l
 # Quickstart
 The quickstart instructions will require that [`kubectl`](#installing-kubectl) is set up and [`cert-manager`](#installing-cert-manager) is installed. 
 
-The following commands will create and deploy the and `jaeger operator` in the observability namesapce and the `opentelemetry operator`.
+The following commands will create and deploy the and `jaeger operator` in the observability namespace and the `opentelemetry operator`.
 
 ```
 kubectl apply -f ./konstellation-yaml/setup/runFirst.yaml 
 ```
 
-Once the `jager operator` and `opentelemetry operator` pods are depoloyed, run the following command.
+Once the `jager operator` and `opentelemetry operator` pods are deployed, run the following command.
 
 ```
 kubectl apply -f ./konstellation-yaml/setup/runSecond.yaml
 ```
 
-This second command will configure an opentelemetry collector and jaeger collector in the default namespace. It will addiionally set up auto-instrumentation for Node-JS in the default namespace and add an annotation to the namespace to allow the Operator to injection the code to all pods in the namespace.
+This second command will configure an opentelemetry collector and jaeger collector in the default namespace. It will addionally set up autoinstrumentation for Node-JS in the default namespace and add an annotation to the namespace to allow the Operator to inject the autoinstrumentation to all pods in the namespace.
 
 Once the jaeger collector has been set up, port-forward the jaeger collector to your http://localhost:16686
 
 # Running the Application
 
-Once, all of the prerequisite conditions are met, and jaeger is port-forwarded to `localhost:16686`, run the following commands.
+Once all of the prerequisite conditions are met, and jaeger is port-forwarded to `localhost:16686`, run the following commands.
 ```
 npm install
 ```
@@ -193,7 +194,7 @@ npm start
 ```
 Navigate to `localhost:8080` to run the application
 
-2. On successfull startup, if you are not connected to your AWS, please enter your AWS credentials.
+2. On successful startup, if you are not connected to your AWS, please enter your AWS credentials.
 ![loginpage](./images/konstellation-login.png)
 
 
@@ -207,9 +208,12 @@ Navigate to `localhost:8080` to run the application
 5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
 
 # Known Issues
-
-
-
+- There is a known issue regarding apple silicon Macbooks causing incompatibility with the canvas npm module. 
+To solve the issue, run:
+```
+arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
+```
+More information can be found [here](https://github.com/Automattic/node-canvas/issues/1733#issuecomment-808916786)
 
 # Authors
 
