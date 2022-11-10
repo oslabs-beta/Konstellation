@@ -231,7 +231,7 @@ Jonathan Le [Github](https://github.com/lejon1220)/[LinkedIn]
 
 Matthew Antosiak [Github](https://github.com/Jaitnium)/[LinkedIn](https://linkedin.com/in/matthewantosiak)
 
-Kathyrn Tsai [Githib](https://github.com/katalystkat)/[LinkedIn](https://linkedin.com/in/ck-tsai/)
+Kathryn Tsai [Githib](https://github.com/katalystkat)/[LinkedIn](https://linkedin.com/in/ck-tsai/)
 
 Richard Roberts [Github](https://github.com/Richard-Roberts)/[LinkedIn](https://www.linkedin.com/in/richard--roberts/)
 
