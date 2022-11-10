@@ -110,7 +110,7 @@ function createWindow() {
 
 
   // Automatically open Chrome's DevTools in development mode.
-  if (!app.isPackaged) {
+  if (!prodMode) {
     win.webContents.openDevTools();
   }
 }
