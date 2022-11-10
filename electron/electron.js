@@ -96,8 +96,9 @@ function createWindow() {
   // In production, set the initial browser path to the local bundle generated
   // by the Create React App build process.
   // In development, set it to localhost to allow live/hot-reloading.
-  console.log('NODE_ENV:', process.env.NODE_ENV);
-  const appURL = (process.env.NODE_ENV === "production")
+  const prodMode = process.env.npm_lifecycle_script.includes('production');
+  //const prodMode = process.env.
+  const appURL = (prodMode)
     ? url.format({
       pathname: path.join(__dirname, "../dist/index.html"),
       protocol: "file:",
