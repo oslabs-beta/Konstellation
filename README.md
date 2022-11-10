@@ -207,10 +207,11 @@ Navigate to `localhost:8080` to run the application
 ![cluster-view](./images/KonstellationCluster.png)
 3. To view a specific trace, click on the trace ID on the table.
 ![trace-table](./images/konstellation-trace-table.png)
-4. To return to the clusterView click on the clusterView button.
+4. Clicking on a specific pod in the trace view will display the span details of the particular pod
 ![trace](./images/trace-view.png)
-
-5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
+5. To return to the clusterView click on the clusterView button.
+![span-details](./images/konstellation-span-details.png)
+6. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
 
 # Known Issues
 - There is a known issue regarding apple silicon Macbooks causing incompatibility with the canvas npm module. 
