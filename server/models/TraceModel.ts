@@ -146,11 +146,8 @@ export class TraceModel {
   
     for (let k = 0; k < currentTraceSpans.length; k++){
       let indivSpan = currentTraceSpans[k];
-			//console.log(spanToProcess[indivSpan])
 			 if (indivSpan.references[0]){
-				console.log('right before the arrow building ')
 				 if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
-					console.log('in the inner if statement')
 					 traceViewArray.push({
 						 data: {
 							 id: uuidv4(),
