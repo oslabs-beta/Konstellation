@@ -11,6 +11,8 @@ import { changeRenderView, RenderType } from './span-table/spanMapSlice';
 import { getSpanTableAsync } from './span-table/spanListSlice';
 import { node } from 'webpack';
 import { selectSourceMap } from './sourceMapSlice';
+import { useAppSelector } from '../lib/hooks';
+import { selectSearchTraceResult } from './searchBarSlice';
 
 export interface Trace {
   data: TraceData
@@ -29,6 +31,11 @@ cytoscape.use(coseBilkent);
   const layout = options();
 
   const dispatch = useAppDispatch();
+
+  
+  let traceData = useAppSelector(selectSearchTraceResult); 
+	let exportedtraceViewData: any= traceData.data
+ 
 
   function loadNewSpanTable(type: RenderType, data: string, id: string, traceData: any) {
     dispatch(changeRenderView({type: RenderType.render, data, id}))
@@ -90,10 +97,18 @@ cytoscape.use(coseBilkent);
             //   cy.$('').unselect();
             //   cy.fit(cy.$(''),50);
             // }, 5000 );
+            let currentTraceId = 'placeholder'
+            if (exportedtraceViewData) {
+              currentTraceId = exportedtraceViewData.traceID
+              console.log('current TraceID', currentTraceId)
+              }
+
             const traceData = {
               processTarget : nodeData.id, 
-              traceId : traceId
+              traceId : currentTraceId
             }
+
+            console.log('traceData in traceView',traceData)
 
             loadNewSpanTable(RenderType.render, nodeData.label, nodeData.id, traceData)
             console.log('traceData from nodeClick', traceData)

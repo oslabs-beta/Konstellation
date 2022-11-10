@@ -11,7 +11,7 @@ const initialState: View = {
 
 export interface View {
   type: ViewType,
-  data: string
+  data?: string
 }
 
 /**
