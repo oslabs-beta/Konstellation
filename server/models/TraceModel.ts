@@ -208,16 +208,19 @@ export class TraceModel {
   }
   // Want to pass back id when calling individual PodData; will contain the process # 
   public static async getIndividualPodData(req: Request, res: Response, next: NextFunction) {
-    const processTarget = req.body.processTarget;
-    // const processTarget = 'p1';
-    // const traceID = 'fd81b45493417ef7e6776311639e8a2d'
-    const traceID = req.body.traceID;
+    console.log('req.params: ', req.params)
+    const processTarget = req.params.processTarget;
+    const traceID = req.params.traceId;
+    const url = 'http://localhost:16686/api/traces/' + traceID
+    console.log(`fetching this url: ${url}`)
     try {
-      const response = await fetch('http://localhost:16686/api/traces/' + traceID)
-    if (!response.ok) {
-      throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-    }
+    const response = await fetch(url)
+    // if (!response.ok) {
+    //   throw new Error(`Error retrieving traceview! Status: ${response.status}`)
+    // }
+    
     const responseJson = await response.json();
+    console.log('responseJSON: ', responseJson)
     const currentTraceData = responseJson.data[0];
     const currentTraceSpans = currentTraceData.spans;
     type SpanData = SpanCache[];
@@ -246,6 +249,7 @@ export class TraceModel {
   }};
 
   public static getIndivSpanDetails(req: Request, res:Response, next:NextFunction){
+    console.log('getIndivSpanDetails Params: ', req.params)
     const currentSpanIdObj = req.body.spanData;
     let operationName: any;
     let references: any;

@@ -123,4 +123,11 @@ body {
     'wght' 700,
   }
 
+.overlaydata{
+    grid-area: 2 / 3 / 2 / 5;
+    z-index: 1;
+    display: grid;
+    padding-top: 10%;
+   
+}
   
