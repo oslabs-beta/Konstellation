@@ -117,7 +117,6 @@ DotNet:
 instrumentation.opentelemetry.io/inject-dotnet: "true"
 ```
 
-
 For example, running the following command will patch the `default` namespace to allow Node-JS autoinstrumentation injection.
 
 ```
@@ -181,10 +180,6 @@ This second command will configure an opentelemetry collector and jaeger collect
 
 Once the jaeger collector has been set up, port-forward the jaeger collector to your http://localhost:16686
 
-```
-kubectl port-forward services/jaeger-query 16686:16686
-```
-
 # Running the Application
 
 Once, all of the prerequisite conditions are met, and jaeger is port-forwarded to `localhost:16686`, run the following commands.
@@ -203,10 +198,12 @@ Navigate to `localhost:8080` to run the application
 
 
 3. To view a list of traces click on the table tab at the bottom of the screen.
+![cluster-view](./images/KonstellationCluster.png)
 4. To view a specific trace, click on the trace ID on the table.
 ![trace-table](./images/konstellation-trace-table.png)
-1. Ensure your Jaeger frontend is port-forwarded to localhost:16686
+![trace](./images/trace-view.png)
 6. To return to the clusterView click on the clusterView button.
+
 5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
 
 # Contribute
