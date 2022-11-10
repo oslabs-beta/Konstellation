@@ -28,7 +28,7 @@ Check out our [QuickStart](#quickstart) section for instructions on how to quick
 - The app has been tested on both AWS Elastic Kubernetes Service as well as unmanaged clusters. While it is expected that this application will work with other managed Kubernetes providers, support on such platforms is not officially supported.
 
 - ENV templates have been provided in the client.zip and server.zip files
-
+___
 # Installing Kubectl
 - Instructions to install kubectl [here](https://kubernetes.io/docs/tasks/tools/)
 
@@ -51,7 +51,7 @@ brew install kubernetes-cli
 ```
 kubectl version --client
 ```
-
+___
 # Installing cert-manager
 - Detailed Instructions for installing `cert-manager` [here](https://cert-manager.io/docs/installation/)
 
@@ -60,13 +60,14 @@ To install cert-manager run:
 ```
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
 ```
-
+___
 # Deploying Opentelemetry Operator and Collector
 - Detailed instructions for installing the Opentelemetry Operator and Collector can be found [here](https://github.com/open-telemetry/opentelemetry-operator)
 
 When deploying the operator and collector services, please ensure that cert-manager has also been installed in your system. The Opentelemetry Operator and Collector may be deployed via helm chart or manually.
 
 ## (Optional) Deploy Via Helm chart
+
 The Opentelemetry Operator can be deployed via [Helm Chart](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-operator) from the opentelemetry-helm-charts repository. More information can be found [here](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-operator).
 
 ## Install Opentelemetry Operator
@@ -77,6 +78,8 @@ kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releas
 ```
 
 Once the `opentelemetry-operator` deployment is succefully running, create an OpenTelemetry Collector (otelcol) instance:
+
+**_NOTE:_** For AWS EKS users, a dedicated opentelemetry collector, `AWS Distro for OpenTelemetry` can be used instead. Instructions and documentation can be found [here](https://aws.amazon.com/otel/)
 
 A pre-configured OpenTelemetry collector YAML file is provided in the konstellation-yaml folder of this repository. With it available on your local system, run the following command: 
 
@@ -126,7 +129,7 @@ For example, running the following command will patch the `default` namespace to
 ```
 kubectl patch namespace default -p '{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-nodejs": "true"}}}'
 ```
-
+___
 # Setting up Jaeger Operator and Collector
 - Documentation to set up the Jaeger Operator on a Kubernetes cluster is available [here](https://www.jaegertracing.io/docs/1.39/operator/)
 
@@ -161,7 +164,7 @@ kubectl port-forward jaeger-collector 16686:16686
 With these services deployed, and the service now ported to the local machine, we can confirm functionality. Open a browser and navigate to  `http://localhost:16686`. The jaeger UI should load.
 
 <img src="./images/JaegerUI.png" alt="drawing" width="500"/>
-
+___
 # Quickstart
 The quickstart instructions will require that [`kubectl`](#installing-kubectl) is set up and [`cert-manager`](#installing-cert-manager) is installed. 
 
@@ -186,16 +189,20 @@ kubectl port-forward services/jaeger-query 16686:16686
 ```
 
 Confirm proper setup by visiting http://localhost:16686. You should see the JaegerUI.
-
+___
 # Running the Application
 
 Once all of the prerequisite conditions are met, and Jaeger is port-forwarded to `localhost:16686`, run the following command:
+
 
 ```
 npm install
 ```
 
-Once all of the npm dependencies have resolved, run:
+- Konstellation can be run as either in the browser  or as an electron application.
+
+## Running in the browser
+- Once all of the npm dependencies have resolved, run:
 
 ```
 npm start
@@ -203,6 +210,21 @@ npm start
 
 Navigate to `localhost:8080` to run the application
 
+## Running as an Electron Application
+The application can also run as an electron application, to build the electron app, run:
+
+```
+npm run build
+```
+- Once the webpack build is finished, run:
+```
+npm run server-prod
+```
+- Then, on a separate terminal, run to start the electon app:
+```
+npm run electron-start
+```
+___
 1. On successful startup, if you are not connected to your AWS cluster, please enter your AWS credentials, otherwise the app will proceed to the cluster map view.
 <img src="./images/konstellation-login.png" alt="drawing" width="700"/>
 
