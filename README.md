@@ -117,8 +117,8 @@ EOF
 This will create an OpenTelemetry instance named `otel`, exposing a `jaeger-grpc` port to consume spans from your instrumented applications and exporting those spans via `logging`, which writes the spans to the console (`stdout`) of the OpenTelemetry Collector instance that receives the span and to the `jaeger-collector`.
 
 
-# Setting up Opentelemetry Autoinstrumentation Injection
-- Only required if your app does not have Opentelemetry's Autoinstrumentation built in.
+# (Optional) Setting up Opentelemetry Autoinstrumentation Injection
+- Only required if your app does not have Opentelemetry's Autoinstrumentation built in. Do not set up Opentelemetry auoinstrumentation injection if your app is already instrumented with Opentelemetry SDK tools.
 
 The operator can inject and configure OpenTelemetry auto-instrumentation libraries. Currently DotNet, Java, NodeJS and Python are supported.
 
@@ -176,7 +176,7 @@ instrumentation.opentelemetry.io/inject-dotnet: "true"
 (Include the actual instructions to annotate a namespace with the instrumentation (ask kat))
 
 
-# Setting up Jaeger Operator
+# Setting up Jaeger Operator and Collector
 - Documentation to set up the Jaeger Operator on a Kubernetes cluster [here](https://www.jaegertracing.io/docs/1.39/operator/)
 
 To install the Jaeger Operator. Please ensure cert-manager is installed.
@@ -188,22 +188,43 @@ kubectl create namespace observability # <1>
 kubectl create -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.39.0/jaeger-operator.yaml -n observability # <2>
 
 ```
+- The first command will create a namespace on your cluster named observability.
+- The second command will create the jaeger operator in the observability namespace.
 
-This will create the Jaeger Operator in the observability namespace
+Once the Jaeger operator has been set up, we will need to create an instance of the jaeger collector on the cluster.
 
-//instructions to create a jaeger instance here. (Include the yaml file)
+To create a Jaeger collector with the following command
+
+``` 
+kubectl apply -f ./konstellation-yaml/setup/jaegerconfig.yaml
+```
+
+Alternatively, the following command can also be run to set up the jaeger collector:
+
+``` yaml
+kubectl apply -f - <<EOF
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: simplest
+EOF
+```
 
 // Also in the YAML file, include the service so that it automatically exposes the correct jaeger port.
 
-## Port-Forwarding Jaeger
+# Port-Forwarding Jaeger
 
-To access the Jaeger instance from your cloud. 
+Konstellation requires port-forwarding of Jaeger to `localhost:16686` to function.
+
+- Run the following command to port-forward Jaeger to your `localhost:16686`
 
 ```bash
-
-kubectl apply -f -- 
-
+kubectl port-forward jaeger-collector 16686:16686
 ```
+
+Open a browser and navigate to  `http://localhost:16686`. The jaeger UI should load.
+(insert picture of jaeger ui right here) 
+
 # Running the Electron App
 ```
 npm install
@@ -230,9 +251,14 @@ This will set up opentelemetry operator/collector (in default), jaeger operator 
 Question for kat: 
 (Sets up autoinstrumentation) but not the injection? Sets up autoinstrumentation in default. Or should we not do this, because autinstrumentation injection is broken for nodejs.
 
+
 # Using Konstellation
-1. On successfull startup, if you are not connected please enter your AWS credentials
-2. To view a list of traces click on the table tab at the bottom of the screen.
-3. To view a specific trace, click on the trace ID on the table.
-4. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
-5. To return to the clusterView click on the clusterView button.
+1. Ensure your Jaeger frontend is port-forwarded to localhost:16686
+2. On successfull startup, if you are not connected please enter your AWS credentials
+3. To view a list of traces click on the table tab at the bottom of the screen.
+4. To view a specific trace, click on the trace ID on the table.
+5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
+6. To return to the clusterView click on the clusterView button.
+
+# Known Bugs
+- Opening the app without jaeger port-forwarded to localhost:16686 will crash the app even in cluster view(if there are no checks on the backend. willl need to refactor a component in the frontend so that if the query to jaeger fails it is still able to display the constellation)

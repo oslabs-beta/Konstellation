@@ -50,7 +50,11 @@ export const getServicesAsync = createAsyncThunk(
     const url = config.url + `/api/traces/getTraceViewServices`
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     const response = await fetch(url)
+		if (!response.ok){
+      return [];
+		}
     const data = await response.json();
+		const sortedData = data.sort();;
     return data;
   }
 )
@@ -64,9 +68,7 @@ export const getTraceTableDataAsync = createAsyncThunk(
 			return [];
 		}
 
-		console.log ('this is what the actual endpoint looks like', config.url + `/api/traces/getAll/${parameters.activeService}/${parameters.lookback}`)
-   // const url = config.url + `/api/traces/getAll/${parameters.activeService}/${parameters.lookback}`
-	 const url = config.url + `/api/traces/getAll/${parameters.lookback}`
+    const url = config.url + `/api/traces/getAll/${parameters.activeService}/${parameters.lookback}`
   
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     console.log("Fetching Data From: ")
