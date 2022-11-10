@@ -288,14 +288,21 @@ export class TraceModel {
   }
 
   public static async getTraceViewServices(req: Request, res:Response, next:NextFunction){
-    const response = await fetch('http://localhost:16686/api/services')
-    if (!response.ok) {
-      throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-    };
-    const responseJson = await response.json();
-    res.locals.traceViewServices = responseJson.data;
-    console.log(res.locals.traceViewServices);
-    return next();
+		console.log('ingettraceview services')
+		try{
+			
+			const response = await fetch('http://localhost:16686/api/services')
+			if (!response.ok) {
+				throw new Error(`Error retrieving traceview! Status: ${response.status}`)
+			};
+			const responseJson = await response.json();
+			res.locals.traceViewServices = responseJson.data;
+			console.log(res.locals.traceViewServices);
+			return next();
+		}
+		catch(err){
+       console.log(err);
+		}
   }
   public static saveDataToTextFile(req: Request, res: Response, next: NextFunction) {
     // console.log(req.socket.remoteAddress); // Use this if not using a server proxy (ex: ngrok)

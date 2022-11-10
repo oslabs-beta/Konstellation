@@ -32,13 +32,16 @@ const tableList = () => {
       const e = data[i];
       const maxUrlLength = 40;
       let renderedUrl = e.data.url;
+			if (e.data.url== 'unknown'){
+				renderedUrl = 'N/A'
+			}
 
       //NOTE: Some data being filtered due to issues with JaegerQuery. 
       //Temporary band-aid to hide bugged results.
       const trimFrontLength = 20;
-      if(e.data.url == 'unknown' || !validMethods.includes(e.data.method)) {
-        continue;
-      }
+      // if(e.data.url == 'unknown' || !validMethods.includes(e.data.method)) {
+      //   continue;
+      // }
       renderedUrl = renderedUrl.indexOf('http://') != -1 ? renderedUrl.slice(trimFrontLength, renderedUrl.length) : renderedUrl 
       if(renderedUrl.length > maxUrlLength) {
         renderedUrl = renderedUrl.slice(0, maxUrlLength) + '...'
