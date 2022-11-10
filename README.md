@@ -207,8 +207,11 @@ Navigate to `localhost:8080` to run the application
 3. To view a specific trace, click on the trace ID on the table.
 <img src="./images/konstellation-trace-table.png" alt="drawing" width="700"/>
 
-4. To return to the clusterView click on the clusterView button.
+4. To view span details, double-click on a pod in the trace map view.
 <img src="./images/trace-view.png" alt="drawing" width="700"/>
+
+5. To return to the clusterView click on the clusterView button.
+<img src="./images/span-details.png" alt="drawing" width="700"/>
 
 5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
 
