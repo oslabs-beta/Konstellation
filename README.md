@@ -1,4 +1,7 @@
 # ![Konstellation logo](./images/konstellation-logo.png)
+![Copy of Konstellation](https://user-images.githubusercontent.com/96984912/201180097-7da4799f-ae61-4e08-8dff-6bec1a5d3326.gif)
+
+
 
 # Summary
 Konstellation is an Open Source Distributed Tracing tool built specifically for Kubernetes.
