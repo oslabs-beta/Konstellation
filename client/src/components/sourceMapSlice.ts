@@ -6,10 +6,12 @@ export enum ViewType {cluster, trace}
 
 const initialState: View = {
   type: ViewType.cluster,
+  data: undefined
 }
 
 export interface View {
-  type: ViewType
+  type: ViewType,
+  data?: string
 }
 
 /**
@@ -20,7 +22,8 @@ export const sourceMapSlice = createSlice({
   initialState: initialState,
   reducers: {
     changeView: (state, action: PayloadAction<View>) => {
-      state.type = action.payload.type
+      state.type = action.payload.type,
+      state.data = action.payload.data
     }
   }
 })
