@@ -5,7 +5,7 @@ Konstellation is a Distributed Tracing tool for AWS EKS Kubernetes clusters.
 
 This tool gathers telemetry data within a kubernetes cluster and displays the connections in an easy to understand User Graphical Interface.
 
-Please read the medium article [here](insertlinkhere) for more information.
+Please read the [website](insertlinkhere) and [medium](insertLinkHere) article for more information.
 
 # Getting Started
 Prerequisites:
@@ -15,12 +15,12 @@ Prerequisites:
 - [ ] Opentelemetry instrumentation integrated within your app.
 - [ ] Jaeger deployed on the cluster
 
-Check out our [QuickStart](#quickstart) section for instructions on how to quickly setup our app
+Check out our [QuickStart](#quickstart) section for instructions on how to quickly setup our app.
 
 *Note*
 - If your App is not instrumented with Opentelemetry instrumentation, the following instructions will provide a method to instrument a NodeJS, Python, or Java app with Opentelemetry Autoinstrumentation. Do note that errors may arise do due to a known issue with NodeJS native fetch and Opentelemetry's Autostrumentation, inter-pod traces will not correctly propagate.
 
-- Custom deployment of the Opentelemetry Operator Collector, and the deployment of the Jaeger Operator Operator and collector is possible. As long as the `Jaeger-Front-End` is exposed on `localhost:16686`, Konstellation can be used.
+- Custom deployment of the Opentelemetry Operator Collector, and the deployment of the Jaeger Operator Operator and collector is possible. As long as the `Jaeger-frontend` is exposed on `localhost:16686`, Konstellation can be used.
 
 # Installing Kubectl
 - Instructions to install kubectl [here](https://kubernetes.io/docs/tasks/tools/)
@@ -48,7 +48,7 @@ kubectl version --client
 # Installing cert-manager
 - Detailed Instructions to installing `cert-manager` [here](https://cert-manager.io/docs/installation/)
 
-To install run:
+To install cert-manager run:
 
 ```
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
@@ -64,6 +64,7 @@ You can install Opentelemetry Operator via [Helm Chart](https://github.com/open-
 
 ## Install Opentelemetry Operator
 Once cert-manager is installed:
+
 ```bash
 kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 ```
@@ -73,7 +74,7 @@ Once the `opentelemetry-operator` deployment is ready, create an OpenTelemetry C
 The OpenTelemetry collector yaml file is provided in the konstellation-yaml Folder. Run the following command: 
 
 ```
-kubectl apply -f ./konstellation-yaml/setup/opentelemetry-collector.yaml
+kubectl apply -f ./konstellation-yaml/setup/03-opentelemetry-collector.yaml
 ```
 
 
@@ -91,28 +92,7 @@ To use auto-instrumentation, configure an `Instrumentation` resource with the co
 The requisite autoinstrumentation yaml file is located in the konstellation-yaml folder. To apply the instrumentation run:
 
 ```bash
-kubectl apply -f ./konstellation-yaml/konstellation-autoinstrumentation.yaml
-```
-
-Alternatively, the following command will install the OpenTelemetry Autoinstrumentation.
-
-```yaml
-kubectl apply -f - <<EOF
-apiVersion: opentelemetry.io/v1alpha1
-kind: Instrumentation
-metadata:
-  name: my-instrumentation
-spec:
-  exporter:
-    endpoint: http://otel-collector:4317
-  propagators:
-    - tracecontext
-    - baggage
-    - b3
-  sampler:
-    type: parentbased_traceidratio
-    argument: "0.25"
-EOF
+kubectl apply -f ./konstellation-yaml/05-konstellation-autoinstrumentation.yaml
 ```
 
 Then add an annotation to a pod to enable injection. The annotation can be added to a namespace, so that all pods within that namespace wil get instrumentation, or by adding the annotation to individual PodSpec objects, available as part of Deployment, Statefulset, and other resources.
@@ -136,13 +116,18 @@ DotNet:
 ```
 instrumentation.opentelemetry.io/inject-dotnet: "true"
 ```
-(Include the actual instructions to annotate a namespace with the instrumentation (ask kat))
 
+
+For example, running the following command will patch the `default` namespace to allow Node-JS autoinstrumentation injection.
+
+```
+kubectl patch namespace default -p '{"metadata":{"annotations":{"instrumentation.opentelemetry.io/inject-nodejs": "true"}}}'
+```
 
 # Setting up Jaeger Operator and Collector
 - Documentation to set up the Jaeger Operator on a Kubernetes cluster [here](https://www.jaegertracing.io/docs/1.39/operator/)
 
-To install the Jaeger Operator. Please ensure cert-manager is installed.
+Before installing the Jaeger Operator. Please ensure cert-manager is installed.
 
 To Install the Operator, run: 
 
@@ -159,21 +144,8 @@ Once the Jaeger operator has been set up, we will need to create an instance of 
 To create a Jaeger collector with the following command
 
 ``` 
-kubectl apply -f ./konstellation-yaml/setup/jaegerconfig.yaml
+kubectl apply -f ./konstellation-yaml/setup/04-jaegerconfig.yaml
 ```
-
-Alternatively, the following command can also be run to set up the jaeger collector:
-
-``` yaml
-kubectl apply -f - <<EOF
-apiVersion: jaegertracing.io/v1
-kind: Jaeger
-metadata:
-  name: simplest
-EOF
-```
-
-// Also in the YAML file, include the service so that it automatically exposes the correct jaeger port.
 
 # Port-Forwarding Jaeger
 
@@ -188,50 +160,58 @@ kubectl port-forward jaeger-collector 16686:16686
 Open a browser and navigate to  `http://localhost:16686`. The jaeger UI should load.
 ![jaegerUIpicture](./images/JaegerUI.png)
 
-# Running the Application
-```
-npm install
-npm run build
-```
-```
-NPM run server-prod
-```
-Then on a different terminal run
-```
-NPM run electron-start
-```
-## Running the webapp
-```
-NPM start
-```
 
-# DELETE LATER
-WHAT WE SHOULD DO:
-PUT ALL THE YAML FILES IN A BIG FOLDER SO THAT THEY CAN JUST RUN 
-
-```bash
-kubect apply -f ./konstellation-yaml/setup
-```
-Maybe a quick start question that assumes 1. cert manager and kubectl set up. But not otel.
-This will set up opentelemetry operator/collector (in default), jaeger operator in observability and jaeger collector (in default).
-
-Question for kat: 
-(Sets up autoinstrumentation) but not the injection? Sets up autoinstrumentation in default. Or should we not do this, because autinstrumentation injection is broken for nodejs.
 
 # Quickstart
-The quickstart guide will assume `kubectl` is set up and `cert-manager` is installed. The following command will create and deploy the opentelemetry operator and collector in the default namespace. An observability namespace will be created along with.
+The quickstart instructions will require that [`kubectl`](#installing-kubectl) is set up and [`cert-manager`](#installing-cert-manager) is installed. 
+
+The following commands will create and deploy the and `jaeger operator` in the observability namesapce and the `opentelemetry operator`.
 
 ```
-
+kubectl apply -f ./konstellation-yaml/setup/runFirst.yaml 
 ```
 
-# Using Konstellation
-1. Ensure your Jaeger frontend is port-forwarded to localhost:16686
-2. On successfull startup, if you are not connected to your AWS, please enter your AWS credentials
+Once the `jager operator` and `opentelemetry operator` pods are depoloyed, run the following command.
+
+```
+kubectl apply -f ./konstellation-yaml/setup/runSecond.yaml
+```
+
+This second command will configure an opentelemetry collector and jaeger collector in the default namespace. It will addiionally set up auto-instrumentation for Node-JS in the default namespace and add an annotation to the namespace to allow the Operator to injection the code to all pods in the namespace.
+
+Once the jaeger collector has been set up, port-forward the jaeger collector to your http://localhost:16686
+
+```
+kubectl port-forward services/jaeger-query 16686:16686
+```
+
+# Running the Application
+
+Once, all of the prerequisite conditions are met, and jaeger is port-forwarded to `localhost:16686`, run the following commands.
+```
+npm install
+```
+
+Once all of the npm dependencies are installed, run
+```
+npm start
+```
+Navigate to `localhost:8080` to run the application
+
+2. On successfull startup, if you are not connected to your AWS, please enter your AWS credentials.
+![loginpage](./images/konstellation-login.png)
+
+
 3. To view a list of traces click on the table tab at the bottom of the screen.
 4. To view a specific trace, click on the trace ID on the table.
-5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
+![trace-table](./images/konstellation-trace-table.png)
+1. Ensure your Jaeger frontend is port-forwarded to localhost:16686
 6. To return to the clusterView click on the clusterView button.
+5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
+
+# Contribute
+
+
 
 # Authors
 
