@@ -4,7 +4,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/getAll/:lookback', 
+router.get('/getAll/:service/:lookback', 
   TraceController.getAggregateData,
   (req: Request, res: Response, next: NextFunction) => {
     console.log('router complete getAll');
@@ -19,35 +19,36 @@ router.get('/getTraceView/:traceId',
   }
 );
 
-//TEST ROUTE please delete later when the actual route is added
-router.get('/searchbarTraceView/:traceId', (req: Request, res: Response, next: NextFunction) => {
-	  console.log("searchbarTrace endpoint hit")
-	const fakeData = {data: {
-			id: 'searchBarData',
-			type: 'searchBarData',
-			traceID: req.params.traceId,
-			traceStart: '1000',
-			traceDuration: '200',
-			serviceCount: 2,
-			spanCount: 3,
-			label: undefined
-		}}
-    res.status(200).json(fakeData)
+router.get('/getSearchBarTraceView/:traceId', 
+  TraceController.getTraceViewData, TraceController.getSearchBarTraceView,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json(res.locals.searchBarTraceView)
   }
 );
 
+router.get('/getTraceViewServices', 
+  TraceController.getTraceViewServices,
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log('router complete getAll');
+    res.status(200).json(res.locals.traceViewServices);
+  }
+)
+// Will need to pass in req.body the specific pod name, req.body.traceID 
+router.get('/getSpansInProcess/:traceId/:processTarget',
 // router.get('/getSpansInProcess',
-//   TraceController.getPodDetails,
-//   (req: Request, res: Response, next: NextFunction) => {
-//     res.status(200).json(res.locals.processSpecificSpans)
-//   }
-// )
-// router.get('/getSpanDetails', 
-//   TraceController.getSpanDetails,
-//   (req: Request, res: Response, next: NextFunction) => {
-//     res.status(200).json(res.locals.spanDetails)
-// } 
-// )
+  TraceController.getPodDetails,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json(res.locals.processSpecificSpans)
+  }
+)
+
+router.get('/getIndivSpanDetails/:spanId', 
+  TraceController.getSpanDetails,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json(res.locals.spanDetails)
+  } 
+)
+
 // router.post('/post', 
 //   TraceController.saveData, 
 //   (req: Request, res: Response, next: NextFunction) => {res.status(200).json("Trace Data Added")}

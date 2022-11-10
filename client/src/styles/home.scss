@@ -104,6 +104,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
   gap: 3vh;
 }
 
@@ -122,4 +123,11 @@ body {
     'wght' 700,
   }
 
+.overlaydata{
+    grid-area: 2 / 3 / 2 / 5;
+    z-index: 1;
+    display: grid;
+    padding-top: 10%;
+   
+}
   

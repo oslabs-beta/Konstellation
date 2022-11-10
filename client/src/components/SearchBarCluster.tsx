@@ -42,7 +42,7 @@ const SearchBarCluster = ():JSX.Element => {
 	}
 
 	nameSpaceData.forEach(element => {
-		DropDownOptions.push (<option className='options'>{element}</option>)
+		DropDownOptions.push (<option className='options' key={'search' + element}>{element}</option>)
 	})
 
 return (

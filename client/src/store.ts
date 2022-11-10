@@ -5,6 +5,10 @@ import searchReducer from './components/searchBarSlice'
 import drawerReducer from './components/trace-table/drawerSlice'
 import traceViewReducer from './components/traceViewSlice'
 import traceTableReducer from './components/trace-table/tableListSlice'
+import spanTableReducer from './components/span-table/spanListSlice'
+import spanMapReducer from './components/span-table/spanMapSlice'
+import spanResultsMapReducer from './components/span-table/spanResultsMapSlice'
+import spanDataReducer from './components/span-table/spanDataSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +18,10 @@ export const store = configureStore({
     traceDrawer: drawerReducer,
     traceView: traceViewReducer,
     traceTable: traceTableReducer,
+    spanTable: spanTableReducer,
+    spanMap: spanMapReducer,
+    spanResultsMap: spanResultsMapReducer,
+    spanData: spanDataReducer
   },
 })
 

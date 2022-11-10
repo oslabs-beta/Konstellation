@@ -1,0 +1,148 @@
+.boldSpan {
+  font-weight: bold;
+}
+
+.boldSpanTag {
+  font-weight: bold;
+  font-size: 1.4vh;
+}
+
+.boldSpanName {
+  font-weight: bold;
+  font-size: 1.7;
+}
+
+.boldItalicsSpan {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.5vh
+}
+
+.button-close {
+  background: #3C3C3C;
+  color: white;
+  border: none;
+  font-size: 2vh;
+  font-weight: 10;
+  text-align: center;
+  
+}
+
+    .button-close:hover {
+      cursor: pointer
+    }
+
+.header {
+  display: flex;
+  flex: inline-block;
+  justify-content: space-between;
+  padding-top: 1.1vh;
+}
+
+.span-map {
+  background: #3C3C3C;
+  height: 48.5vh;
+  width: 55.8vw;
+  border-radius: 12px;
+  filter: drop-shadow(0px 10px 24px rgba(0, 0, 0, 0.25));
+  z-index: 1;
+   grid-template-columns: 1fr;
+    grid-template-rows: 154fr 926fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.spanButton {
+  background: #3C3C3C;
+  color: white;
+  font-weight: 100;
+  border: none;
+  font-size: 1.6vh;
+  display: flex;
+  align-items: center;
+}
+
+    .spanButton:hover {
+      cursor: pointer
+    }
+
+.span-data-entry {
+  padding-left: 3vw;
+  font-weight: 200;
+}
+
+.span-data-entry-indent {
+  padding-left: 4vw;
+  font-weight: 200;
+}
+
+.span-details {
+  display: flex;
+  overflow-y: scroll;
+}
+
+.span-entry {
+  display: flex
+}
+
+.spanHeader {
+  font-size: 2.5vh;
+}
+
+.spanHeaderPodName {
+  font-size: 1.4vh;
+  font-weight: 100;
+  padding-top: 0.7vh;
+}
+
+.span-pod-entry {
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  overflow-y: scroll;
+  border-bottom: 1px solid white;
+}
+
+#span-table-list {
+  overflow-y: scroll;
+  height:1fr;
+  max-height: 38vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
+}
+
+.span-name {
+  display: flex;
+  font-size: 1.6vh;
+  font-weight: 100;
+  
+  align-items: center;
+  
+}
+
+.span-data-entry {
+  font-size: 1.4vh
+}
+
+.divider {
+  border-bottom: 1px solid white;
+}
+
+#span-table-header {
+  border-bottom: 1px solid white;
+  padding-bottom: 1vh;
+  margin-top: 1.3vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
+}
+
+.span-map {
+  overflow-y: hidden;
+}
+
+#span-table-content {
+  max-height:100vh;
+}
+
+#span-table-overlay {
+  max-height: 100vh;
+}

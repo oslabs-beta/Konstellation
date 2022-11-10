@@ -46,7 +46,7 @@ export const getTraceViewInfo = createAsyncThunk(
   'searchBar/traceInfo',
   async (traceId:string) => {
 		//Endpoint is a work in progress
-    const response = await fetch(config.url + `/api/traces/searchbarTraceView/${traceId}`)
+    const response = await fetch(config.url + `/api/traces/getSearchbarTraceView/${traceId}`)
     const data = await response.json();
     return data;
   }
