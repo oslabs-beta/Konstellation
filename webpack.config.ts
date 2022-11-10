@@ -22,6 +22,11 @@ module.exports = (env: any, argv:any) => {
 });
 
   return {
+		performance: {
+			hints: false,
+			maxEntrypointSize: 512000,
+			maxAssetSize: 512000
+	  },
     mode,
     stats: {
       errorDetails: true
