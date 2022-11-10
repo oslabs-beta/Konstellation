@@ -5,7 +5,7 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from '../styles/Stylesheet'
 import options from '../constants/CytoscapeConfig'
 import { useSelector } from 'react-redux';
-import { selectTraceViewData } from './traceViewSlice';
+import { selectTraceView, TraceData } from './traceViewSlice';
 
 export interface Trace {
   data: TraceData
@@ -20,7 +20,7 @@ cytoscape.use(coseBilkent);
  */
   const TraceView = () => {
   
-  const traceViewData = useSelector(selectTraceViewData); 
+  const traceViewData = useSelector(selectTraceView); 
   const layout = options();
 
   let myCyRef;
@@ -43,8 +43,8 @@ cytoscape.use(coseBilkent);
         stylesheet={styleSheet}
         layout={layout}
         style={{
-          width: '100%',
-          height: '50rem',
+          width: '100vw',
+          height: '100vh',
           objectFit: 'cover',
           backgroundColor: '#161820'
         }}
@@ -55,11 +55,22 @@ cytoscape.use(coseBilkent);
   
           // console.log("EVT", cy);
   
-          cy.on("tap", "node", evt => {
+          cy.on("dblclick", "node", evt => {
             var node = evt.target;
             console.log("EVT", evt);
             console.log("TARGET", node.data());
             console.log("TARGET TYPE", typeof node[0]);
+            cy.fit( cy.$(':selected'), 50 );
+            setTimeout( function(){
+              cy.panBy({
+                x: -300,
+                y: 0
+              })
+            }, 10)
+            setTimeout( function(){
+              cy.$('').unselect();
+              cy.fit(cy.$(''),50);
+            }, 5000 );
           });
         }}
       ></CytoscapeComponent>

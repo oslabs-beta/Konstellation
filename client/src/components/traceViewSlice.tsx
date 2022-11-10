@@ -8,10 +8,21 @@ const initialState: Trace = {
   status: 'idle'
 }
 
+export type TraceData = Data[]
+
+export type Data = {
+  data: {
+    id: string,
+    label: string,
+    type: string,
+  }
+  classes: string,
+}
+
 export const getTraceDataAsync = createAsyncThunk(
   'traceView/getTraceData',
   async (traceId: string) => {
-    const url = config.url + '/api/traces/' + traceId
+    const url = config.url + '/api/traces/getTraceView/' + traceId
 
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     console.log("Fetching Data From: ")
@@ -19,6 +30,7 @@ export const getTraceDataAsync = createAsyncThunk(
 
     const response = await fetch(url)
     const data = await response.json();
+    console.log(data);
     return data;
   }
 )
@@ -46,6 +58,6 @@ export const traceViewSlice = createSlice({
   }
 })
 
-export const selectTraceViewData = (state: RootState) => state.traceView;
+export const selectTraceView = (state: RootState) => state.traceView;
 
 export default traceViewSlice.reducer;

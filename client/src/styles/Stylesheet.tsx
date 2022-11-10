@@ -23,7 +23,7 @@ const styleSheet = [
       "background-fit": "contain",
       shape: 'rectangle',
       'background-color': 'whitesmoke',
-      'border-width': '1px',
+      'border-width': '5px',
       'text-outline-color': 'black',
       'text-outline-width': 1,
       height: 50,
@@ -35,7 +35,7 @@ const styleSheet = [
     style: {
       label: 'data(label)',
       color: 'white',
-      'border-width': '1px',
+      'border-width': '5px',
       'border-style': 'solid',
       'border-color': '#EFEFEF',
       'border-opacity': '1',
@@ -63,7 +63,7 @@ const styleSheet = [
     style: {
       label: 'data(label)',
       color: 'white',
-      'border-width': '1px',
+      'border-width': '5px',
       'border-style': 'solid',
       'border-color': '#A4C3D2',
       'border-opacity': '1',
@@ -80,7 +80,9 @@ const styleSheet = [
     style: {
       label: 'data(label)',
       color: 'white',
-      'border-width': '1px',
+      'border-width': '5px',
+      'border-color': 'lightgrey',
+      'background-color': 'lightgrey',
       'font-family': 'SF Pro',
       'background-image': 'data:text/html;charset=utf-8' + encoded,
       "background-width": ["100px", "100px", "100px"],
@@ -98,8 +100,8 @@ const styleSheet = [
     style: {
       label: 'data(label)',
       color: 'white',
-      'border-width': '1px',
-      'border-color': 'grey',
+      'border-width': '5px',
+      'border-color': '#FFFAA0',
       height: 50,
       width: 50,
       shape: 'triangle',
@@ -112,8 +114,8 @@ const styleSheet = [
   {
     selector: "node[type='root']",
     style: {
-      'border-width': '1px',
-      'border-color': 'grey',
+      'border-width': '5px',
+      'border-color': '#006994',
       'font-family': 'SF Pro',
       'text-outline-color': 'black',
       'text-outline-width': 1,
@@ -155,15 +157,14 @@ const styleSheet = [
         'font-family': 'SF Pro',
     }
   },
-  // {
-  //   selector: ".wrapping",
-  //   css: {
-  //     // 'text-wrap': 'ellipsis',
-  //     // 'text-max-width': 80
-  //     // "text-background-opacity": 1,
-  //     // "text-valign": "center",
-  //   }
-  // }
+{
+  selector: ":selected",
+    css: {
+      // 'background-color':'green',
+      'border-color': 'green',
+      // 'border-width': '5px'
+    }
+}
 ];
 
 export default styleSheet

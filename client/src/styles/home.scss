@@ -31,7 +31,7 @@ body {
   grid-template-rows: 154fr 881fr 45fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  
+
   .home__pod-details { grid-area: 2 / 3 / 3 / 6; }
   .home__trace-table { grid-area: 2 / 1 / 4 / 6; }
   .home__source-map { grid-area: 1 / 1 / 4 / 6; }
@@ -104,6 +104,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
   gap: 3vh;
 }
 
