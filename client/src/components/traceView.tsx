@@ -93,7 +93,6 @@ cytoscape.use(coseBilkent);
             let currentTraceId = 'placeholder'
             if (exportedtraceViewData) {
               currentTraceId = exportedtraceViewData.traceID
-              console.log('current TraceID', currentTraceId)
               }
 
             const traceData = {
@@ -101,10 +100,7 @@ cytoscape.use(coseBilkent);
               traceId : currentTraceId
             }
 
-            console.log('traceData in traceView',traceData)
-
             loadNewSpanTable(RenderType.render, nodeData.label, nodeData.id, traceData)
-            console.log('traceData from nodeClick', traceData)
           });
         }}
 

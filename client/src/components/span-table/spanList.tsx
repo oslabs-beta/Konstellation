@@ -9,8 +9,6 @@ import SpanData from './spanData'
 import SpanResultsMap from './spanResultsMap';
 import { ViewType } from '../sourceMapSlice';
 
-
-
 const spanList = () => {
 
   const { data } = useSelector(selectSpanTableList)
@@ -25,8 +23,6 @@ const spanList = () => {
 
   const jsxElements = (() => {
     const result: Array<Array<JSX.Element>> = []
-
-   
 
     result.push([<div key="span-table-spacer-entry" className='span-entry-spacer'> </div>])
 

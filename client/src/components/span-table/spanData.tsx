@@ -6,10 +6,7 @@ import '../../styles/spanTable.scss'
 
 const spanData= (props: any) => {
  
-  console.log(props) 
-  console.log('props.spanData.duration', props.spanData.duration)
-
-// const { data } = useSelector(selectSpanDataList)
+ 
 const dispatch = useAppDispatch();
   
 const jsxElements = (() => {

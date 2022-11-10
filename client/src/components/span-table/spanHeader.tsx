@@ -8,7 +8,6 @@ import { changeRenderView, RenderType } from './spanMapSlice';
 import { useAppSelector } from '../../lib/hooks';
 import { selectSearchTraceResult } from '../searchBarSlice';
 
- 
 const spanHeader = () => {
 
   const { data, id } = useSelector(selectSpanMap)

@@ -17,25 +17,20 @@ export interface SingleSpanData {
 
 type SpanNames = String
 
-//will probably need to change this from SpanNames depending on incoming data.
+
 type OneSpanData = SpanNames[]
 
 
-//need to update endpoint for getSpanDataAsync
 
 export const getSpanDataAsync = createAsyncThunk(
   'spanData/getSpanData',
   async (spanId: String) => {
-    console.log('spanId in getSpanDataAsync', spanId)
+    
     const url = config.url + '/api/traces/getIndivSpanDetails/' + spanId 
-
-    //Use these logs as a first step towards troubleshooting trace fetch requests:
-    console.log("Fetching Data From: ")
-    console.log(url)
 
     const response = await fetch(url)
     const data = await response.json();
-    console.log(data);
+    
     return data;
   }
 )

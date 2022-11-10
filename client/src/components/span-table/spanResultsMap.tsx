@@ -4,10 +4,6 @@ import SpanData from './spanData'
 import { selectSpanResultsMap, spanViewType } from './spanResultsMapSlice'
 import '../../styles/home.scss'
 
-/**
- * Renders a specific Source Map "View" (utilizing Cytoscape)
- * @Views : Currently Supports both Cluster View and Trace View
- */
 
 interface Props {
   spanData?: any;
