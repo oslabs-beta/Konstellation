@@ -35,7 +35,7 @@ export class TraceModel {
 					case "1m" : startInµs = nowInµs - (µsPerMinute * 1); break;
 				} 
 				
-				const url = `http://localhost:16686/api/traces?end=${nowInµs}&limit=20000&service=frontend&lookback=${req.params.lookback}&start=${startInµs}`
+				const url = `http://localhost:16686/api/traces?end=${nowInµs}&limit=20000&service=${req.params.service}&lookback=${req.params.lookback}&start=${startInµs}`
 		
 				// const serviceQuery = req.body.service;
 				// const lookbackParam = req.body.lookbackParam; 

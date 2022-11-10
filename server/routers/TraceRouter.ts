@@ -4,7 +4,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/getAll/:lookback', 
+router.get('/getAll/:service/:lookback', 
   TraceController.getAggregateData,
   (req: Request, res: Response, next: NextFunction) => {
     console.log('router complete getAll');
