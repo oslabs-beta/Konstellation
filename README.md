@@ -55,7 +55,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 ```
 
 # Setting up Opentelemetry Operator and Collector
-- Detailed instructions to installing the Opentelemetry Operator and Collector are found [here](https://github.com/open-telemetry/opentelemetry-operator)
+- Detailed instructions for installing the Opentelemetry Operator and Collector are found [here](https://github.com/open-telemetry/opentelemetry-operator)
 
 To install the operator and collector. Please ensure cert-manager is installed. The Opentelemetry Operator and Collector may be installed via  helm chart or manually
 
@@ -188,7 +188,7 @@ kubectl port-forward jaeger-collector 16686:16686
 Open a browser and navigate to  `http://localhost:16686`. The jaeger UI should load.
 ![jaegerUIpicture](./images/JaegerUI.png)
 
-# Running the Electron App
+# Running the Application
 ```
 npm install
 npm run build
@@ -199,6 +199,10 @@ NPM run server-prod
 Then on a different terminal run
 ```
 NPM run electron-start
+```
+## Running the webapp
+```
+NPM start
 ```
 
 # DELETE LATER
@@ -215,18 +219,28 @@ Question for kat:
 (Sets up autoinstrumentation) but not the injection? Sets up autoinstrumentation in default. Or should we not do this, because autinstrumentation injection is broken for nodejs.
 
 # Quickstart
-The quickstart guide will assume `kubectl` is set up and `cert-manager` is installed. The following command will create and deploy the opentelemetry operator and collector in the default namespace. An observability namespace will be created along with 
+The quickstart guide will assume `kubectl` is set up and `cert-manager` is installed. The following command will create and deploy the opentelemetry operator and collector in the default namespace. An observability namespace will be created along with.
+
+```
+
+```
 
 # Using Konstellation
 1. Ensure your Jaeger frontend is port-forwarded to localhost:16686
-2. On successfull startup, if you are not connected please enter your AWS credentials
+2. On successfull startup, if you are not connected to your AWS, please enter your AWS credentials
 3. To view a list of traces click on the table tab at the bottom of the screen.
 4. To view a specific trace, click on the trace ID on the table.
 5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
 6. To return to the clusterView click on the clusterView button.
 
-# 
+# Authors
 
+Jonathan Le [Github](https://github.com/lejon1220)/[LinkedIn]
 
-# Known Bugs
--
+Matthew Antosiak [Github](https://github.com/Jaitnium)/[LinkedIn](https://linkedin.com/in/matthewantosiak)
+
+Kathyrn Tsai [Githib](https://github.com/katalystkat)/[LinkedIn](https://linkedin.com/in/ck-tsai/)
+
+Richard Roberts [Github](https://github.com/Richard-Roberts)/[LinkedIn](https://www.linkedin.com/in/richard--roberts/)
+
+Drew Dunne [Github](https://github.com/drewdunne)/[LinkedIn](https://www.linkedin.com/in/andrew-dunne-7620bb84/)
