@@ -47,6 +47,7 @@ export const traceViewSlice = createSlice({
     builder
       .addCase(getTraceDataAsync.pending, (state) => {
         state.status = 'loading';
+				state.data = [];
       })
       .addCase(getTraceDataAsync.fulfilled, (state, action: PayloadAction<TraceData>) => {
         state.status = 'idle';

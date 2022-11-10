@@ -64,6 +64,7 @@ export const clusterViewSlice = createSlice({
     builder
       .addCase(getClusterAsync.pending, (state) => {
         state.status = 'loading';
+				state.data = [];
       })
       .addCase(getClusterAsync.fulfilled, (state, action: PayloadAction<ClusterData>) => {
         state.status = 'idle';
