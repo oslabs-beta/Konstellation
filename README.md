@@ -188,17 +188,24 @@ kubectl port-forward jaeger-collector 16686:16686
 Open a browser and navigate to  `http://localhost:16686`. The jaeger UI should load.
 ![jaegerUIpicture](./images/JaegerUI.png)
 
-# Running the Electron App
+# Running the Application
+To start the application, run:
 ```
 npm install
 npm run build
 ```
+
+To run the backend:
+
 ```
-NPM run server-prod
+npm run server-prod
+
 ```
-Then on a different terminal run
+
+Then on a different terminal, to run the client:
+
 ```
-NPM run electron-start
+npm run client
 ```
 
 # DELETE LATER
