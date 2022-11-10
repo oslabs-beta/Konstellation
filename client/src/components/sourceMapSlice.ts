@@ -6,7 +6,7 @@ export enum ViewType {cluster, trace}
 
 const initialState: View = {
   type: ViewType.cluster,
-  data: 'placeholder'
+  data: undefined
 }
 
 export interface View {

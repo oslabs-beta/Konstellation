@@ -16,9 +16,7 @@ export interface Render {
   id?: String
 }
 
-/**
-   * Handles reducer logic related to Source Map View Type Updates
-   */
+
 export const spanMapSlice = createSlice({
   name: 'spanMap',
   initialState: initialState,

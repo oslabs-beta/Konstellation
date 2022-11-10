@@ -19,7 +19,6 @@ const home  = () => {
 
   const spanList = useAppSelector(selectSpanMap)
 
-
   const uiElements: Array<JSX.Element> = [];
 
   // Make sure to overwite clickable elements with 'pointer-events: auto'

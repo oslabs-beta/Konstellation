@@ -10,10 +10,7 @@ import SpanResultsMap from './spanResultsMap';
 import { ViewType } from '../sourceMapSlice';
 
 
-/** 
-   * Defines the contents of the Trace Table Headers
-   * @Remarks Manages spacing between elements via a CSS Grid defined in traceTable.scss
-   */
+
 const spanList = () => {
 
   const { data } = useSelector(selectSpanTableList)
@@ -22,12 +19,7 @@ const spanList = () => {
   function loadNewSpanResults(type: spanViewType, spanId: String) {
     console.log('in loadNewSpanResults')
     dispatch(changeSpanDataView({type}))
-    // dispatch(getSpanDataAsync(spanId))
   }
-
-  // interface Props {
-  //   traceId? : String
-  // }
  
   const { type } = useSelector(selectSpanResultsMap)
 
@@ -50,7 +42,6 @@ const spanList = () => {
 
       result.push([
         <div key={entryKey} className='span-pod-entry'>
-          {/* <br></br> */}
           <div className="span-entry">
           <button className="spanButton" onClick={() => {if (type === spanViewType.noRender) {loadNewSpanResults(spanViewType.render, data[i])} else {loadNewSpanResults(spanViewType.noRender, data[i].spanIds)}}}>{'>'}</button>
           <div key={entryKey} className='span-name'><span className='boldSpanName'>SpanID: </span> {data[i].spanIds}</div>

@@ -85,22 +85,8 @@ export class TraceController {
       }
     }
     public static getSpanDetails(req: Request, res: Response, next: NextFunction) {
-      // try{
+  
         console.log("In Tracecontroller getIndivSpanDetails");
         TraceModel.getIndivSpanDetails(req, res, next);
-      // }
-      // catch(err) {
-      //   return next({
-      //     log: `Error in TraceController.getCluster: ${err}`,
-      //     status: 500,
-      //     message: {
-      //       err: 'Error occured while retrieving Span Details Data in TraceController',
-      //     },
-      //   });
-      // }
     }
-    // public static saveData (req: Request, res: Response, next: NextFunction) {
-    //       TraceModel.saveDataToTextFile(req, res);
-    //       next();
-    //   }
 }

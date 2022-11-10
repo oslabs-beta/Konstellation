@@ -77,14 +77,10 @@ cytoscape.use(coseBilkent);
         cy={cy => {
           myCyRef = cy;
           const reset = () => {cy.elements().remove()}
-          
-          // console.log("EVT", cy);
   
           cy.on("dblclick", "node", evt => {
             var node = evt.target;
-            // console.log("EVT", evt);
-            // console.log("TARGET", node.data());
-            // console.log("TARGET TYPE", typeof node[0]);
+       
             cy.fit( cy.$(':selected'), 50 );
             setTimeout( function(){
               cy.panBy({
@@ -93,10 +89,7 @@ cytoscape.use(coseBilkent);
               })
             }, 10)
             const nodeData = node.data()
-            // setTimeout( function(){
-            //   cy.$('').unselect();
-            //   cy.fit(cy.$(''),50);
-            // }, 5000 );
+           
             let currentTraceId = 'placeholder'
             if (exportedtraceViewData) {
               currentTraceId = exportedtraceViewData.traceID

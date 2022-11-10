@@ -21,7 +21,7 @@ const jsxElements = (() => {
     const e = tags[i];
 
     const entryKey = `span-data-tag-entry-${i}`
-    // console.log(e)
+   
 
     const key = tags[i].key
     const type = tags[i].type
@@ -36,8 +36,6 @@ const jsxElements = (() => {
     ])
   }
 
-  // onClick={()=>loadSpanTableData(e.data.name)}
-
   return result})()
 
   const jsxWarnings = (() => {
@@ -50,10 +48,7 @@ const jsxElements = (() => {
     for (let i = 0; i < warnings.length; i++) {
       const e = warnings[i];
   
-      const entryKey = `span-data-tag-entry-${i}`
-      // console.log(e)
-  
-    
+      const entryKey = `span-data-tag-entry-${i}`  
   
       result.push([
         <div key={entryKey} className='span-data-tag-entry'>
@@ -65,32 +60,11 @@ const jsxElements = (() => {
     }
     return result})()
 
-    // const jsxStartTimes = (() => {
-    //   const result: Array<Array<JSX.Element>> = []
-    
       const startTime = props.spanData.startTime
-      
-  
 
       const time: any = new Date(startTime/1000).toString()
-      
-    //     console.log('startTime: ', time)
-    //     const entryKey = `span-data-time-entry`
-    //     // console.log(e)
-        
-      
-    
-    //     result.push([
-    //       <div key={entryKey} className='span-data-startTime-entry'>
-    //         <div className="span-data-start-entry">
-    //           {time} ms
-    //         </div>
-    //       </div>
-    //     ])
-        
-    //   })()
-      
 
+      
   return (
     <div>
       <div className="span-data-entry"> <span className='boldItalicsSpan'>ProcessID: </span>{props.spanData.processID} </div>
@@ -102,9 +76,5 @@ const jsxElements = (() => {
     </div>
   )
 }
-
-  
-
-
 
 export default spanData;

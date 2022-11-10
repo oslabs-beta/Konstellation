@@ -14,9 +14,6 @@ export interface Render {
   
 }
 
-/**
-   * Handles reducer logic related to Source Map View Type Updates
-   */
 export const spanResultsMapSlice = createSlice({
   name: 'spanResultsMap',
   initialState: initialState,

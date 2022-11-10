@@ -8,12 +8,6 @@ import { changeRenderView, RenderType } from './spanMapSlice';
 import { useAppSelector } from '../../lib/hooks';
 import { selectSearchTraceResult } from '../searchBarSlice';
 
-/** 
-   * Defines the contents of the Trace Table Headers
-   * @Remarks Manages spacing between elements via a CSS Grid defined in traceTable.scss
-   */
-
-
  
 const spanHeader = () => {
 

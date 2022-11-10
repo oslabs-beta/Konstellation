@@ -20,8 +20,6 @@ type SpanNames = any
 
 type SpanTableData = SpanNames[]
 
-
-
 export const getSpanTableAsync = createAsyncThunk(
   'spanList/getSpanNames',
   async (traceData: any) => {
@@ -38,9 +36,7 @@ export const getSpanTableAsync = createAsyncThunk(
     return data;
   }
 )
-/**
-   * Handles reducer logic related to Source Map View Type Updates
-   */
+
 export const spanListSlice = createSlice({
   name: 'spanDataTable',
   initialState: initialState,
