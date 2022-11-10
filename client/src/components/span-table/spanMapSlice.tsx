@@ -12,8 +12,8 @@ const initialState: Render = {
 
 export interface Render {
   type: RenderType,
-  data: String,
-  id: String
+  data?: String,
+  id?: String
 }
 
 /**
