@@ -188,11 +188,15 @@ Confirm proper setup by visiting http://localhost:16686. You should see the Jaeg
 
 Once all of the prerequisite conditions are met, and Jaeger is port-forwarded to `localhost:16686`, run the following command:
 
+
 ```
 npm install
 ```
 
-Once all of the npm dependencies have resolved, run:
+- Konstellation can be run as either in the browser  or as an electron application.
+
+## Running in the browser
+- Once all of the npm dependencies have resolved, run:
 
 ```
 npm start
@@ -200,6 +204,21 @@ npm start
 
 Navigate to `localhost:8080` to run the application
 
+## Running as an Electron Application
+The application can also run as an electron application, to build the electron app, run:
+
+```
+npm run build
+```
+- Once the webpack build is finished, run:
+```
+npm run server-prod
+```
+- Then, on a separate terminal, run to start the electon app:
+```
+npm run electron-start
+```
+___
 1. On successful startup, if you are not connected to your AWS cluster, please enter your AWS credentials, otherwise the app will proceed to the cluster map view.
 <img src="./images/konstellation-login.png" alt="drawing" width="700"/>
 
