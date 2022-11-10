@@ -110,7 +110,7 @@ export class TraceModel {
     const traceViewArray = [];
     console.log("jaeger query-ing");
     const traceID = req.params.traceId;
-		console.log(traceID)
+		//console.log(traceID)
     const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
