@@ -9,62 +9,108 @@ export class TraceModel {
 // Currently set to only retrieve first 3, when complete, will want to pass in service name, lookbackParam 
    // final fetch call should be line below
       // const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=' + serviceQuery + '&lookback=' + lookbackParam)
-  public static async getTraceLogsFromJaeger(req: Request, res: Response, next: NextFunction) {
-    console.log("jaeger query-ing");
-    // const serviceQuery = req.body.service;
-    // const lookbackParam = req.body.lookbackParam; 
-    // Can limit results by changing results, currently set to 20000 results shown. 
-    const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=frontend')
-    if (!response.ok) {
-      throw new Error(`Error retrieving trace! Status: ${response.status}`)
-    }
-    const responseJson = await response.json();
-    const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
-    console.log('responseJson.data.length: ' + responseJson.data.length)
-    // Uncomment code below for final version to retrieve all trace logs instead of first 3
-    // for (let i = 0; i < responseJson.data.length; i++){
-    for (let i = 0; i < 3; i++){
-      const currentTrace = responseJson.data[i];
-      const traceID = currentTrace.traceID;
-      const traceSpans = currentTrace.spans[0];
-      const traceDuration = traceSpans.duration;
-      const timeStamp = traceSpans.startTime;
-      let traceMethod = 'unknown';
-      let traceResponse = 'unknown';
-      let traceURL = 'unknown';
-      const traceTags = traceSpans.tags;
-      for (let j = 0; j < traceTags.length; j++) {
-        if (traceTags[j].key === 'http.method' || traceTags[j].key === 'rpc.method') {
-          traceMethod = traceTags[j].value;
-        }
-        else if (traceTags[j].key === 'http.status_code'|| traceTags[j].key === 'rpc.grpc.status_code') {
-          traceResponse = traceTags[j].value;
-          }
-        else if (traceTags[j].key === 'http.url'){
-          traceURL = traceTags[j].value;
-        }
-      }
-      tracesArray.push({
-        data: {
-          id: traceID,
-          label: traceID,
-          type: 'temp',
-          response: traceResponse,
-          method: traceMethod,
-          url: traceURL,
-          duration: traceDuration,
-          timestamp: timeStamp,
-        }
-      })
-    console.log(tracesArray);
-    res.locals.tracesArray = tracesArray;
-    return next();
-  }};
+			public static async getTraceLogsFromJaeger(req: Request, res: Response, next: NextFunction) {
+				console.log("jaeger query-ing");
+				
+				// µs = microseconds
+				const µsPerDay = 86400000000
+				const µsPerHour = 3600000000
+				const µsPerMinute = 60000000
+		
+				const nowInµs = Date.now() * 1000;
+		
+				let startInµs;
+				switch (req.params.lookback) {
+					case "2d" : startInµs = nowInµs - (µsPerDay * 2); break;
+					case "1d" : startInµs = nowInµs - (µsPerDay); break;
+					case "12h" :startInµs = nowInµs - (µsPerHour * 12); break;
+					case "4h" : startInµs = nowInµs - (µsPerHour * 4); break;
+					case "2h" : startInµs = nowInµs - (µsPerHour * 2); break;
+					case "1h" : startInµs = nowInµs - (µsPerHour * 1); break;
+					case "30m" :startInµs = nowInµs - (µsPerMinute * 30); break;
+					case "15m" :startInµs = nowInµs - (µsPerMinute * 15); break;
+					case "10m" :startInµs = nowInµs - (µsPerMinute * 10); break;
+					case "5m" : startInµs = nowInµs - (µsPerMinute * 5); break;
+					case "2m" : startInµs = nowInµs - (µsPerMinute * 2); break;
+					case "1m" : startInµs = nowInµs - (µsPerMinute * 1); break;
+				} 
+				
+				const url = `http://localhost:16686/api/traces?end=${nowInµs}&limit=20000&service=frontend&lookback=${req.params.lookback}&start=${startInµs}`
+		
+				// const serviceQuery = req.body.service;
+				// const lookbackParam = req.body.lookbackParam; 
+				// Can limit results by changing results, currently set to 20000 results shown. 
+				try {
+					console.log("FETCHING JAEGER from: " + url)
+					const response = await fetch(url)
+					if (!response.ok) {
+						throw new Error(`Error retrieving trace! Status: ${response.status}`)
+					}
+					const responseJson = await response.json();
+					const tracesArray: { data: { method: any; } | { response: any; } | { url: string; } | { id: any; label: any; type: string; duration: any; timestamp: any; }; }[] = [];
+					console.log('responseJson.data.length: ' + responseJson.data.length)
+					// console.log("TRACEID:")
+					// console.log(responseJson.data)
+					// Using forEach renders error: Cannot read properties of undefined (reading 'length') despite responseJson.data.length returning length # value
+					// Uncomment code below for final version to retrieve all trace logs instead of first 3
+					// for (let i = 0; i < responseJson.data.length; i++){
+					for (let i = 0; i < responseJson.data.length; i++){
+						const currentTrace = responseJson.data[i];
+						const traceID = currentTrace.traceID;
+						// setting index to 0 to get origin trace for aggregate traceLog 
+						const traceSpans = currentTrace.spans[0];
+						const traceDuration = traceSpans.duration;
+						const timeStamp = traceSpans.startTime;
+						let traceMethod = 'unknown';
+						let traceResponse = 'unknown';
+						let traceURL = 'unknown';
+						// console.log('traceSpans: ' + traceSpans);
+						// console.log('traceDuration: ' + traceDuration);
+						// console.log('Spans.Duration: ' + traceSpans.duration);
+						// console.log('timeStamp: ' + timeStamp)
+						// console.log(traceSpans);
+						// need to convert timeStamp from linux t
+						// traceSpans[0] to get origin trace data for aggregate trace log; 
+						const traceTags = traceSpans.tags;
+						for (let j = 0; j < traceTags.length; j++) {
+							if (traceTags[j].key === 'http.method' || traceTags[j].key === 'rpc.method') {
+								traceMethod = traceTags[j].value;
+							}
+							else if (traceTags[j].key === 'http.status_code'|| traceTags[j].key === 'rpc.grpc.status_code') {
+								traceResponse = traceTags[j].value;
+								}
+							else if (traceTags[j].key === 'http.url'){
+								traceURL = traceTags[j].value;
+							}
+						}
+						tracesArray.push({
+							data: {
+								id: traceID,
+								label: traceID,
+								type: 'temp',
+								response: traceResponse,
+								method: traceMethod,
+								url: traceURL,
+								duration: traceDuration,
+								timestamp: new Date(timeStamp/1000).toString(),
+							}
+						})
+						// console.log('res.locals.tracesArray: ', tracesArray);
+					}
+					 console.log(tracesArray);
+					res.locals.tracesArray = tracesArray;
+					return next();
+				}
+				catch (err){
+					console.log('TraceModel.getTraceLogsFromJaeger:\n' + err)
+				}
+		};
   
   public static async getIndividualTraceView(req: Request, res: Response, next: NextFunction) {
     const traceViewArray = [];
     console.log("jaeger query-ing");
-    const traceID = req.body.traceID;
+    const traceID = req.params.traceId;
+		console.log(traceID)
     const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
