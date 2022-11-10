@@ -1,7 +1,7 @@
 # ![Konstellation logo](./images/konstellation-logo.png)
 
 # Summary
-Konstellation is a Distributed Tracing tool for AWS EKS Kubernetes clusters.
+Konstellation is a Distributed Tracing tool for AWS EKS Kubernetes clusters and managed clusters.
 
 This tool gathers telemetry data within a kubernetes cluster and displays the connections in an easy to understand User Graphical Interface.
 
@@ -206,7 +206,8 @@ Navigate to `localhost:8080` to run the application
 
 5. To view a specific trace, if the trace Id is known, enter the traceId at the search bar on the top and click submit.
 
-# Contribute
+# Known Issues
+
 
 
 

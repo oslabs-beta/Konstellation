@@ -2,5 +2,4 @@ cluster/cluster_app
 node_modules
 TEMP/*
 dist/*
-.env
 .DS_Store
