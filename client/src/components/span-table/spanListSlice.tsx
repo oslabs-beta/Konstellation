@@ -46,6 +46,7 @@ export const spanListSlice = createSlice({
     builder
       .addCase(getSpanTableAsync.pending, (state) => {
         state.status = 'loading';
+				state.data = [];
       })
       .addCase(getSpanTableAsync.fulfilled, (state, action: PayloadAction<SpanTableData>) => {
         state.status = 'idle';
