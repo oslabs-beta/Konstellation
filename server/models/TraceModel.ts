@@ -157,8 +157,10 @@ export class TraceModel {
   }
   // Want to pass back id when calling individual PodData; will contain the process # 
   public static async getIndividualPodData(req: Request, res: Response, next: NextFunction) {
-    const processTarget = req.body.processTarget;
-    const traceID = req.body.traceID;
+    // const processTarget = req.body.processTarget;
+    const processTarget = 'p1';
+    const traceID = 'fd81b45493417ef7e6776311639e8a2d'
+    // const traceID = req.body.traceID;
     const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
@@ -183,7 +185,7 @@ export class TraceModel {
     console.log('spanToProcess: ', spanToProcess);
     const proccessSpecificSpans : string | any[] = [];
     spanToProcess.forEach((element) => {
-      if (element.processNum === processTarget) proccessSpecificSpans.push(element.spanIds)
+      if (element.processNum === processTarget) proccessSpecificSpans.push(element)
     })
     res.locals.processSpecificSpans = proccessSpecificSpans;
     return next();
