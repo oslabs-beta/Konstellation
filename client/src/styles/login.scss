@@ -1,59 +1,184 @@
-@use "./theme" as theme;
+// @use "./theme" as theme;
+$font-input-size: 1.48vh;
+$color-font: #F4F4F4;
+$font-family: SF Pro;
+$font-weight: 700;
+$eye-width: 24px;
+$eye-height: 24px;
+$letter-spacing: 0em;
+$line-height: 19px;
 
 #login {
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: absolute;
   width: 100%;
   height: 100%;
-  left: 0px;
-  top: 0px;
-
-  background: radial-gradient(79.58% 79.58% at 50% 50%, #000000 0%, rgba(0, 0, 0, 0) 100%), url(images/login-background.png);
+  background-position: center;
+  margin: 0px;
+  padding:0px;
 }
 
-#login-container {
-  @include theme.container;
+// * {
+//   font-family: SF Pro;
+//   font-size: 16px;
+//   font-weight: 700;
+//   line-height: 19px;
+//   letter-spacing: 0em;
+//   text-align: left;
+//   color: #F4F4F4;
+// }
 
+#login-container {
+  background: #3C3C3C;
+  box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 30px;  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 420px;
   padding: 8px;
-  width: 500px;
+  width: 26.04vw;
   height: 640.08px;
 }
 
-#logo {
-  @include theme.logo;
+#login-logo {
+  // width: 400px;
+  // height: 53px;
+  height: auto;
+  min-width: 20.83vw;
+  left: 0px;
+  top: 0px;
+
+  font-family: 'Noto Serif';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 39.0261px;
+  line-height: 53px;
+  letter-spacing: 0.15em;
+
+  color: #EFEFEF;  
 }
 
 #login-label {
-  //styleName: H3;
-  font-family: SF Pro;
+  font-family: $font-family;
   font-size: 22px;
   font-weight: 510;
   line-height: 26px;
-  letter-spacing: 0em;
+  letter-spacing: $letter-spacing;
   text-align: left;
 }
 
 form {
-  @include theme.form-style;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
 }
 
-::placeholder {
-  @include theme.placeholder-style
+.login-font {
+  font-family: $font-family;
+  font-size: $font-input-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+  text-align: left;
+  color: $color-font;
 }
 
-input {
-  @include theme.input;
-  width: 436px;
+
+.login-input {
+  box-sizing: border-box;
+  background-color: #3C3C3C;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px;
+  gap: 8px;
+  border: 1px solid #919191;
+  border-radius: 8px;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+  width: 0.2271vw;
+  min-width: 350px;
+
+  font-family: $font-family;
+  font-size: $font-input-size;
+  font-weight: $font-weight;
+  line-height: 19px;
+  letter-spacing: $letter-spacing;
+  text-align: left;
+  color: $color-font;
+}
+
+.passwordContainer {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.eye-close {
+  background: url(images/eye-closed.png);
+  width: $eye-width;
+  height: $eye-height;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 10;
+  padding-right: 10px;
+}
+
+.eye-open {
+  background: url(images/eye-open.png);
+  width: $eye-width;
+  height: $eye-height;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 10;
+  padding-right: 10px;
 }
 
 #login-button {
-  /* Button */
-  @include theme.button-style;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 8px;
 
-  width: 436px;
+  background: #2F80ED;
+  border-radius: 8px;
+  border: 0px;
+
+  /* Inside auto layout */
+  margin-top: 10px;
+
+  &:hover {
+    background: #438be9;
+  }
+  &:active {
+    background: #1a66c9;
+  }  
+  width: 0.2271vw;
+  min-width: 350px;
   height: 56px;
+  font-family: $font-family;
+  font-size: $font-input-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+  text-align: left;
+  color: $color-font;
+}
 
+#loading-screen {
+  z-index: 10;
+  position: absolute;
 }

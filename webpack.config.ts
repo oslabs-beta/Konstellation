@@ -22,6 +22,11 @@ module.exports = (env: any, argv:any) => {
 });
 
   return {
+		performance: {
+			hints: false,
+			maxEntrypointSize: 512000,
+			maxAssetSize: 512000
+	  },
     mode,
     stats: {
       errorDetails: true
@@ -38,6 +43,13 @@ module.exports = (env: any, argv:any) => {
     module: {
       
       rules: [
+        {
+          test: /\.(png|jpe?g|gif|jp2|webp)$/,
+          loader: 'file-loader',
+          options: {
+          name: 'images/[name].[ext]'
+        },
+        },
         {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,

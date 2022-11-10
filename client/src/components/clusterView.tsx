@@ -10,6 +10,7 @@ import LoadingScreen, { LoadingScreenType } from './loadingScreen';
 export interface Cluster {
   data: ClusterData
   status: 'idle' | 'loading' | 'failed';
+	namespace: string;
 }
 
 /**
@@ -29,7 +30,7 @@ export default function clusterView(): JSX.Element {
     if(data.length === 0) {
       dispatch(getClusterAsync());
     }
-  })
+  },[])
 
   if (status === 'failed') {
     <div id="message-screen">Request Failed. Please confirm server is active.</div>
@@ -64,13 +65,25 @@ export default function clusterView(): JSX.Element {
           minZoom={0.1}
           cy={cy => {
             myCyRef = cy;
-            cy.on("tap", "node", evt => {
+            cy.on("dblclick", "node", evt => {
               var node = evt.target;
               console.log("EVT", evt);
               console.log("TARGET", node.data());
               console.log("TARGET TYPE", typeof node[0]);
+              cy.fit( cy.$(':selected'), 50 );
+              setTimeout( function(){
+                cy.panBy({
+                  x: -100,
+                  y: 0
+                })
+              }, 10)
+              setTimeout( function(){
+                cy.$('').unselect();
+                cy.fit(cy.$(''),50);
+              }, 5000 );
+            
             });
-          }}
+          }}         
         ></CytoscapeComponent>
       </div>
       </div>

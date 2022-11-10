@@ -70,7 +70,7 @@ $selector-size: 4.72vh;
 }
 
 .duration-selector-active {
-  
+  cursor: pointer;
   font-size: $selector-font-size;
   display: flex;
   width: 100%;
@@ -158,5 +158,25 @@ $trace-table-slim-width: 5.156vw;
     .method { grid-area: 1 / 5 / 2 / 6; text-align: center;}
     .url { grid-area: 1 / 6 / 2 / 7; text-align: center;}
     .namespaces { grid-area: 1 / 7 / 2 / 8; text-align: center;}
+
+}
+
+#trace-table-dropdown-menu {
+	font-size: 1.48vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 5px;
+	.dropDownOptions{
+		background-color: #242424;
+		color: white;
+		border: 1px solid #919191;
+		border-radius: 8px 8px 8px 8px;
+		width: 15.844vw;
+		height: 5.37vh;
+		padding-right: 10px;
+		padding-left: 10px;
+		text-indent: 10px;
+	}
 
 }

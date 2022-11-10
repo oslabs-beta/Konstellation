@@ -5,7 +5,14 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 import styleSheet from '../styles/Stylesheet'
 import options from '../constants/CytoscapeConfig'
 import { useSelector } from 'react-redux';
-import { selectTraceViewData } from './traceViewSlice';
+import { selectTraceView, TraceData } from './traceViewSlice';
+import { useAppDispatch } from '../lib/hooks';
+import { changeRenderView, RenderType } from './span-table/spanMapSlice';
+import { getSpanTableAsync } from './span-table/spanListSlice';
+import { node } from 'webpack';
+import { selectSourceMap } from './sourceMapSlice';
+import { useAppSelector } from '../lib/hooks';
+import { selectSearchTraceResult } from './searchBarSlice';
 
 export interface Trace {
   data: TraceData
@@ -20,8 +27,23 @@ cytoscape.use(coseBilkent);
  */
   const TraceView = () => {
   
-  const traceViewData = useSelector(selectTraceViewData); 
+  const traceViewData = useSelector(selectTraceView); 
   const layout = options();
+
+  const dispatch = useAppDispatch();
+
+  
+  let traceData = useAppSelector(selectSearchTraceResult); 
+	let exportedtraceViewData: any= traceData.data
+ 
+
+  function loadNewSpanTable(type: RenderType, data: string, id: string, traceData: any) {
+    dispatch(changeRenderView({type: RenderType.render, data, id}))
+    dispatch(getSpanTableAsync(traceData));
+  }
+
+  const trace = useSelector(selectSourceMap)
+  const traceId = trace.data
 
   let myCyRef;
 
@@ -39,29 +61,50 @@ cytoscape.use(coseBilkent);
       }}
     >
       <CytoscapeComponent
+        
         elements={traceViewData.data}
         stylesheet={styleSheet}
         layout={layout}
         style={{
-          width: '100%',
-          height: '50rem',
+          width: '100vw',
+          height: '100vh',
           objectFit: 'cover',
           backgroundColor: '#161820'
         }}
-        maxZoom={3}
+        wheelSensitivity={0.08}
+        maxZoom={3.0}
         minZoom={0.1}
+        
         cy={cy => {
           myCyRef = cy;
+          const reset = () => {cy.elements().remove()}
   
-          // console.log("EVT", cy);
-  
-          cy.on("tap", "node", evt => {
+          cy.on("dblclick", "node", evt => {
             var node = evt.target;
-            console.log("EVT", evt);
-            console.log("TARGET", node.data());
-            console.log("TARGET TYPE", typeof node[0]);
+       
+            cy.fit( cy.$(':selected'), 50 );
+            setTimeout( function(){
+              cy.panBy({
+                x: -300,
+                y: 0
+              })
+            }, 10)
+            const nodeData = node.data()
+           
+            let currentTraceId = 'placeholder'
+            if (exportedtraceViewData) {
+              currentTraceId = exportedtraceViewData.traceID
+              }
+
+            const traceData = {
+              processTarget : nodeData.id, 
+              traceId : currentTraceId
+            }
+
+            loadNewSpanTable(RenderType.render, nodeData.label, nodeData.id, traceData)
           });
         }}
+
       ></CytoscapeComponent>
     </div>
     )

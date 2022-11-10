@@ -1,0 +1,32 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: sidecar-for-my-app
+spec:
+  image: public.ecr.aws/aws-observability/aws-otel-collector:latest
+  mode: sidecar
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http: 
+
+    processors:
+
+    exporters:
+      logging:
+      otlphttp:
+        endpoint: http://jaeger-collector.observability:4318
+        tls: 
+          insecure: true
+      
+
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: []
+          exporters: [logging, otlphttp]
+
+
