@@ -3,7 +3,7 @@
 
 
 
-# Summary
+# Introduction
 Konstellation is an Open Source Distributed Tracing tool built specifically for Kubernetes.
 
 This tool gathers telemetry data within a kubernetes cluster and presents it within an intuitive Source Map topology, and provides developers with additional tools to identify and examine trace data in detail.
