@@ -30,7 +30,7 @@ const jsxElements = (() => {
     result.push([
       <div key={entryKey} className='span-data-tag-entry'>
         <div className="span-data-entry">
-          {i}: [Key: {key}, Type: {type}, Value: {value}]
+          {i}: [<span className='boldSpanTag'>Key: </span>{key}, <span className='boldSpanTag'>Type: </span>{type}, <span className='boldSpanTag'>Value: </span>{value}]
         </div>
       </div>
     ])
@@ -65,14 +65,40 @@ const jsxElements = (() => {
     }
     return result})()
 
+    // const jsxStartTimes = (() => {
+    //   const result: Array<Array<JSX.Element>> = []
+    
+      const startTime = props.spanData.startTime
+      
+  
+
+      const time: any = new Date(startTime/1000).toString()
+      
+    //     console.log('startTime: ', time)
+    //     const entryKey = `span-data-time-entry`
+    //     // console.log(e)
+        
+      
+    
+    //     result.push([
+    //       <div key={entryKey} className='span-data-startTime-entry'>
+    //         <div className="span-data-start-entry">
+    //           {time} ms
+    //         </div>
+    //       </div>
+    //     ])
+        
+    //   })()
+      
+
   return (
     <div>
-      <div className="span-data-entry"> ProcessID: {props.spanData.processID} </div>
-      <div className="span-data-entry"> Duration: {props.spanData.duration} </div>
-      <div className="span-data-entry"> Operation Name: {props.spanData.operationName} </div>
-      <div className="span-data-entry"> Start Time: {props.spanData.startTime} </div>
-      <div className="span-data-entry"> Warnings: {jsxWarnings}</div>
-      <div className="span-data-entry"> Tags: {jsxElements}</div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan'>ProcessID: </span>{props.spanData.processID} </div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan'>Duration: </span>{props.spanData.duration} μs</div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan'>Operation Name: </span>{props.spanData.operationName} </div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan'>Start Time: </span>{time} </div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan'>Warnings: </span>{jsxWarnings}</div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan'>Tags: </span>{jsxElements}</div>
     </div>
   )
 }

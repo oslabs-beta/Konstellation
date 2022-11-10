@@ -31,8 +31,8 @@ const spanHeader = () => {
         <div className='spanHeader'>Span Details</div>
         <button className='button-close' onClick={() => {loadNewSpanTable(RenderType.noRender)}}>X</button>
       </div>
-      <div className='spanHeaderPodName'>Pod Name: {data}</div>
-      <div className='spanHeaderPodName'>TraceID: {traceId.data}</div>
+      <div className='spanHeaderPodName'> <span className="boldSpan">Pod Name: </span> {data} </div>
+      <div className='spanHeaderPodName'> <span className="boldSpan">TraceID: </span> {traceId.data}</div>
     </div>
   )
 }
