@@ -111,6 +111,8 @@ export class TraceModel {
     console.log("jaeger query-ing");
     const traceID = req.params.traceId;
 		//console.log(traceID)
+
+    try{
     const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
@@ -146,11 +148,8 @@ export class TraceModel {
   
     for (let k = 0; k < currentTraceSpans.length; k++){
       let indivSpan = currentTraceSpans[k];
-			//console.log(spanToProcess[indivSpan])
 			 if (indivSpan.references[0]){
-				console.log('right before the arrow building ')
 				 if (spanToProcess[indivSpan.spanID] !== spanToProcess[indivSpan.references[0].spanID]){
-					console.log('in the inner if statement')
 					 traceViewArray.push({
 						 data: {
 							 id: uuidv4(),
@@ -167,23 +166,24 @@ export class TraceModel {
     res.locals.spanToProcess = spanToProcess;
     res.locals.traceViewArray = traceViewArray;
     res.locals.currentTraceSpans = currentTraceSpans;
-    console.log('traceviewArray: ', traceViewArray);
     return next();
   }
+  catch(err){
+    console.log(err)
+  }}
 
   public static async getSearchBarTraceView(req: Request, res: Response, next: NextFunction){
     const currentTraceSpans = res.locals.currentTraceSpans;
     const traceViewArray = res.locals.traceViewArray
     let spanCountData = 0;
     let traceID;
-    let traceStart;
-    let traceDuration;
+    let traceStart =0;
+    let traceDuration =0;
     currentTraceSpans.forEach((indivSpan: any) => {
       spanCountData ++; 
 			if (indivSpan.references[0]){
 				const currRef = indivSpan.references[0];
 				if (currRef.refType === "FOLLOWS_FROM") {
-					console.log('follows from: ' + indivSpan.traceID);
 					traceID = indivSpan.traceID;
 					traceStart = indivSpan.startTime;
 					traceDuration = indivSpan.duration;
@@ -195,24 +195,25 @@ export class TraceModel {
         id: "searchBarData",
         type: "searchBarData",
         traceID: traceID,
-        traceStart: traceStart,
-        traceDuration: traceDuration,
+        traceStart: new Date(traceStart/1000).toString(),
+        traceDuration: `${traceDuration/1000} ms`,
         serviceCount: traceViewArray.length,
         spanCount: spanCountData,
         label: undefined
       },
       classes: "label"
     }
-    console.log('spanCountData', spanCountData);
-    console.log(searchTraceData) 
     res.locals.searchBarTraceView = searchTraceData;
     return next();
   }
   // Want to pass back id when calling individual PodData; will contain the process # 
   public static async getIndividualPodData(req: Request, res: Response, next: NextFunction) {
     const processTarget = req.body.processTarget;
+    // const processTarget = 'p1';
+    // const traceID = 'fd81b45493417ef7e6776311639e8a2d'
     const traceID = req.body.traceID;
-    const response = await fetch('http://localhost:16686/api/traces/' + traceID)
+    try {
+      const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
@@ -233,14 +234,16 @@ export class TraceModel {
           spanData: indivSpan,
         });
       })
-    console.log('spanToProcess: ', spanToProcess);
     const proccessSpecificSpans : string | any[] = [];
     spanToProcess.forEach((element) => {
-      if (element.processNum === processTarget) proccessSpecificSpans.push(element.spanIds)
+      if (element.processNum === processTarget) proccessSpecificSpans.push(element)
     })
     res.locals.processSpecificSpans = proccessSpecificSpans;
     return next();
   }
+  catch(err){
+    console.log(err)
+  }};
 
   public static getIndivSpanDetails(req: Request, res:Response, next:NextFunction){
     const currentSpanIdObj = req.body.spanData;
@@ -295,7 +298,7 @@ export class TraceModel {
   }
 
   public static async getTraceViewServices(req: Request, res:Response, next:NextFunction){
-		console.log('ingettraceview services')
+		console.log('in get traceview services')
 		try{
 			
 			const response = await fetch('http://localhost:16686/api/services')
@@ -304,7 +307,6 @@ export class TraceModel {
 			};
 			const responseJson = await response.json();
 			res.locals.traceViewServices = responseJson.data;
-			console.log(res.locals.traceViewServices);
 			return next();
 		}
 		catch(err){
