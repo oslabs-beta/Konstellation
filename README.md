@@ -64,6 +64,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 When deploying the operator and collector services, please ensure that cert-manager has also been installed in your system. The Opentelemetry Operator and Collector may be deployed via helm chart or manually.
 
 ## (Optional) Deploy Via Helm chart
+
 The Opentelemetry Operator can be deployed via [Helm Chart](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-operator) from the opentelemetry-helm-charts repository. More information can be found [here](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-operator).
 
 ## Install Opentelemetry Operator
@@ -74,6 +75,8 @@ kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releas
 ```
 
 Once the `opentelemetry-operator` deployment is succefully running, create an OpenTelemetry Collector (otelcol) instance:
+
+**_NOTE:_** For AWS EKS users, a dedicated opentelemetry collector, `AWS Distro for OpenTelemetry` can be used instead. Instructions and documentation can be found [here](https://aws.amazon.com/otel/)
 
 A pre-configured OpenTelemetry collector YAML file is provided in the konstellation-yaml folder of this repository. With it available on your local system, run the following command: 
 
