@@ -111,6 +111,7 @@ export class TraceModel {
     console.log("jaeger query-ing");
     const traceID = req.params.traceId;
 		//console.log(traceID)
+    try{
     const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
@@ -170,14 +171,17 @@ export class TraceModel {
     console.log('traceviewArray: ', traceViewArray);
     return next();
   }
+  catch(err){
+    console.log(err)
+  }}
 
   public static async getSearchBarTraceView(req: Request, res: Response, next: NextFunction){
     const currentTraceSpans = res.locals.currentTraceSpans;
     const traceViewArray = res.locals.traceViewArray
     let spanCountData = 0;
     let traceID;
-    let traceStart;
-    let traceDuration;
+    let traceStart =0;
+    let traceDuration =0;
     currentTraceSpans.forEach((indivSpan: any) => {
       spanCountData ++; 
 			if (indivSpan.references[0]){
@@ -195,8 +199,8 @@ export class TraceModel {
         id: "searchBarData",
         type: "searchBarData",
         traceID: traceID,
-        traceStart: traceStart,
-        traceDuration: traceDuration,
+        traceStart: new Date(traceStart/1000).toString(),
+        traceDuration: `${traceDuration/1000} ms`,
         serviceCount: traceViewArray.length,
         spanCount: spanCountData,
         label: undefined
@@ -210,11 +214,12 @@ export class TraceModel {
   }
   // Want to pass back id when calling individual PodData; will contain the process # 
   public static async getIndividualPodData(req: Request, res: Response, next: NextFunction) {
-    // const processTarget = req.body.processTarget;
-    const processTarget = 'p1';
-    const traceID = 'fd81b45493417ef7e6776311639e8a2d'
-    // const traceID = req.body.traceID;
-    const response = await fetch('http://localhost:16686/api/traces/' + traceID)
+    const processTarget = req.body.processTarget;
+    // const processTarget = 'p1';
+    // const traceID = 'fd81b45493417ef7e6776311639e8a2d'
+    const traceID = req.body.traceID;
+    try {
+      const response = await fetch('http://localhost:16686/api/traces/' + traceID)
     if (!response.ok) {
       throw new Error(`Error retrieving traceview! Status: ${response.status}`)
     }
@@ -243,6 +248,9 @@ export class TraceModel {
     res.locals.processSpecificSpans = proccessSpecificSpans;
     return next();
   }
+  catch(err){
+    console.log(err)
+  }};
 
   public static getIndivSpanDetails(req: Request, res:Response, next:NextFunction){
     const currentSpanIdObj = req.body.spanData;
