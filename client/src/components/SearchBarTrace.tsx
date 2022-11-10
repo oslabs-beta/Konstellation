@@ -92,9 +92,6 @@ const SearchBarTrace = (): JSX.Element => {
 						{exportedtraceViewData?.spanCount}
 					  </div>
 					  </div>
-					<div>
-					  <span className="close" onClick={handleClick}>&times;</span>
-					</div>
 				</div>
 			</div>
 		</div>

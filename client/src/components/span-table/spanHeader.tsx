@@ -33,8 +33,8 @@ const spanHeader = () => {
         <div className='spanHeader'>Span Details</div>
         <button className='button-close' onClick={() => {loadNewSpanTable(RenderType.noRender)}}>X</button>
       </div>
-      <div className='spanHeaderPodName'> <span className="boldSpan">Pod Name: </span> {data} </div>
-      <div className='spanHeaderPodName'> <span className="boldSpan">TraceID: </span> {currentTraceId}</div>
+      <div className='spanHeaderPodName'> <span className="boldSpan span-label">Pod Name: </span> {data} </div>
+      <div className='spanHeaderPodName'> <span className="boldSpan span-label">TraceID: </span> {currentTraceId}</div>
     </div>
   )
 }

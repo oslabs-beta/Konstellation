@@ -64,12 +64,12 @@ const jsxElements = (() => {
       
   return (
     <div>
-      <div className="span-data-entry"> <span className='boldItalicsSpan'>ProcessID: </span>{props.spanData.processID} </div>
-      <div className="span-data-entry"> <span className='boldItalicsSpan'>Duration: </span>{props.spanData.duration} μs</div>
-      <div className="span-data-entry"> <span className='boldItalicsSpan'>Operation Name: </span>{props.spanData.operationName} </div>
-      <div className="span-data-entry"> <span className='boldItalicsSpan'>Start Time: </span>{time} </div>
-      <div className="span-data-entry"> <span className='boldItalicsSpan'>Warnings: </span>{jsxWarnings}</div>
-      <div className="span-data-entry"> <span className='boldItalicsSpan'>Tags: </span>{jsxElements}</div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan span-label'>ProcessID: </span>{props.spanData.processID} </div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan span-label'>Duration: </span>{props.spanData.duration} μs</div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan span-label'>Operation Name: </span>{props.spanData.operationName} </div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan span-label'>Start Time: </span>{time} </div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan span-label'>Warnings: </span>{jsxWarnings}</div>
+      <div className="span-data-entry"> <span className='boldItalicsSpan span-label'>Tags: </span>{jsxElements}</div>
     </div>
   )
 }
