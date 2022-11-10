@@ -222,13 +222,14 @@ export class TraceModel {
     console.log('spanToProcess: ', spanToProcess);
     const proccessSpecificSpans : string | any[] = [];
     spanToProcess.forEach((element) => {
-      if (element.processNum === processTarget) proccessSpecificSpans.push(element.spanIds)
+      if (element.processNum === processTarget) proccessSpecificSpans.push(element)
     })
     res.locals.processSpecificSpans = proccessSpecificSpans;
     return next();
   }
 
   public static getIndivSpanDetails(req: Request, res:Response, next:NextFunction){
+    console.log('getIndivSpanDetails Params: ', req.params)
     const currentSpanIdObj = req.body.spanData;
     let operationName: any;
     let references: any;

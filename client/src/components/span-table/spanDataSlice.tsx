@@ -25,8 +25,9 @@ type OneSpanData = SpanNames[]
 
 export const getSpanDataAsync = createAsyncThunk(
   'spanData/getSpanData',
-  async (traceId: String) => {
-    const url = config.url + '/api/traces/' + traceId 
+  async (spanId: String) => {
+    console.log('spanId in getSpanDataAsync', spanId)
+    const url = config.url + '/api/traces/getIndivSpanDetails/' + spanId 
 
     //Use these logs as a first step towards troubleshooting trace fetch requests:
     console.log("Fetching Data From: ")

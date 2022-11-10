@@ -42,12 +42,12 @@ router.get('/getSpansInProcess/:traceId/:processTarget',
   }
 )
 
-// router.get('/getIndivSpanDetails/:traceId', 
-//   TraceController.getIndivSpanDetails,
-//   (req: Request, res: Response, next: NextFunction) => {
-//     res.status(200).json(res.locals.spanDetails)
-//   } 
-// )
+router.get('/getIndivSpanDetails/:spanId', 
+  TraceController.getSpanDetails,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json(res.locals.spanDetails)
+  } 
+)
 
 // router.post('/post', 
 //   TraceController.saveData, 

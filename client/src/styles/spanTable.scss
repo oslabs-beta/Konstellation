@@ -23,6 +23,16 @@
   font-weight: 200;
 }
 
+.span-data-entry-indent {
+  padding-left: 4vw;
+  font-weight: 200;
+}
+
+.span-details {
+  display: flex;
+  overflow-y: scroll;
+}
+
 .span-entry {
   display: flex
 }
@@ -42,4 +52,10 @@
 .span-pod-entry {
   padding-left: 1vw;
   padding-top: 1vh;
+  overflow-y: scroll;
+}
+
+#span-table-list {
+  overflow-y: scroll;
+  max-height: 39.4vh;
 }

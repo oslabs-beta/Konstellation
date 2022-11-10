@@ -15,7 +15,8 @@ export interface SpanTable {
   data: SpanTableData
 }
 
-type SpanNames = String
+//changed to any for passing props
+type SpanNames = any
 
 type SpanTableData = SpanNames[]
 

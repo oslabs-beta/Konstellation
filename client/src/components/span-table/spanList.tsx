@@ -19,16 +19,16 @@ const spanList = () => {
   const { data } = useSelector(selectSpanTableList)
   const dispatch = useAppDispatch();
 
-  function loadNewSpanResults(type: spanViewType, traceId: String) {
+  function loadNewSpanResults(type: spanViewType, spanId: String) {
     console.log('in loadNewSpanResults')
     dispatch(changeSpanDataView({type}))
-    dispatch(getSpanDataAsync(traceId))
+    // dispatch(getSpanDataAsync(spanId))
   }
 
   // interface Props {
   //   traceId? : String
   // }
-
+ 
   const { type } = useSelector(selectSpanResultsMap)
 
   const jsxElements = (() => {
@@ -43,21 +43,23 @@ const spanList = () => {
 
       const entryKey = `span-table-entry-${i}`
       console.log(e)
+      console.log('duration', data[i].spanData.duration)
 
       const spanData = 'hello'
+      const spanID = e.spanIds
 
       result.push([
         <div key={entryKey} className='span-pod-entry'>
           <div className="span-entry">
-          <button className="spanButton" onClick={() => {if (type === spanViewType.noRender) {loadNewSpanResults(spanViewType.render, data[i])} else {loadNewSpanResults(spanViewType.noRender, data[i])}}}>^</button>
-          <div key={entryKey} className='span-name' >{data[i]}</div>
+          <button className="spanButton" onClick={() => {if (type === spanViewType.noRender) {loadNewSpanResults(spanViewType.render, data[i])} else {loadNewSpanResults(spanViewType.noRender, data[i].spanIds)}}}>^</button>
+          <div key={entryKey} className='span-name' >SpanID: {data[i].spanIds}</div>
           </div>
-          <SpanResultsMap traceId={data[i]}/>
+          <div className="span-details">
+          <SpanResultsMap spanData={data[i].spanData}/>
+          </div>
         </div>
       ])
     }
-
-    // onClick={()=>loadSpanTableData(e.data.name)}
 
     return result;
   })()

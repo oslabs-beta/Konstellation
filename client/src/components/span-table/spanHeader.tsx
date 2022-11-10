@@ -23,7 +23,6 @@ const spanHeader = () => {
     <div id="span-table-header">
       <div className='spanHeader'>Span Details</div>
       <div className='spanHeaderPodName'>Pod Name: {data}</div>
-      <div className='spanHeaderPodName'>TargetProcess: {id}</div>
       <div className='spanHeaderPodName'>TraceID: {traceId.data}</div>
     </div>
   )
