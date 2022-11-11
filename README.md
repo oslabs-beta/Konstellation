@@ -164,7 +164,9 @@ kubectl port-forward jaeger-collector 16686:16686
 With these services deployed, and the service now ported to the local machine, we can confirm functionality. Open a browser and navigate to  `http://localhost:16686`. The jaeger UI should load.
 
 <img src="./images/JaegerUI.png" alt="drawing" width="500"/>
+
 ___
+
 # Quickstart
 The quickstart instructions will require that [`kubectl`](#installing-kubectl) is set up and [`cert-manager`](#installing-cert-manager) is installed. 
 
