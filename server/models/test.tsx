@@ -9,4 +9,5 @@
 //     console.log(res.body.items[0].status);
 // });
 
-// //run this page to see what is available from the kubernetes api for a single pod with node client/server/models/test.tsx
+// run this page to see what is available from the kubernetes api 
+// for a single pod with node client/server/models/test.tsx

@@ -2,10 +2,10 @@
    Generic dark-gray container for holding the login elements, search bar, trace table, etc.
 */
 @mixin container {
-  background: #3C3C3C;
+  background: #3c3c3c;
   box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
-  padding: 30px;  
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,7 +46,7 @@
 
   flex: none;
   order: 0;
-  flex-grow: 0;  
+  flex-grow: 0;
 }
 
 @mixin button-style {
@@ -58,7 +58,7 @@
   align-items: center;
   padding: 16px 8px;
 
-  background: #2F80ED;
+  background: #2f80ed;
   border-radius: 8px;
   border: 0px;
 
@@ -70,19 +70,19 @@
   }
   &:active {
     background: #1a66c9;
-  }  
+  }
 }
 
 /*
    Formats all font
 */
 * {
- // styleName: Body Default Bold;
+  // styleName: Body Default Bold;
   font-family: SF Pro;
-//  font-size: 16px;
+  //  font-size: 16px;
   font-weight: 700;
-//  line-height: 19px;
-//  letter-spacing: 0em;
-//  text-align: left;
-//  color: #F4F4F4;
+  //  line-height: 19px;
+  //  letter-spacing: 0em;
+  //  text-align: left;
+  //  color: #F4F4F4;
 }

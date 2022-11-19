@@ -15,22 +15,21 @@
 .boldItalicsSpan {
   font-weight: bold;
   font-style: italic;
-  font-size: 1.5vh
+  font-size: 1.5vh;
 }
 
 .button-close {
-  background: #3C3C3C;
+  background: #3c3c3c;
   color: white;
   border: none;
   font-size: 2vh;
   font-weight: 10;
   text-align: center;
-  
 }
 
-    .button-close:hover {
-      cursor: pointer
-    }
+.button-close:hover {
+  cursor: pointer;
+}
 
 .header {
   display: flex;
@@ -40,20 +39,20 @@
 }
 
 .span-map {
-  background: #3C3C3C;
+  background: #3c3c3c;
   height: 48.5vh;
   width: 55.8vw;
   border-radius: 12px;
   filter: drop-shadow(0px 10px 24px rgba(0, 0, 0, 0.25));
   z-index: 1;
-   grid-template-columns: 1fr;
-    grid-template-rows: 154fr 926fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 154fr 926fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
 .spanButton {
-  background: #3C3C3C;
+  background: #3c3c3c;
   color: white;
   font-weight: 100;
   border: none;
@@ -62,9 +61,9 @@
   align-items: center;
 }
 
-    .spanButton:hover {
-      cursor: pointer
-    }
+.spanButton:hover {
+  cursor: pointer;
+}
 
 .span-label {
   margin-right: 8px;
@@ -107,7 +106,7 @@
 
 #span-table-list {
   overflow-y: scroll;
-  height:1fr;
+  height: 1fr;
   max-height: 38vh;
   margin-left: 2vw;
   margin-right: 2vw;
@@ -117,13 +116,12 @@
   display: flex;
   font-size: 1.6vh;
   font-weight: 100;
-  
+
   align-items: center;
-  
 }
 
 .span-data-entry {
-  font-size: 1.4vh
+  font-size: 1.4vh;
 }
 
 .divider {
@@ -143,7 +141,7 @@
 }
 
 #span-table-content {
-  max-height:100vh;
+  max-height: 100vh;
 }
 
 #span-table-overlay {

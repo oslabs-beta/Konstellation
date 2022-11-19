@@ -1,9 +1,9 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron');
 
 /**
-   * This file bridges the main process, electron.js, with the render process, Login.tsx,
-   * by exposing specific API using contextBridge.
-   */
+ * This file bridges the main process, electron.js, with the render process, Login.tsx,
+ * by exposing specific API using contextBridge.
+ */
 
 const exposedAPI = {
   /**
@@ -27,11 +27,11 @@ const exposedAPI = {
   },
 
   /**
-  * @remarks
-  * Invoked by Login to retrieve any locally-stored configurations/credentials
-  * located in the user's aws and kubeconfig files.
-  * @param channel - listener in electron will receive this message if listening to this channel
-  */
+   * @remarks
+   * Invoked by Login to retrieve any locally-stored configurations/credentials
+   * located in the user's aws and kubeconfig files.
+   * @param channel - listener in electron will receive this message if listening to this channel
+   */
   getConfig: () => ipcRenderer.send('get-config'),
 
   /**
@@ -49,9 +49,8 @@ const exposedAPI = {
    * @remarks
    * Invoked by Login on unMount to avoid the accumulation of multiple listeners
    */
-  unMount: () => ipcRenderer.removeAllListeners()
-
+  unMount: () => ipcRenderer.removeAllListeners(),
 };
 
 // Exposes API key:value functions to the renderer process
-contextBridge.exposeInMainWorld("electronAPI", exposedAPI);
+contextBridge.exposeInMainWorld('electronAPI', exposedAPI);

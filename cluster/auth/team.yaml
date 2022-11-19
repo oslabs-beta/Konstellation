@@ -25,4 +25,3 @@ data:
       username: Admin_Testo
       groups:
         - system:masters
-    

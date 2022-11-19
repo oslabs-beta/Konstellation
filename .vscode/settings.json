@@ -1,0 +1,5 @@
+{
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "off",
+    "editor.wordWrapColumn": 120
+}

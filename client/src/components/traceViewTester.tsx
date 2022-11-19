@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 /**
  * Returns sample data for the Trace View for testing purposes
  * @temp This function can soon be deleted
  */
 const TraceTester = () => {
-    const [traceData, setTraceData] = useState<TraceData>({data: ""});
+  const [traceData, setTraceData] = useState<TraceData>({ data: '' });
 
-    useEffect( () => {
-        getTraceData();
-    });
+  useEffect(() => {
+    getTraceData();
+  });
 
-    async function getTraceData(): Promise<void> {
-        console.log("Weback conquered");
-        if(traceData.data) return;
+  async function getTraceData(): Promise<void> {
+    console.log('Weback conquered');
+    if (traceData.data) return;
 
-        const httpHeaders = {'ngrok-skip-browser-warning': 'true'}
-        const requestHeaders: HeadersInit = new Headers(httpHeaders);
+    const httpHeaders = { 'ngrok-skip-browser-warning': 'true' };
+    const requestHeaders: HeadersInit = new Headers(httpHeaders);
 
-        return (
-        fetch('https://e2de-136-52-47-115.ngrok.io') 
-        .then((response) => response.json())
-        .then(data => {
-            setTraceData(data)
-        })
-        .catch((err) => {"Unable to fetch Trace Data: " + err })
-        );
-    }
+    return fetch('https://e2de-136-52-47-115.ngrok.io')
+      .then((response) => response.json())
+      .then((data) => {
+        setTraceData(data);
+      })
+      .catch((err) => {
+        'Unable to fetch Trace Data: ' + err;
+      });
+  }
 
   return (
     <>
-        <h1>Welcome to Konstellation TraceTester!</h1>
-        <div>{Object.values(traceData as object)}</div>
+      <h1>Welcome to Konstellation TraceTester!</h1>
+      <div>{Object.values(traceData as object)}</div>
     </>
-  )
-}
+  );
+};
 
 type TraceData = {
-    data: string | void,
-}
+  data: string | void;
+};
 
-export default TraceTester
+export default TraceTester;

@@ -1,8 +1,8 @@
 type PodData = {
   data: {
-    id: string,
-    label: string,
-    type: string,
-  }
-  classes?: any
-}
+    id: string;
+    label: string;
+    type: string;
+  };
+  classes?: any;
+};

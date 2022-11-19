@@ -1,60 +1,70 @@
-import React, { useEffect } from 'react'
-import '../../styles/home.scss'
-import { useAppDispatch, useAppSelector } from '../../lib/hooks'
-import { selectTraceTableDrawerIsOpen, toggleIsOpen } from './drawerSlice'
-import FooterDrawerHandle, {DrawerTabProps} from './footerDrawerTab'
-import TraceTable from './traceTableContent'
-import { getTraceTableDataAsync, selectService } from './tableListSlice'
+import React, { useEffect } from 'react';
+import '../../styles/home.scss';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { selectTraceTableDrawerIsOpen, toggleIsOpen } from './drawerSlice';
+import FooterDrawerHandle, { DrawerTabProps } from './footerDrawerTab';
+import TraceTable from './traceTableContent';
+import { getTraceTableDataAsync, selectService } from './tableListSlice';
 
 /**
-   * Parent level component for managing "Drawer"-type elements in the window's Footer.
-   * @renders Either a "Tab" at the bottom of the page when closed OR an expanded window when opened.
-   * @remarks Currently features a hard-coded implementation of a TraceTable but can be quickly repurposed for reusability via prop-drilling.
-   */
+ * Parent level component for managing "Drawer"-type elements in the window's Footer.
+ * @renders Either a "Tab" at the bottom of the page when closed OR an expanded window when opened.
+ * @remarks Currently features a hard-coded implementation of a TraceTable but can be quickly repurposed 
+ * for reusability via prop-drilling.
+ */
 export const footerDrawer = () => {
   const dispatch = useAppDispatch();
   const drawerIsOpen = useAppSelector(selectTraceTableDrawerIsOpen);
-	const activeService = useAppSelector(selectService);
-  
+  const activeService = useAppSelector(selectService);
+
   const data: DrawerTabProps = getDrawerTabData();
 
-/**
-   * Updates when drawer's @see {drawerIsOpen} is opened or closed. Will subsequently trigger the drawer to open or close via CSS Animation.
+  /**
+   * Updates when drawer's @see {drawerIsOpen} is opened or closed. Will subsequently trigger the drawer to 
+   * open or close via CSS Animation.
    * @Reference See home.scss for additional context
    */
-  let cssId = drawerIsOpen ? 'drawer-opened' : 'drawer-closed'
+  const cssId = drawerIsOpen ? 'drawer-opened' : 'drawer-closed';
 
   const handleClick = () => {
-    const defaultLookback = "1m"
+    const defaultLookback = '1m';
 
-    dispatch(toggleIsOpen())
-    dispatch(getTraceTableDataAsync({activeService: activeService, lookback: defaultLookback}))
-  }
+    dispatch(toggleIsOpen());
+    dispatch(
+      getTraceTableDataAsync({
+        activeService: activeService,
+        lookback: defaultLookback,
+      })
+    );
+  };
 
   return (
-      <div id={cssId}>
-        <FooterDrawerHandle handleClick={handleClick} iconId={data.iconId} handleText={data.handleText}/>
-        <TraceTable />
-      </div>
-  )
+    <div id={cssId}>
+      <FooterDrawerHandle
+        handleClick={handleClick}
+        iconId={data.iconId}
+        handleText={data.handleText}
+      />
+      <TraceTable />
+    </div>
+  );
 
-/**
+  /**
    * Helper function which assigns data based on drawer's opened or closed state
    */
   function getDrawerTabData(): DrawerTabProps {
-    if(drawerIsOpen) {
+    if (drawerIsOpen) {
       return {
-          iconId: 'expand_more',
-          handleText: 'Hide View',
-        }
-      }
-      else {
-        return {
-            iconId: 'expand_less',
-            handleText: 'Trace Table',
-          }
-      }
+        iconId: 'expand_more',
+        handleText: 'Hide View',
+      };
+    } else {
+      return {
+        iconId: 'expand_less',
+        handleText: 'Trace Table',
+      };
+    }
   }
-}
+};
 
-export default footerDrawer
+export default footerDrawer;

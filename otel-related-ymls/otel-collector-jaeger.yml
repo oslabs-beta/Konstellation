@@ -28,5 +28,3 @@ spec:
           receivers: [otlp]
           processors: []
           exporters: [logging, otlphttp]
-
-

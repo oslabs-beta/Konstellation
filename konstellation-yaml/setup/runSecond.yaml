@@ -50,11 +50,11 @@ spec:
     - b3
   sampler:
     type: parentbased_traceidratio
-    argument: "0.25"
+    argument: '0.25'
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: default
   annotations:
-    instrumentation.opentelemetry.io/inject-nodejs: "true"
+    instrumentation.opentelemetry.io/inject-nodejs: 'true'

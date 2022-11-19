@@ -3,17 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/logout.scss';
 
 const logout = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const buttonClicked = () => {
     console.log('button clicked!');
-    navigate('/', {state : { autoLoad : false}});
-  }
+    navigate('/', { state: { autoLoad: false } });
+  };
 
   return (
-      <button type="submit" className="logout-button" onClick={buttonClicked}>Log Out</button>
+    <button type="submit" className="logout-button" onClick={buttonClicked}>
+      Log Out
+    </button>
   );
-
-}
+};
 
 export default logout;

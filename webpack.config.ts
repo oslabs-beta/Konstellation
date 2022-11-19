@@ -2,37 +2,38 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
-const Dotenv = require('dotenv').config({path: path.resolve(__dirname, './client/.env')});
+const Dotenv = require('dotenv').config({
+  path: path.resolve(__dirname, './client/.env'),
+});
 
-module.exports = (env: any, argv:any) => {
-
+module.exports = (env: any, argv: any) => {
   const mode = argv.mode || 'development';
 
   const dotEnv = new webpack.DefinePlugin({
-    "process.env": {
-      'DOMAIN': JSON.stringify(process.env.DOMAIN),
-      'PORT': JSON.stringify(process.env.PORT),
+    'process.env': {
+      DOMAIN: JSON.stringify(process.env.DOMAIN),
+      PORT: JSON.stringify(process.env.PORT),
 
       // PRODUCTION
       // Testing Purposes Only - never save production environment variables in local files.
       // Tests will require updating config.ts as well
-      'DOMAIN_PD': JSON.stringify(process.env.DOMAIN_PD),
-      'PORT_PD': JSON.stringify(process.env.PORT_PD),
-   }
-});
+      DOMAIN_PD: JSON.stringify(process.env.DOMAIN_PD),
+      PORT_PD: JSON.stringify(process.env.PORT_PD),
+    },
+  });
 
   return {
-		performance: {
-			hints: false,
-			maxEntrypointSize: 512000,
-			maxAssetSize: 512000
-	  },
+    performance: {
+      hints: false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000,
+    },
     mode,
     stats: {
-      errorDetails: true
+      errorDetails: true,
     },
     entry: {
-      bundle: './client/src/index.tsx' 
+      bundle: './client/src/index.tsx',
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -41,14 +42,13 @@ module.exports = (env: any, argv:any) => {
       assetModuleFilename: '[name][ext]', // this makes sure that the name remains the same during compilation
     },
     module: {
-      
       rules: [
         {
           test: /\.(png|jpe?g|gif|jp2|webp)$/,
           loader: 'file-loader',
           options: {
-          name: 'images/[name].[ext]'
-        },
+            name: 'images/[name].[ext]',
+          },
         },
         {
           test: /\.(js|jsx)$/,
@@ -79,7 +79,7 @@ module.exports = (env: any, argv:any) => {
       new CopyPlugin({
         patterns: [{ from: './client/style.css' }],
       }),
-      dotEnv
+      dotEnv,
     ],
     devtool: 'source-map',
     devServer: {
@@ -98,4 +98,4 @@ module.exports = (env: any, argv:any) => {
       historyApiFallback: true,
     },
   };
-  }
+};

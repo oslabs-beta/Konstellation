@@ -102,9 +102,5 @@
   },
   // "include": ["server/**/*", "client/**/*"],
   "exclude": ["node_modules"],
-  "typeRoots": [
-    "./typings",
-    "./node_modules/@types/"
-  ]
+  "typeRoots": ["./typings", "./node_modules/@types/"]
 }
-

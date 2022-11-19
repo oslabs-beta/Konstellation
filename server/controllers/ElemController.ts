@@ -5,8 +5,6 @@
 // kc.loadFromDefault();
 // const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 
-
-
 // const elemController = {
 //   getElements: async (req, res, next) => {
 //     try {
@@ -35,7 +33,7 @@
 //       console.log(elements)
 //       res.locals.elements = elements
 //       return next();
-    
+
 //     }
 //     catch (err) {
 //       return next({
@@ -50,7 +48,6 @@
 // }
 
 // elemController.getElements()
-
 
 // // const nodeData = k8sApi.listNode('default').then((res) => {
 // //     // console.log(res.body);

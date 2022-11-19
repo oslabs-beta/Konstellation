@@ -11,31 +11,31 @@ spec:
   rules:
     - http:
         paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: landing-page-service
-              port:
-                number: 8080
-        - path: /apple
-          pathType: Prefix
-          backend:
-            service:
-              name: apple-service
-              port:
-                number: 8080
-        - path: /banana
-          pathType: Prefix
-          backend:
-            service:
-              name: banana-service
-              port:
-                number: 8080
-        - path: /durian
-          pathType: Prefix
-          backend:
-            service:
-              name: durian-service
-              port:
-                number: 8080
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: landing-page-service
+                port:
+                  number: 8080
+          - path: /apple
+            pathType: Prefix
+            backend:
+              service:
+                name: apple-service
+                port:
+                  number: 8080
+          - path: /banana
+            pathType: Prefix
+            backend:
+              service:
+                name: banana-service
+                port:
+                  number: 8080
+          - path: /durian
+            pathType: Prefix
+            backend:
+              service:
+                name: durian-service
+                port:
+                  number: 8080

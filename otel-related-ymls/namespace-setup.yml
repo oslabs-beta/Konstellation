@@ -4,6 +4,6 @@ metadata:
   name: aiait
   labels:
     name: test
-  annotations: 
-    "sidecar.opentelemetry.io/inject" : "true"
-    "instrumentation.opentelemetry.io/inject-nodejs": "true"
+  annotations:
+    'sidecar.opentelemetry.io/inject': 'true'
+    'instrumentation.opentelemetry.io/inject-nodejs': 'true'

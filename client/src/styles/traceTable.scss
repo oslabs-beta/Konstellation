@@ -1,5 +1,5 @@
 #trace-table-content {
-  background: #3C3C3C;
+  background: #3c3c3c;
   height: 82vh;
   width: 93.3vw;
   border-radius: 12px;
@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: calc(100% - 2*$margin);
+  width: calc(100% - 2 * $margin);
   margin: $margin;
 
   h1 {
@@ -47,11 +47,11 @@ $selector-size: 4.72vh;
 #duration-selector {
   display: flex;
   flex-direction: row;
-  padding: 0px .83vw;
+  padding: 0px 0.83vw;
   font-size: $selector-font-size;
 
   width: 15.6vw;
-  gap: .83vw;
+  gap: 0.83vw;
   height: $selector-size;
   border: 1px solid #919191;
   border-radius: 12px;
@@ -91,30 +91,54 @@ $trace-table-slim-width: 5.156vw;
   border-radius: 6px;
   width: 91.666vw;
   height: 3.703vh;
-  padding: .074vh;
+  padding: 0.074vh;
   margin: auto;
   align-items: center;
-  
+
   display: grid;
-  grid-template-columns: repeat(2, 15.3646fr) 7.4479fr repeat(2, 5.156fr) repeat(2, 15.3646fr);
+  grid-template-columns: repeat(2, 15.3646fr) 7.4479fr repeat(2, 5.156fr) repeat(
+      2,
+      15.3646fr
+    );
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   gap: $trace-table-grid-gap;
 
-    div {
-      color: #FFFFFF;
-      font-size: 10px;
-      font-weight: 700;
-    }
-    
-    .timestamp { grid-area: 1 / 1 / 2 / 2; text-align: center;}
-    .traceId { grid-area: 1 / 2 / 2 / 3; text-align: center;}
-    .response-time { grid-area: 1 / 3 / 2 / 4; text-align: center;}
-    .response { grid-area: 1 / 4 / 2 / 5; text-align: center;}
-    .method { grid-area: 1 / 5 / 2 / 6; text-align: center;}
-    .url { grid-area: 1 / 6 / 2 / 7; text-align: center;}
-    .namespaces { grid-area: 1 / 7 / 2 / 8; text-align: center;}
+  div {
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .timestamp {
+    grid-area: 1 / 1 / 2 / 2;
+    text-align: center;
+  }
+  .traceId {
+    grid-area: 1 / 2 / 2 / 3;
+    text-align: center;
+  }
+  .response-time {
+    grid-area: 1 / 3 / 2 / 4;
+    text-align: center;
+  }
+  .response {
+    grid-area: 1 / 4 / 2 / 5;
+    text-align: center;
+  }
+  .method {
+    grid-area: 1 / 5 / 2 / 6;
+    text-align: center;
+  }
+  .url {
+    grid-area: 1 / 6 / 2 / 7;
+    text-align: center;
+  }
+  .namespaces {
+    grid-area: 1 / 7 / 2 / 8;
+    text-align: center;
+  }
 }
 
 #trace-table-list {
@@ -131,52 +155,70 @@ $trace-table-slim-width: 5.156vw;
   height: 32px;
 }
 .trace-table-entry {
-  
   display: grid;
-  grid-template-columns: repeat(2, 15.3646fr) 7.4479fr repeat(2, 5.156fr) repeat(2, 15.3646fr);
+  grid-template-columns: repeat(2, 15.3646fr) 7.4479fr repeat(2, 5.156fr) repeat(
+      2,
+      15.3646fr
+    );
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   gap: $trace-table-grid-gap;
-    
-    div {
-      color: #FFFFFF;
-      font-size: 10px;
-      font-weight: 300;
-    }
 
-    .timestamp { grid-area: 1 / 1 / 2 / 2;text-align: center; }
-    .traceId { 
-      cursor:pointer;
-      color: rgb(142, 142, 254);
-      text-decoration: underline;
-      grid-area: 1 / 2 / 2 / 3;
-      text-align: center;
-     }
-    .response-time { grid-area: 1 / 3 / 2 / 4; text-align: center;}
-    .response { grid-area: 1 / 4 / 2 / 5; text-align: center;}
-    .method { grid-area: 1 / 5 / 2 / 6; text-align: center;}
-    .url { grid-area: 1 / 6 / 2 / 7; text-align: center;}
-    .namespaces { grid-area: 1 / 7 / 2 / 8; text-align: center;}
+  div {
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 300;
+  }
 
+  .timestamp {
+    grid-area: 1 / 1 / 2 / 2;
+    text-align: center;
+  }
+  .traceId {
+    cursor: pointer;
+    color: rgb(142, 142, 254);
+    text-decoration: underline;
+    grid-area: 1 / 2 / 2 / 3;
+    text-align: center;
+  }
+  .response-time {
+    grid-area: 1 / 3 / 2 / 4;
+    text-align: center;
+  }
+  .response {
+    grid-area: 1 / 4 / 2 / 5;
+    text-align: center;
+  }
+  .method {
+    grid-area: 1 / 5 / 2 / 6;
+    text-align: center;
+  }
+  .url {
+    grid-area: 1 / 6 / 2 / 7;
+    text-align: center;
+  }
+  .namespaces {
+    grid-area: 1 / 7 / 2 / 8;
+    text-align: center;
+  }
 }
 
 #trace-table-dropdown-menu {
-	font-size: 1.48vh;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 5px;
-	.dropDownOptions{
-		background-color: #242424;
-		color: white;
-		border: 1px solid #919191;
-		border-radius: 8px 8px 8px 8px;
-		width: 15.844vw;
-		height: 5.37vh;
-		padding-right: 10px;
-		padding-left: 10px;
-		text-indent: 10px;
-	}
-
+  font-size: 1.48vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  .dropDownOptions {
+    background-color: #242424;
+    color: white;
+    border: 1px solid #919191;
+    border-radius: 8px 8px 8px 8px;
+    width: 15.844vw;
+    height: 5.37vh;
+    padding-right: 10px;
+    padding-left: 10px;
+    text-indent: 10px;
+  }
 }

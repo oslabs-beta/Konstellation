@@ -1,17 +1,17 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../store';
 
-
-export enum spanViewType {noRender, render}
+export enum spanViewType {
+  noRender,
+  render,
+}
 
 const initialState: Render = {
   type: spanViewType.noRender,
-  
-}
+};
 
 export interface Render {
-  type: spanViewType,
-  
+  type: spanViewType;
 }
 
 export const spanResultsMapSlice = createSlice({
@@ -19,10 +19,10 @@ export const spanResultsMapSlice = createSlice({
   initialState: initialState,
   reducers: {
     changeSpanDataView: (state, action: PayloadAction<Render>) => {
-      state.type = action.payload.type
-    }
-  }
-})
+      state.type = action.payload.type;
+    },
+  },
+});
 
 export const { changeSpanDataView } = spanResultsMapSlice.actions;
 export const selectSpanResultsMap = (state: RootState) => state.spanResultsMap;

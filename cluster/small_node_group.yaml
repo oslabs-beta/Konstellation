@@ -6,6 +6,6 @@ metadata:
   region: us-west-2
 
 managedNodeGroups:
-  - name: kon-small-nodes 
+  - name: kon-small-nodes
     instanceType: t2.small
     desiredCapacity: 3

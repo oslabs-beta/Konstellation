@@ -11,4 +11,4 @@ spec:
     - b3
   sampler:
     type: parentbased_traceidratio
-    argument: "0.25"
+    argument: '0.25'

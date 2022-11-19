@@ -1,8 +1,9 @@
 import colors from '../colors';
 import { kubesColors } from '../colors';
 
-const uri = 'https://www.kindpng.com/picc/m/74-746008_icon-for-user-user-icon-png-white-transparent.png';
-const encoded = encodeURIComponent(uri)
+const uri =
+  'https://www.kindpng.com/picc/m/74-746008_icon-for-user-user-icon-png-white-transparent.png';
+const encoded = encodeURIComponent(uri);
 
 const styleSheet = [
   {
@@ -10,17 +11,17 @@ const styleSheet = [
     style: {
       //color is text color of label
       color: 'white',
-     
+
       //label is displayed above node
       label: 'data(label)',
       //"background-image": 'data(data)',
       //width and height can also be assigned as percentage values.
-      "background-width": ["100px", "100px", "100px"],
-      "background-height": ["100px", "100px", "100px"],
-      "background-position-x": ["0px", "0px"],
-      "background-position-y": ["0px", "0px"],
-      "background-image-smoothing": 'yes',
-      "background-fit": "contain",
+      'background-width': ['100px', '100px', '100px'],
+      'background-height': ['100px', '100px', '100px'],
+      'background-position-x': ['0px', '0px'],
+      'background-position-y': ['0px', '0px'],
+      'background-image-smoothing': 'yes',
+      'background-fit': 'contain',
       shape: 'rectangle',
       'background-color': 'whitesmoke',
       'border-width': '5px',
@@ -50,13 +51,13 @@ const styleSheet = [
       'underlay-padding': 3,
       'underlay-shape': 'ellipse',
       'text-outline-color': 'black',
-      'text-outline-width': 1
+      'text-outline-width': 1,
     },
     css: {
       'text-wrap': 'ellipsis',
       'text-max-width': '10px',
       'text-outline-color': 'black',
-    }
+    },
   },
   {
     selector: "node[type='trace']",
@@ -72,8 +73,8 @@ const styleSheet = [
       width: 50,
       'background-color': '#A4C3D2',
       'text-outline-color': 'black',
-      'text-outline-width': 1
-    }
+      'text-outline-width': 1,
+    },
   },
   {
     selector: "node[type='client']",
@@ -85,15 +86,15 @@ const styleSheet = [
       'background-color': 'lightgrey',
       'font-family': 'SF Pro',
       'background-image': 'data:text/html;charset=utf-8' + encoded,
-      "background-width": ["100px", "100px", "100px"],
-      "background-height": ["100px", "100px", "100px"],
-      "background-image-smoothing": 'yes',
-      "background-fit": "contain",
+      'background-width': ['100px', '100px', '100px'],
+      'background-height': ['100px', '100px', '100px'],
+      'background-image-smoothing': 'yes',
+      'background-fit': 'contain',
       height: 50,
       width: 50,
       'text-outline-color': 'black',
-      'text-outline-width': 1
-    }
+      'text-outline-width': 1,
+    },
   },
   {
     selector: "node[type='namespace']",
@@ -108,7 +109,7 @@ const styleSheet = [
       'background-color': '#FFFAA0',
       'font-family': 'SF Pro',
       'text-outline-color': 'black',
-      'text-outline-width': 1
+      'text-outline-width': 1,
     },
   },
   {
@@ -129,7 +130,7 @@ const styleSheet = [
     selector: 'edge',
     style: {
       width: 1,
-      'curve-style': 'bezier'
+      'curve-style': 'bezier',
     },
   },
   {
@@ -142,29 +143,29 @@ const styleSheet = [
       'target-arrow-shape': 'triangle',
       'target-arrow-color': 'white',
       'curve-style': 'bezier',
-      'label': 'data(label)',
-      'color': 'black',
+      label: 'data(label)',
+      color: 'black',
       'text-background-color': 'white',
       'font-family': 'SF Pro',
     },
   },
   {
-    selector: ".background",
+    selector: '.background',
     style: {
-        "text-background-opacity": 1,
-        "color": "white",
-        "text-background-color": "#161820",
-        'font-family': 'SF Pro',
-    }
+      'text-background-opacity': 1,
+      color: 'white',
+      'text-background-color': '#161820',
+      'font-family': 'SF Pro',
+    },
   },
-{
-  selector: ":selected",
+  {
+    selector: ':selected',
     css: {
       // 'background-color':'green',
       'border-color': 'green',
       // 'border-width': '5px'
-    }
-}
+    },
+  },
 ];
 
-export default styleSheet
+export default styleSheet;

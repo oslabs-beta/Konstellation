@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from "express";
+/* eslint-disable @typescript-eslint/no-var-requires */
+import { Request, Response, NextFunction } from 'express';
 
 const execSync = require('child_process').execSync;
 const k8s = require('@kubernetes/client-node');
@@ -11,18 +12,15 @@ console.log('in AuthModel');
 
 export default class AuthModel {
   public static async connect(req: Request, res: Response, next: NextFunction) {
-
     console.log('trying to connect...');
     try {
-
       //const output = execSync('kubectl get svc', {encoding: 'utf-8'});
       const namespaceData = await k8sApi.listNamespace();
       //const output = execSync('kubectl get node', {encoding: 'utf-8'});
 
       //console.log('Output was:\n', namespaceData);
       next();
-    }
-    catch(err) {
+    } catch (err) {
       console.log('Error in Auth model!');
       // If there is an error, then the user doesn't have access to the EKS
       return next(err);

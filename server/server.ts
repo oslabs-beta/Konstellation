@@ -4,9 +4,9 @@ import cors from 'cors';
 import clusterRouter from './routers/ClusterRouter';
 import traceRouter from './routers/TraceRouter';
 import authRouter from './routers/AuthRouter';
-import dotenv from 'dotenv'
-import path from 'path'
-dotenv.config({path: path.resolve(__dirname, '../.env')})
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 app.use(cors());
@@ -19,7 +19,7 @@ app.use('/api/traces', traceRouter);
 app.use('/authenticate', authRouter);
 
 // 500: Server Error
-app.use((err: ErrObject, req: Request, res: Response, next : NextFunction) => {
+app.use((err: ErrObject, req: Request, res: Response, next: NextFunction) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
@@ -33,8 +33,8 @@ app.use((err: ErrObject, req: Request, res: Response, next : NextFunction) => {
 
 // 404: Not found
 app.use((req: Request, res: Response) => {
-  console.log("Server issued a 404 response")
-  res.status(404).send('404 Page Not Found')
+  console.log('Server issued a 404 response');
+  res.status(404).send('404 Page Not Found');
 });
 
 app.listen(3000, () => console.log('SERVER is listening on port 3000'));

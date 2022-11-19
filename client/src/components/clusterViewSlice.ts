@@ -1,33 +1,30 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../store";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState, AppThunk } from '../store';
 import coseBilkent from 'cytoscape-cose-bilkent';
 import cytoscape from 'cytoscape';
-import { config } from '../constants/config'
-import { Cluster } from './clusterView'
-import { stat } from "fs";
+import { config } from '../constants/config';
+import { Cluster } from './clusterView';
+import { stat } from 'fs';
 
 export type ClusterData = ClusterElement[];
 
-
 export interface ClusterElement {
   data: {
-		id: string,
-		label: string,
-		type: string,
-	}
+    id: string;
+    label: string;
+    type: string;
+  };
 }
-
-
 
 const initialState: Cluster = {
   data: [],
   status: 'idle',
-	namespace: 'all'
-}
+  namespace: 'all',
+};
 
 // Included as a critical first step for troubleshooting:
-console.log("Fetching Data From: ")
-console.log(config.url + '/api/cluster')
+console.log('Fetching Data From: ');
+console.log(config.url + '/api/cluster');
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(getClusterData())`. This
@@ -37,25 +34,25 @@ console.log(config.url + '/api/cluster')
 export const getClusterAsync = createAsyncThunk(
   'clusterView/getCluster',
   async () => {
-    const response = await fetch(config.url + '/api/cluster')
+    const response = await fetch(config.url + '/api/cluster');
     const data = await response.json();
     return data;
   }
-)
+);
 
 /**
-   * Handles reducer logic related to the Cluster View
-   */
+ * Handles reducer logic related to the Cluster View
+ */
 export const clusterViewSlice = createSlice({
   name: 'clusterView',
   initialState: initialState,
-  reducers: { 
-    updateData:  (state, action: PayloadAction<ClusterData>) => {
+  reducers: {
+    updateData: (state, action: PayloadAction<ClusterData>) => {
       state.data = action.payload;
     },
-		updateNameSpace: (state, action: PayloadAction<string>) => {
+    updateNameSpace: (state, action: PayloadAction<string>) => {
       state.namespace = action.payload;
-		}
+    },
   },
 
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -64,17 +61,20 @@ export const clusterViewSlice = createSlice({
     builder
       .addCase(getClusterAsync.pending, (state) => {
         state.status = 'loading';
-				state.data = [];
+        state.data = [];
       })
-      .addCase(getClusterAsync.fulfilled, (state, action: PayloadAction<ClusterData>) => {
-        state.status = 'idle';
-        state.data = action.payload;
-      })
+      .addCase(
+        getClusterAsync.fulfilled,
+        (state, action: PayloadAction<ClusterData>) => {
+          state.status = 'idle';
+          state.data = action.payload;
+        }
+      )
       .addCase(getClusterAsync.rejected, (state) => {
         state.status = 'failed';
       });
-  }
-})
+  },
+});
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

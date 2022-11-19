@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: default
   annotations:
-    instrumentation.opentelemetry.io/inject-nodejs: "true"
+    instrumentation.opentelemetry.io/inject-nodejs: 'true'

@@ -1,4 +1,4 @@
-@use "./theme" as theme;
+@use './theme' as theme;
 
 .button-container {
   grid-area: 3 / 1 / 3 / 1;
@@ -19,7 +19,7 @@
   color: white;
   border-radius: 6px;
   font-size: 0.9vh;
-  background: #3C3C3C;
+  background: #3c3c3c;
   pointer-events: auto;
 
   &:hover {

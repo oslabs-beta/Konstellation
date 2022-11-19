@@ -1,10 +1,11 @@
-import { TraceController } from "../controllers/TraceController";
+import { TraceController } from '../controllers/TraceController';
 import { Request, Response, NextFunction } from 'express';
 import express from 'express';
 
 const router = express.Router();
 
-router.get('/getAll/:service/:lookback', 
+router.get(
+  '/getAll/:service/:lookback',
   TraceController.getAggregateData,
   (req: Request, res: Response, next: NextFunction) => {
     console.log('router complete getAll');
@@ -12,45 +13,51 @@ router.get('/getAll/:service/:lookback',
   }
 );
 
-router.get('/getTraceView/:traceId', 
+router.get(
+  '/getTraceView/:traceId',
   TraceController.getTraceViewData,
   (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json(res.locals.traceViewArray)
+    res.status(200).json(res.locals.traceViewArray);
   }
 );
 
-router.get('/getSearchBarTraceView/:traceId', 
-  TraceController.getTraceViewData, TraceController.getSearchBarTraceView,
+router.get(
+  '/getSearchBarTraceView/:traceId',
+  TraceController.getTraceViewData,
+  TraceController.getSearchBarTraceView,
   (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json(res.locals.searchBarTraceView)
+    res.status(200).json(res.locals.searchBarTraceView);
   }
 );
 
-router.get('/getTraceViewServices', 
+router.get(
+  '/getTraceViewServices',
   TraceController.getTraceViewServices,
   (req: Request, res: Response, next: NextFunction) => {
     console.log('router complete getAll');
     res.status(200).json(res.locals.traceViewServices);
   }
-)
-// Will need to pass in req.body the specific pod name, req.body.traceID 
-router.get('/getSpansInProcess/:traceId/:processTarget',
-// router.get('/getSpansInProcess',
+);
+// Will need to pass in req.body the specific pod name, req.body.traceID
+router.get(
+  '/getSpansInProcess/:traceId/:processTarget',
+  // router.get('/getSpansInProcess',
   TraceController.getPodDetails,
   (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json(res.locals.processSpecificSpans)
+    res.status(200).json(res.locals.processSpecificSpans);
   }
-)
+);
 
-router.get('/getIndivSpanDetails/:spanId', 
+router.get(
+  '/getIndivSpanDetails/:spanId',
   TraceController.getSpanDetails,
   (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json(res.locals.spanDetails)
-  } 
-)
+    res.status(200).json(res.locals.spanDetails);
+  }
+);
 
-// router.post('/post', 
-//   TraceController.saveData, 
+// router.post('/post',
+//   TraceController.saveData,
 //   (req: Request, res: Response, next: NextFunction) => {res.status(200).json("Trace Data Added")}
 // );
 
