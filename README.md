@@ -99,7 +99,7 @@ To use auto-instrumentation, configure an `Instrumentation` resource with the co
 The requisite autoinstrumentation YAML file can again be found in the konstellation-yaml folder. To apply the instrumentation run:
 
 ```bash
-kubectl apply -f ./konstellation-yaml/05-autoinstrumentation.yaml
+kubectl apply -f ./konstellation-yaml/setup/05-autoinstrumentation.yaml
 ```
 
 Next, an annotation must be added to enable pod injection. The annotation can be added to a namespace, so that all pods within that namespace will get instrumentation, or by adding the annotation to individual PodSpec objects, available as part of Deployment, Statefulset, and other resources.
