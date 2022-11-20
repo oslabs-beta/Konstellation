@@ -155,10 +155,10 @@ kubectl apply -f ./konstellation-yaml/setup/04-jaegerconfig.yaml
 
 # Port-Forwarding Jaeger
 
-In order to retrieve trace data from these entities, the application requires access to the Jaeger Collector. To provide this access, port-forward the Jaeger Collector service to `localhost:16686`. This can be done with the following command:
+In order to retrieve trace data from these entities, the application requires access to the Jaeger Collector. To provide this access, port-forward the Jaeger Query service to `localhost:16686`. This can be done with the following command:
 
 ```bash
-kubectl port-forward jaeger-collector 16686:16686
+kubectl port-forward jaeger-query 16686:16686
 ```
 
 With these services deployed, and the service now ported to the local machine, we can confirm functionality. Open a browser and navigate to  `http://localhost:16686`. The jaeger UI should load.
