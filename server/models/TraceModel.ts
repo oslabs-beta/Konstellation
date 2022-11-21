@@ -121,19 +121,24 @@ export class TraceModel {
     const currentTraceData = responseJson.data[0];
     const currentTraceSpans = currentTraceData.spans;
     const currentTraceProcesses = currentTraceData.processes;
+    const processToColor: SpanCache = {};
     for (const process in currentTraceProcesses){
       const currProcess = currentTraceProcesses[process];
       const currProcessTags = currProcess.tags;
+      let j = 1;
       for (let i = 0; i < currProcessTags.length; i++){
+        processToColor[process] = `${j}`;
         if (currProcessTags[i].key === 'k8s.pod.name')
         traceViewArray.push({
           data: {
             id: process,
             label: currProcessTags[i].value,
             type: 'trace',
+            // Adding color data here that will match with bar color as well 
+            color: `color_${j++}`
           },
           classes: 'label'
-        })
+        });
       }
     }
     type SpanCache = {[key: string] : string}
@@ -142,7 +147,10 @@ export class TraceModel {
       const currSpan = indivSpan.spanID;
       const currProcess = indivSpan.processID;
       spanToProcess[currSpan] = currProcess;
+      // processColor[]
     });
+
+
 
     // Currently will generate an undefined for source when it is a trace following from another trace; that trace origin pod information is not self sustained in this specific traceOr data, will need to retrieve elsewhere / off screen, as it is beyond scope of this current trace
   
@@ -166,12 +174,26 @@ export class TraceModel {
     res.locals.spanToProcess = spanToProcess;
     res.locals.traceViewArray = traceViewArray;
     res.locals.currentTraceSpans = currentTraceSpans;
+    res.locals.processToColor = processToColor;
     return next();
   }
   catch(err){
     console.log(err)
   }}
 
+  public static async getTraceSpanTimeSeriesData(req: Request, res: Response, next:NextFunction){
+    const currentTraceSpans = res.locals.currentTraceSpans;
+    // processToColor is currently an array of objects, key of process# and value of color_#
+    const processToColor = res.locals.processToColor;
+    //  In order to match color of trace bar with pod, will have to update data passed to indivTraceView so that each "process" will have a corresponding "color" as well. 
+    // Output : Array of Objects, spanBarGraph data: 
+      // 
+    // Need to iterate through currentTraceSpans and extract start & duration for each span
+    currentTraceSpans.forEach((indivSpan: any) => {
+
+    })
+
+  }
   public static async getSearchBarTraceView(req: Request, res: Response, next: NextFunction){
     const currentTraceSpans = res.locals.currentTraceSpans;
     const traceViewArray = res.locals.traceViewArray
