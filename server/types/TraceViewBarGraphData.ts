@@ -1,4 +1,4 @@
-export type TraceViewPodsData = {
+export type TraceViewBarGraphData = {
     data: {
       id: string,
       type: string,

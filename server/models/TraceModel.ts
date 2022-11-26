@@ -1,6 +1,6 @@
 import { appendFile } from "fs";
 import {v4 as uuidv4}  from 'uuid';
-import {SpanCache, TraceViewPodsData} from '../types/Types'
+import {SpanCache, TraceViewPodsData, TraceViewBarGraphData} from '../types/Types'
 import { Request, Response, NextFunction } from "express";
 import Utils from "../utils/Utils";
 
@@ -181,18 +181,44 @@ export class TraceModel {
     console.log(err)
   }}
 
-  public static async getTraceSpanTimeSeriesData(req: Request, res: Response, next:NextFunction){
+  public static async getTraceSpanGraphData(req: Request, res: Response, next:NextFunction){
     const currentTraceSpans = res.locals.currentTraceSpans;
     // processToColor is currently an array of objects, key of process# and value of color_#
     const processToColor = res.locals.processToColor;
     //  In order to match color of trace bar with pod, will have to update data passed to indivTraceView so that each "process" will have a corresponding "color" as well. 
     // Output : Array of Objects, spanBarGraph data: 
       // 
-    // Need to iterate through currentTraceSpans and extract start & duration for each span
+    // Need to iterate through currentTraceSpans and extract start, duration, color, processID for each span
+    type TraceViewBarData = TraceViewBarGraphData[];
+    const traceViewBarGraphArray: TraceViewBarData = [];
     currentTraceSpans.forEach((indivSpan: any) => {
-
-    })
-
+      const startTime = indivSpan.startTime;
+      const duration = indivSpan.duration;
+      const processID = indivSpan.processID;
+      traceViewBarGraphArray.push({
+          data: {
+            id: uuidv4(),
+            // Type Customizable
+            type: "bar",
+            color: `${processToColor[processID]}`,
+            process: processID,
+            traceStart: startTime,
+            traceDuration: duration,
+            // Label customizable
+            label: "bar-label"
+          },
+          classes: 'bar-class'
+      });
+    });
+    const compareFx = (a: TraceViewBarGraphData, b: TraceViewBarGraphData) => {
+      let aData = a.data;
+      let bData = b.data;
+      if (aData[traceStart] < bData[traceStart]){
+        return -1
+      }
+      if (a)
+    }
+    traceViewBarGraphArray.sort()
   }
   public static async getSearchBarTraceView(req: Request, res: Response, next: NextFunction){
     const currentTraceSpans = res.locals.currentTraceSpans;

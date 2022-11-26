@@ -7,7 +7,7 @@ type LoadingScreenProps = {
   type: LoadingScreenType
 }
 
-/** 
+/**  =
    * Reusable component which renders a loading screen
    * @param type determines the type of loading screen which will render
    * @remarks Percentage calculation is mocked and for demonstration purposes only
