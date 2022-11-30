@@ -213,12 +213,15 @@ export class TraceModel {
     const compareFx = (a: TraceViewBarGraphData, b: TraceViewBarGraphData) => {
       let aData = a.data;
       let bData = b.data;
-      if (aData[traceStart] < bData[traceStart]){
-        return -1
+      if (aData.traceStart < bData.traceStart){
+        return -1;
       }
-      if (a)
+      if (aData.traceStart > bData.traceStart){
+        return 1;
+      }
+      return 0;
     }
-    traceViewBarGraphArray.sort()
+    traceViewBarGraphArray.sort(compareFx)
   }
   public static async getSearchBarTraceView(req: Request, res: Response, next: NextFunction){
     const currentTraceSpans = res.locals.currentTraceSpans;
