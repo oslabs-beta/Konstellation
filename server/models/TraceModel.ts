@@ -222,6 +222,8 @@ export class TraceModel {
       return 0;
     }
     traceViewBarGraphArray.sort(compareFx)
+    res.locals.barGraphArray = traceViewBarGraphArray;
+    return next();
   }
   public static async getSearchBarTraceView(req: Request, res: Response, next: NextFunction){
     const currentTraceSpans = res.locals.currentTraceSpans;

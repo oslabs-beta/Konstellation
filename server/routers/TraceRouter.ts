@@ -20,7 +20,7 @@ router.get('/getTraceView/:traceId',
 );
 
 router.get('/getSearchBarTraceView/:traceId', 
-  TraceController.getTraceViewData, TraceController.getSearchBarTraceView,
+  TraceController.getTraceViewData, TraceController.getSearchBarTraceView, TraceController.getTraceBarGraph,
   (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json(res.locals.searchBarTraceView)
   }

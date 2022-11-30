@@ -69,6 +69,23 @@ export class TraceController {
         });
       }
     }
+    public static getTraceBarGraph(req: Request, res: Response, next: NextFunction) {
+      try{
+        console.log("In Tracecontroller");
+        TraceModel.getTraceSpanGraphData(req, res, next);
+      }
+      catch(err) {
+        return next({
+          log: `Error in TraceController.getCluster: ${err}`,
+          status: 500,
+          message: {
+            err: 'Error occured while retrieving Trace Bar Graph Data in TraceController',
+          },
+        });
+      }
+    }
+
+  
     public static getPodDetails(req: Request, res: Response, next: NextFunction) {
       try{
         console.log("In Tracecontroller GetPodDetails");
