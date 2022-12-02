@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
@@ -9,7 +9,6 @@ import { selectTraceView, TraceData } from './traceViewSlice';
 import { useAppDispatch } from '../lib/hooks';
 import { changeRenderView, RenderType } from './span-table/spanMapSlice';
 import { getSpanTableAsync } from './span-table/spanListSlice';
-import { node } from 'webpack';
 import { selectSourceMap } from './sourceMapSlice';
 import { useAppSelector } from '../lib/hooks';
 import { selectSearchTraceResult } from './searchBarSlice';

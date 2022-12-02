@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { useAppSelector } from '../../lib/hooks';
 import SpanTableContent from './spanTableContent';
 import { selectSpanMap, RenderType } from './spanMapSlice';
 import '../../styles/home.scss';

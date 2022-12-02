@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../store';
+import { RootState } from '../../store';
 import { config } from '../../constants/config';
-import { useSelector } from 'react-redux';
-import sourceMapSlice, { selectSourceMap } from '../sourceMapSlice';
 
 const initialState: SingleSpanData = {
   status: 'idle',

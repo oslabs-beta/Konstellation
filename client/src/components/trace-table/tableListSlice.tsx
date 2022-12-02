@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../store';
+import { RootState } from '../../store';
 import { config } from '../../constants/config';
 
 const initialState: TraceTable = {

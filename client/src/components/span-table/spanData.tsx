@@ -1,11 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from '../../lib/hooks';
-import { selectSpanDataList } from './spanDataSlice';
 import '../../styles/spanTable.scss';
 
 const spanData = (props: any) => {
-  const dispatch = useAppDispatch();
 
   const jsxElements = (() => {
     const result: Array<Array<JSX.Element>> = [];

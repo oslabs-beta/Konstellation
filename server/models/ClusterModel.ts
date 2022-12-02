@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response, NextFunction } from 'express';
-import k8s from '@kubernetes/client-node';
+const k8s = require('@kubernetes/client-node');
 
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
@@ -13,7 +13,7 @@ class ClusterModel {
     next: NextFunction
   ) {
     const elements = [];
-    const clusterName = 'Control Plane'; //await getClusterName()
+    const clusterName = 'Control Plane';
 
     elements.push({
       data: { id: clusterName, label: clusterName, type: 'root' },
@@ -62,7 +62,6 @@ class ClusterModel {
     }
 
     res.locals.elements = elements;
-    //console.log(elements)
     return next();
   }
 }

@@ -1,16 +1,6 @@
 const options2 = () => {
   return {
     name: 'cose-bilkent',
-    // name: 'breadthfirst',
-    // ready: function () {
-    // },
-    // // Called on `layoutstop`
-    // stop: function () {
-    // },
-    // 'draft', 'default' or 'proof"
-    // - 'draft' fast cooling rate
-    // - 'default' moderate cooling rate
-    // - "proof" slow cooling rate
     quality: 'default',
     // Whether to include labels in node dimensions. Useful for avoiding label overlap
     nodeDimensionsIncludeLabels: false,

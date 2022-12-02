@@ -6,10 +6,6 @@ import Utils from '../utils/Utils';
 
 export class TraceModel {
   static requestCount = 0;
-  // Currently set to only retrieve first 3, when complete, will want to pass in service name, lookbackParam
-  // final fetch call should be line below
-  // const response = await fetch('http://localhost:16686/api/traces?limit=20000&service=' + 
-  // serviceQuery + '&lookback=' + lookbackParam)
   public static async getTraceLogsFromJaeger(
     req: Request,
     res: Response,
@@ -67,9 +63,6 @@ export class TraceModel {
     const url = `http://localhost:16686/api/traces?end=${nowInµs}&limit=20000&service=
     ${req.params.service}&lookback=${req.params.lookback}&start=${startInµs}`;
 
-    // const serviceQuery = req.body.service;
-    // const lookbackParam = req.body.lookbackParam;
-    // Can limit results by changing results, currently set to 20000 results shown.
     try {
       console.log('FETCHING JAEGER from: ' + url);
       const response = await fetch(url);
@@ -91,12 +84,6 @@ export class TraceModel {
             };
       }[] = [];
       console.log('responseJson.data.length: ' + responseJson.data.length);
-      // console.log("TRACEID:")
-      // console.log(responseJson.data)
-      // Using forEach renders error: Cannot read properties of undefined (reading 'length') despite 
-      // responseJson.data.length returning length # value
-      // Uncomment code below for final version to retrieve all trace logs instead of first 3
-      // for (let i = 0; i < responseJson.data.length; i++){
       for (let i = 0; i < responseJson.data.length; i++) {
         const currentTrace = responseJson.data[i];
         const traceID = currentTrace.traceID;
@@ -107,11 +94,7 @@ export class TraceModel {
         let traceMethod = 'unknown';
         let traceResponse = 'unknown';
         let traceURL = 'unknown';
-        // console.log('traceSpans: ' + traceSpans);
-        // console.log('traceDuration: ' + traceDuration);
-        // console.log('Spans.Duration: ' + traceSpans.duration);
-        // console.log('timeStamp: ' + timeStamp)
-        // console.log(traceSpans);
+
         // need to convert timeStamp from linux t
         // traceSpans[0] to get origin trace data for aggregate trace log;
         const traceTags = traceSpans.tags;
@@ -142,7 +125,6 @@ export class TraceModel {
             timestamp: new Date(timeStamp / 1000).toString(),
           },
         });
-        // console.log('res.locals.tracesArray: ', tracesArray);
       }
       console.log(tracesArray);
       res.locals.tracesArray = tracesArray;
@@ -160,7 +142,6 @@ export class TraceModel {
     const traceViewArray = [];
     console.log('jaeger query-ing');
     const traceID = req.params.traceId;
-    //console.log(traceID)
 
     try {
       const response = await fetch(
@@ -282,10 +263,6 @@ export class TraceModel {
     console.log(`fetching this url: ${url}`);
     try {
       const response = await fetch(url);
-      // if (!response.ok) {
-      //   throw new Error(`Error retrieving traceview! Status: ${response.status}`)
-      // }
-
       const responseJson = await response.json();
       console.log('responseJSON: ', responseJson);
       const currentTraceData = responseJson.data[0];
@@ -400,8 +377,6 @@ export class TraceModel {
     res: Response,
     next: NextFunction
   ) {
-    // console.log(req.socket.remoteAddress); // Use this if not using a server proxy (ex: ngrok)
-    // console.log(req.headers['x-forwarded-for']); // Use this if using a server proxy (ex: ngrok)
     const logData: any = req.body.traceData
       ? req.body.traceData
       : { data: 'Example Trace Data From Server' };

@@ -39,7 +39,6 @@ const initialState: Search = {
   data: {},
 };
 
-//sends an async call to the backend to get the trace data that would show up on the search bar in the trace view screen
 export const getTraceViewInfo = createAsyncThunk(
   'searchBar/traceInfo',
   async (traceId: string) => {

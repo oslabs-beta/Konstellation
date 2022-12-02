@@ -1,10 +1,9 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../lib/hooks';
 import { changeView, ViewType } from '../sourceMapSlice';
 import { getTraceDataAsync } from '../traceViewSlice';
-import { selectTableList, TraceTableEntry } from './tableListSlice';
+import { selectTableList } from './tableListSlice';
 import { getTraceViewInfo } from '../searchBarSlice';
 
 /**

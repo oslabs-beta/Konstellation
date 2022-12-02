@@ -6,12 +6,9 @@ import {
   selectSpanResultsMap,
   spanViewType,
 } from './spanResultsMapSlice';
-import { getSpanDataAsync } from './spanDataSlice';
 import { selectSpanTableList } from './spanListSlice';
 import '../../styles/spanTable.scss';
-import SpanData from './spanData';
 import SpanResultsMap from './spanResultsMap';
-import { ViewType } from '../sourceMapSlice';
 
 const spanList = () => {
   const { data } = useSelector(selectSpanTableList);
@@ -39,9 +36,6 @@ const spanList = () => {
       const entryKey = `span-table-entry-${i}`;
       console.log(e);
       console.log('duration', data[i].spanData.duration);
-
-      const spanData = 'hello';
-      const spanID = e.spanIds;
 
       result.push([
         <div key={entryKey} className="span-pod-entry">

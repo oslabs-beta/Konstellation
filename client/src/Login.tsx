@@ -1,6 +1,5 @@
 import React, {
   FormEvent,
-  MouseEventHandler,
   useEffect,
   useState,
 } from 'react';
@@ -9,43 +8,39 @@ import './styles/login.scss';
 import LoadingScreen, { LoadingScreenType } from './components/loadingScreen';
 import logo from '../../images/konstellation-logo.png';
 import background from './styles/images/login-background.png';
-import { response } from 'express';
+
 /**
  * Catch their respective event from the electron main process
  * Need to be outside of the Login component, otherwise they will fire twice
  */
-
 function Login() {
-  let navigate = useNavigate();
-  // Message to send to the user on invalid input
+  const navigate = useNavigate();
   const badCredentials = 'Invalid Credentials';
+
   // State will be null, but won't be if navigated from app
   // Don't autoload user into app if they navigated from app
-  let { state } = useLocation();
+  const { state } = useLocation();
+
   const autoLoad = state === null ? true : false;
   const usingElectron = window.electronAPI === undefined ? false : true;
-  // Input fields
   const [accessKey, setAccessKey] = useState('');
   const [secretKey, setSecretKey] = useState('');
   const [clusterName, setClusterName] = useState('');
   const [regionName, setRegionName] = useState('');
-  // Toggling Password visiblity
   const [hideEye, toggleEye] = useState(true);
   const [hidePassword, togglePassword] = useState(true);
-  // Toggle loading screen
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoadingScreen] = useState(false);
 
-  // Only fire on initial render
   // Executes twice because of React.Strict
   useEffect(() => {
     // Don't load user in if they just logged out
     if (autoLoad !== false) {
-      setLoading(true);
+      setLoadingScreen(true);
       loginUser(true);
     } else {
       // Only send request to electron if using electron
       if (window.electronAPI) {
-        setLoading(true);
+        setLoadingScreen(true);
         window.electronAPI.getConfig();
       }
     }
@@ -55,10 +50,8 @@ function Login() {
       window.electronAPI.onConfigResp(
         'onConfigResp',
         (event: any, data: any) => {
-          // console.log("From server:", data)
-          setLoading(false);
+          setLoadingScreen(false);
           // The fourth datapoint is whether the kube config was set properly
-          // Only attempt to log the user in if kube config was created
           if (data[4]) {
             loginUser(false);
           } else {
@@ -73,9 +66,7 @@ function Login() {
       window.electronAPI.onSendConfig(
         'onSendConfig',
         (event: any, data: [string, string, string, string]) => {
-          // console.log("Parsed from local files:", data);
-          setLoading(false);
-          // Update each input field
+          setLoadingScreen(false);
           setAccessKey(data[0]);
           setSecretKey(data[1]);
           setClusterName(data[2]);
@@ -85,8 +76,7 @@ function Login() {
     }
 
     return () => {
-      setLoading(false);
-      // Remove listeners
+      setLoadingScreen(false);
       if (usingElectron) {
         window.electronAPI.unMount();
       }
@@ -105,10 +95,6 @@ function Login() {
       method: 'GET',
     })
       .then((response) => {
-        //console.log('resp:', resp.json());
-        //console.log('typeof:', typeof response.json());
-        //console.log(response.json());
-
         if (response.status !== 200) {
           console.log('bad credentials...');
           alert(badCredentials);
@@ -123,13 +109,10 @@ function Login() {
         alert('Unable to log in. Please ensure the server is running.');
       })
       .finally(() => {
-        // Do nothing if the user is clear to log in
         if (!loginUser) {
-          // Leverage Electron to parse any authentication data from local files
           if (usingElectron && loadConfig) {
             window.electronAPI.getConfig();
           }
-          // Else not using electron and the local credentials are bad
           else if (!usingElectron) {
             alert('Please configure your local kubeconfig file.');
           }
@@ -137,7 +120,6 @@ function Login() {
       });
   };
 
-  // Return true if the given string is empty
   const emptyString = (input: string) => {
     if (input.trim() === '') return true;
     return false;
@@ -147,14 +129,8 @@ function Login() {
   const buttonPressed = (event: FormEvent) => {
     event.preventDefault();
 
-    // if (emptyString(accessKey) || emptyString(secretKey) || emptyString(clusterName) || emptyString(regionName)) {
-    //   alert('Please fill out all fields');
-    //   return;
-    // }
-
-    setLoading(true);
+    setLoadingScreen(true);
     if (usingElectron) {
-      // Configure the user's local files with the input fields
       window.electronAPI.onConfig([
         accessKey,
         secretKey,
@@ -162,7 +138,6 @@ function Login() {
         regionName,
       ]);
     } else {
-      // Authenticate the user
       loginUser(false);
     }
 
