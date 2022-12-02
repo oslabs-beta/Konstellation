@@ -11,14 +11,10 @@ import logo from '../../../images/konstellation-logo.png';
 const SearchBarCluster = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  //fetches the namespaces
   const { data } = useAppSelector(selectCluster);
 
   const submitTrace = (traceId: string): any => {
-    //changes the state from cluster to trace view
-    //update view so that the data property is updated to the inputted trace view and changes the view type
     dispatch(changeView({ type: 1 }));
-    //dispatches an action to call on the asynchoronous funciton of getting tracedata
     dispatch(getTraceDataAsync(traceId));
     dispatch(getTraceViewInfo(traceId));
     return;

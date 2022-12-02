@@ -21,7 +21,7 @@ const home = () => {
 
   const uiElements: Array<JSX.Element> = [];
 
-  // Make sure to overwite clickable elements with 'pointer-events: auto'
+  // CSS: Make sure to overwite clickable elements with 'pointer-events: auto'
   if (sourceMap.type == ViewType.cluster) {
     uiElements.push(
       <div className="overlay" id="trace-table-overlay" key="overlay-1">

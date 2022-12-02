@@ -1,8 +1,5 @@
-import { resolveNaptr } from 'dns';
-import { appendFile } from 'fs';
 import { Request, Response, NextFunction } from 'express';
 import { TraceModel } from '../models/TraceModel';
-import Utils from '../utils/Utils';
 
 export class TraceController {
   public static getAggregateData(

@@ -9,9 +9,8 @@ import { useAppSelector } from '../../lib/hooks';
 import { selectSearchTraceResult } from '../searchBarSlice';
 
 const spanHeader = () => {
-  const { data, id } = useSelector(selectSpanMap);
+  const { data } = useSelector(selectSpanMap);
   console.log('spanHeaderData: ', data);
-  const traceId = useSelector(selectSourceMap);
 
   const dispatch = useAppDispatch();
 

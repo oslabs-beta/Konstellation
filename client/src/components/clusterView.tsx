@@ -8,7 +8,6 @@ import {
 } from './clusterViewSlice';
 import styleSheet from '../styles/Stylesheet';
 import options2 from '../constants/CytoscapeConfig';
-import cluster from 'cluster';
 import LoadingScreen, { LoadingScreenType } from './loadingScreen';
 
 export interface Cluster {

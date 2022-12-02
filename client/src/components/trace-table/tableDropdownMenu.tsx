@@ -1,9 +1,8 @@
-import React, { JSXElementConstructor, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../lib/hooks';
 import {
   getTraceTableDataAsync,
   updateService,
-  selectService,
   getServicesAsync,
   getAllServices,
   selectLookback,

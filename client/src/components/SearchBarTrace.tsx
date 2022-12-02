@@ -1,10 +1,9 @@
-import React, { JSXElementConstructor, useEffect } from 'react';
-import { changeView, selectSourceMap } from './sourceMapSlice';
+import React from 'react';
+import { changeView } from './sourceMapSlice';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
-import { selectTraceView, getTraceDataAsync } from './traceViewSlice';
+import { getTraceDataAsync } from './traceViewSlice';
 import {
   selectSearchTraceResult,
-  SearchData,
   getTraceViewInfo,
 } from './searchBarSlice';
 import logo from '../../../images/konstellation-logo.png';
@@ -26,14 +25,6 @@ const SearchBarTrace = (): JSX.Element => {
     dispatch(changeView({ type: 0 }));
     return;
   };
-
-  const handleClick = (): any => {
-    //closes this trace details view?
-    //the darrk bottom bar goes back up so that you can hide the details view so you can see more of the map
-  };
-
-  //create a use effect that upon render, grabs the actual trace data store in the store and display it on top
-  //const traceData = useAppSelector(selectTraceViewData);
 
   console.log('this is the exported trace view data', exportedtraceViewData);
   return (

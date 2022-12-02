@@ -5,7 +5,6 @@ const url = require('url');
 // This makes the CLI commands asynchronous
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
-const { config } = require('dotenv');
 const fs = require('fs');
 const readline = require('readline');
 const k8Config = require('@kubernetes/client-node/dist/config');
@@ -21,10 +20,8 @@ async function getConfigClusterName() {
     const home = k8Config.findHomeDir();
 
     // Leverage K8's functions to find the config file
-
     const absolutePath = path.join(home, '.kube/config');
 
-    // console.log('absolute Path:', absolutePath);
     const fileStream = fs.createReadStream(absolutePath);
 
     const rl = readline.createInterface({
@@ -32,9 +29,7 @@ async function getConfigClusterName() {
       crlfDelay: Infinity,
     });
 
-    // Read the file line by line
     for await (const line of rl) {
-      console.log(`Line from file: ${line}`);
       if (line.includes('current-context:')) {
         // Return name of cluster
         return line.split('/')[1];
@@ -85,7 +80,6 @@ async function getAWSField(field) {
 }
 
 function createWindow() {
-  // Create the browser window
   // Sets the dimensions and contextBridge between main and renderer processes
   win = new BrowserWindow({
     width: 1600,
@@ -101,15 +95,14 @@ function createWindow() {
   //const prodMode = process.env.
   const appURL = prodMode
     ? url.format({
-        pathname: path.join(__dirname, '../dist/index.html'),
-        protocol: 'file:',
-        slashes: true,
-      })
+      pathname: path.join(__dirname, '../dist/index.html'),
+      protocol: 'file:',
+      slashes: true,
+    })
     : 'http://localhost:8080';
   console.log('appURL:', appURL);
   win.loadURL(appURL);
 
-  // Automatically open Chrome's DevTools in development mode.
   if (!prodMode) {
     win.webContents.openDevTools();
   }
@@ -147,14 +140,12 @@ app.whenReady().then(() => {
    * @returns True if success, otherwise False
    */
   ipcMain.on('on-config', async (event, arg) => {
-    // If .kube/config was updated or threw an error
     let kubeconfigResp = false;
 
     // First create a backup of the local AWS fields
     const keyBack = await getAWSField('aws_access_key_id');
     const secretBack = await getAWSField('aws_secret_access_key');
     const regionBack = await getAWSField('region');
-    // let user change 'output' from json here
 
     // Then update each field
     const keyResp = await setAWSField('aws_access_key_id', arg[0]);
@@ -169,21 +160,17 @@ app.whenReady().then(() => {
       await setAWSField('region', regionBack);
     };
 
-    // If no bad responses, then set the Kube Config file
     if (!keyResp && !secretResp && !regionResp && !outputResp) {
       kubeconfigResp = await updateKubeConfig(arg[3], arg[2]);
-      // If the kube config couldn't be updated reload backups
       if (!kubeconfigResp) {
         reloadBackups();
       }
     }
-    // If one of the fields was invalid reload backups
     else {
       reloadBackups();
     }
 
     // Trigger another IPC event back to the render process
-    // Sending individual results in case we want input-specific error messages
     event.sender.send('onConfigResp', [
       keyResp,
       secretResp,
@@ -202,7 +189,6 @@ app.whenReady().then(() => {
    */
   ipcMain.on('get-config', async (event) => {
     console.log('get-config');
-    // Retrieve the user's Access Key, Secret Key, and Region from their local files
     const access_key = await getAWSField('aws_access_key_id');
     const secret_key = await getAWSField('aws_secret_access_key');
     const region = await getAWSField('region');

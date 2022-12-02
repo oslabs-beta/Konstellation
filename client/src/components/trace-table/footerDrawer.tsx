@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../../styles/home.scss';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 import { selectTraceTableDrawerIsOpen, toggleIsOpen } from './drawerSlice';
